@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+/* ─── Design Tokens (Tailwind v4) ─── */
+@theme {
+  --color-primary: var(--th-primary);
+  --color-primary-light: var(--th-primary-light);
+  --color-primary-dark: var(--th-primary-dark);
+  --color-accent: var(--th-accent);
+  --color-surface: #ffffff;
+  --color-surface-dark: #0f172a;
+  --color-surface-dim: #f1f5f9;
+  --color-surface-dim-dark: #1e293b;
+  --color-text: #0f172a;
+  --color-text-dark: #f8fafc;
+  --color-text-muted: #64748b;
+  --color-text-muted-dark: #94a3b8;
+}
+
+/* ─── Alchemy Themes ─── */
+
+/* 🧪 Emerald Elixir  — classic alchemy green & purple */
+:root,
+[data-theme="emerald-elixir"] {
+  --th-primary: #10b981;
+  --th-primary-light: #34d399;
+  --th-primary-dark: #059669;
+  --th-accent: #a855f7;
+}
+
+/* 🔥 Philosopher's Fire — calcination crimson & amber */
+[data-theme="philosophers-fire"] {
+  --th-primary: #ef4444;
+  --th-primary-light: #f87171;
+  --th-primary-dark: #dc2626;
+  --th-accent: #f59e0b;
+}
+
+/* ✨ Magnum Opus — the Great Work, gold & deep violet */
+[data-theme="magnum-opus"] {
+  --th-primary: #eab308;
+  --th-primary-light: #facc15;
+  --th-primary-dark: #ca8a04;
+  --th-accent: #7c3aed;
+}
+
+/* 🌑 Nigredo — the dark first stage, indigo & silver */
+[data-theme="nigredo"] {
+  --th-primary: #6366f1;
+  --th-primary-light: #818cf8;
+  --th-primary-dark: #4f46e5;
+  --th-accent: #94a3b8;
+}
+
+/* 🌿 Viriditas — the green force, teal & orange */
+[data-theme="viriditas"] {
+  --th-primary: #14b8a6;
+  --th-primary-light: #2dd4bf;
+  --th-primary-dark: #0d9488;
+  --th-accent: #f97316;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
