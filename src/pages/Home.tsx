@@ -50,7 +50,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://github.com/chase-roohms/transmute"
+              href="https://github.com/transmute-app/transmute"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-8 py-3 rounded-lg bg-primary text-white font-semibold hover:bg-primary-dark transition-colors shadow-lg shadow-primary/25"
@@ -151,7 +151,7 @@ export default function Home() {
             jump in and contribute!
           </p>
           <a
-            href="https://github.com/chase-roohms/transmute"
+            href="https://github.com/transmute-app/transmute"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white font-semibold hover:bg-primary-dark transition-colors"

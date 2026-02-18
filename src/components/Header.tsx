@@ -23,7 +23,7 @@ export default function Header() {
 
         <nav className="flex items-center gap-6">
           <a
-            href="https://github.com/chase-roohms/transmute"
+            href="https://github.com/transmute-app/transmute"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm font-medium text-text-muted dark:text-text-muted-dark hover:text-text dark:hover:text-text-dark transition-colors"
