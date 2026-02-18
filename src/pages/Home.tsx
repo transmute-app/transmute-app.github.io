@@ -42,7 +42,11 @@ export default function Home() {
             <span className="text-primary-light">anywhere</span>.
           </h1>
           <p className="text-lg sm:text-xl text-text-muted dark:text-text-muted-dark max-w-3xl mx-auto mb-10">
-            Transmute is a self-hosted file converter that handles images, video, and audio — all on your own hardware. No uploads to third-party servers. No limits.
+            Transmute is a self-hosted file converter that handles images, video, audio, and more.
+            <br/>
+            All on your own hardware.
+            <br/><br/>
+            No uploads to third-party servers. No limits.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
