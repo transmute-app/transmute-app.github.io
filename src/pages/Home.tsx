@@ -1,56 +1,90 @@
-import { FaRegImage, FaFilm, FaMusic, FaHeadphones, FaLock, FaBolt, FaInfinity } from 'react-icons/fa6'
+import { useEffect, useState } from 'react'
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
+import yaml from 'react-syntax-highlighter/dist/esm/languages/hljs/yaml'
+import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+import { FaRegImage, FaFilm, FaMusic, FaHeadphones, FaTable, FaPenRuler, FaLock, FaBolt, FaInfinity } from 'react-icons/fa6'
 import type { IconType } from 'react-icons'
 
-const conversions: { category: string; formats: string[][]; icon: IconType }[] = [
+SyntaxHighlighter.registerLanguage('yaml', yaml)
+
+const conversions: { category: string; formats: string[]; icon: IconType }[] = [
   {
-    category: 'Image to Image',
-    formats: [['PNG → JPG'], ['JPG → WebP'], ['BMP → PNG']],
+    category: 'Image',
+    formats: ['PNG → JPG', 'JPG → WebP', 'SVG → PNG'],
     icon: FaRegImage,
   },
   {
-    category: 'Video to Video',
-    formats: [['MKV → MP4'], ['MOV → MKV'], ['AVI → MP4']],
+    category: 'Video',
+    formats: ['MKV → MP4', 'MOV → MKV', 'AVI → MP4'],
     icon: FaFilm,
   },
   {
-    category: 'Video to Audio',
-    formats: [['MKV → MP3'], ['MOV → WAV'], ['MP4 → AAC']],
+    category: 'Video → Audio',
+    formats: ['MKV → MP3', 'MP4 → AAC', 'MOV → WAV'],
     icon: FaMusic,
   },
   {
-    category: 'Audio to Audio',
-    formats: [['MP3 → WAV'], ['FLAC → AAC'], ['OGG → MP3']],
+    category: 'Audio',
+    formats: ['MP3 → WAV', 'FLAC → AAC', 'OGG → MP3'],
     icon: FaHeadphones,
+  },
+  {
+    category: 'Data',
+    formats: ['CSV → JSON', 'JSON → YAML', 'YAML → CSV'],
+    icon: FaTable,
+  },
+  {
+    category: 'Diagrams',
+    formats: ['draw.io → PNG', 'draw.io → SVG', 'draw.io → PDF'],
+    icon: FaPenRuler,
   },
 ]
 
 export default function Home() {
+  const [dockerCompose, setDockerCompose] = useState<string | null>(null)
+  const [dockerComposeLoading, setDockerComposeLoading] = useState(true)
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = () => {
+    if (dockerCompose) {
+      navigator.clipboard.writeText(dockerCompose)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    }
+  }
+
+  useEffect(() => {
+    fetch('https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/docker-compose.yml')
+      .then((res) => res.text())
+      .then((text) => { setDockerCompose(text); setDockerComposeLoading(false) })
+      .catch(() => { setDockerCompose(null); setDockerComposeLoading(false) })
+  }, [])
   return (
     <>
       {/* Hero */}
-      <section className="py-20 sm:py-32">
+      <section className="py-20 sm:py-32 bg-surface-dark">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex justify-center mb-8">
             <img
-              src={`${import.meta.env.BASE_URL}icons/beaker-black.svg`}
+              src={`${import.meta.env.BASE_URL}icons/beaker-red-bg.png`}
               alt="Transmute logo"
-              className="h-20 w-20 dark:hidden"
+              className="h-20 w-20"
             />
           </div>
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6">
+          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 text-white">
             Convert <span className="text-primary">anything</span>,{' '}
             <span className="text-primary-light">anywhere</span>.
           </h1>
-          <p className="text-lg sm:text-xl text-text-muted dark:text-text-muted-dark max-w-3xl mx-auto mb-10">
-            Transmute is a self-hosted file converter that handles images, video, audio, and more.
-            <br/>
+          <p className="text-lg sm:text-xl text-text-muted max-w-3xl mx-auto mb-10">
+            Transmute is a self-hosted file converter that handles images, video, data, and more.
+            <br />
             All on your own hardware.
-            <br/><br/>
+            <br /><br />
             No uploads to third-party servers. No limits.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://github.com/transmute-app/transmute"
+              href="https://github.com/transmute-app/transmute#quickstart"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-8 py-3 rounded-lg bg-primary text-white font-semibold hover:bg-primary-dark transition-colors shadow-lg shadow-primary/25"
@@ -64,19 +98,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-16 bg-surface-dim dark:bg-surface-dim-dark">
+      {/* Supported Conversions */}
+      <section className="py-16 bg-surface-light border-y border-gray-700">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-4">
+          <h2 className="text-3xl font-bold text-center mb-2">
             Supported Conversions
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <p className="text-text-muted text-center mb-10">
+            Powered by FFmpeg, Pillow, pandas, and draw.io
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {conversions.map((item) => {
               const Icon = item.icon
               return (
                 <div
                   key={item.category}
-                  className="bg-surface dark:bg-surface-dark rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-md transition-shadow text-center flex flex-col items-center"
+                  className="bg-surface-dark rounded-xl p-6 shadow-sm border border-gray-700 hover:border-primary/50 transition-colors text-center flex flex-col items-center"
                 >
                   <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary mb-4">
                     <Icon className="w-5 h-5" />
@@ -85,10 +122,10 @@ export default function Home() {
                   <ul className="space-y-1.5">
                     {item.formats.map((line) => (
                       <li
-                        key={line[0]}
-                        className="text-sm text-text-muted dark:text-text-muted-dark font-mono whitespace-nowrap"
+                        key={line}
+                        className="text-sm text-text-muted font-mono whitespace-nowrap"
                       >
-                        {line[0]}
+                        {line}
                       </li>
                     ))}
                   </ul>
@@ -99,8 +136,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Highlights */}
-      <section className="py-16">
+      {/* Why Transmute */}
+      <section className="py-16 bg-surface-dark">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">
             Why Transmute?
@@ -111,7 +148,7 @@ export default function Home() {
                 <FaLock className="h-5 w-5" />
               </div>
               <h3 className="font-semibold text-lg mb-2">Self-Hosted</h3>
-              <p className="text-sm text-text-muted dark:text-text-muted-dark">
+              <p className="text-sm text-text-muted">
                 Your files never leave your machine. Full privacy, zero third-party uploads.
               </p>
             </div>
@@ -120,7 +157,7 @@ export default function Home() {
                 <FaBolt className="h-5 w-5" />
               </div>
               <h3 className="font-semibold text-lg mb-2">Fast & Simple</h3>
-              <p className="text-sm text-text-muted dark:text-text-muted-dark">
+              <p className="text-sm text-text-muted">
                 Clean API powered by FastAPI. Upload a file, pick your format, get your result.
               </p>
             </div>
@@ -129,7 +166,7 @@ export default function Home() {
                 <FaInfinity className="h-5 w-5" />
               </div>
               <h3 className="font-semibold text-lg mb-2">No Limits</h3>
-              <p className="text-sm text-text-muted dark:text-text-muted-dark">
+              <p className="text-sm text-text-muted">
                 No file size caps, no watermarks, no rate limits. Convert as much as you need.
               </p>
             </div>
@@ -137,18 +174,43 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Status / CTA */}
-      <section className="py-16 bg-surface-dim dark:bg-surface-dim-dark">
+      {/* Quickstart */}
+      <section className="py-16 bg-surface-light border-y border-gray-700">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+            Quickstart
+          </h2>
+          <p className="text-text-muted mb-6">
+            Deploy in seconds with Docker Compose.
+          </p>
+          <div className="relative bg-surface-dark rounded-xl border border-gray-700 px-6 py-4 text-left mb-8 overflow-x-auto">
+            {!dockerComposeLoading && dockerCompose !== null && (
+              <button
+                onClick={handleCopy}
+                className="absolute top-3 right-3 px-2 py-1 rounded text-xs font-semibold bg-gray-700 hover:bg-gray-600 text-text-muted hover:text-white transition-colors"
+              >
+                {copied ? 'Copied!' : 'Copy'}
+              </button>
+            )}
+            {dockerComposeLoading ? (
+              <span className="text-sm text-text-muted font-mono">Loading...</span>
+            ) : dockerCompose !== null ? (
+              <SyntaxHighlighter
+                language="yaml"
+                style={atomOneDark}
+                customStyle={{ background: 'transparent', padding: 0, margin: 0, fontSize: '0.875rem' }}
+              >
+                {dockerCompose}
+              </SyntaxHighlighter>
+            ) : (
+              <span className="text-sm text-red-400 font-mono">Failed to load docker-compose.yml</span>
+            )}
+          </div>
           <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent mb-4">
             Under Active Development
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4">
-            Transmute is a work in progress
-          </h2>
-          <p className="text-text-muted dark:text-text-muted-dark mb-8">
-            This project is under heavy development. Star the repo on GitHub to stay updated, or
-            jump in and contribute!
+          <p className="text-text-muted mb-6">
+            Star the repo on GitHub to stay updated, or jump in and contribute!
           </p>
           <a
             href="https://github.com/transmute-app/transmute"
