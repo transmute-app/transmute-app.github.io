@@ -7,7 +7,7 @@ interface SEOProps {
 }
 
 const BASE_TITLE = 'Transmute'
-const SITE_URL = 'https://transmute-app.github.io'
+const SITE_URL = 'https://transmute.sh'
 
 /**
  * Updates document title, meta description, canonical, and OG tags on route change.
