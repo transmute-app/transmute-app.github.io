@@ -6,6 +6,11 @@ html {
   scroll-behavior: smooth;
 }
 
+.prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::before,
+.prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::after {
+  content: none;
+}
+
 body {
   margin: 0;
   background-color: #0f172a;

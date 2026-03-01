@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { FaGithub } from 'react-icons/fa6'
+import { FaGithub, FaBook } from 'react-icons/fa6'
 
 export default function Header() {
   return (
@@ -17,6 +17,12 @@ export default function Header() {
         </Link>
 
         <nav className="flex items-center gap-6">
+          <Link
+            to="/docs"
+            className="flex items-center gap-1.5 text-text-muted hover:text-white transition-colors text-sm font-medium"
+          >
+            <FaBook className="h-4 w-4" />
+          </Link>
           <a
             href="https://github.com/transmute-app/transmute"
             target="_blank"
