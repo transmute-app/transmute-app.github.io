@@ -3,8 +3,85 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/icons/beaker-red-bg.png" />
+    <link rel="apple-touch-icon" href="/icons/beaker-red-bg.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Transmute: Self-Hosted File Converter</title>
+
+    <!-- Primary SEO -->
+    <title>Transmute — Self-Hosted File Converter for Images, Video, Audio & More</title>
+    <meta name="description" content="Transmute is a free, open-source, self-hosted file converter. Convert images, video, audio, data, and documents on your own hardware with no file size limits, no watermarks, and full privacy." />
+    <meta name="keywords" content="self hosted file converter, self-hosted file converter, open source file converter, convert images video audio, docker file converter, private file conversion, transmute" />
+    <link rel="canonical" href="https://transmute-app.github.io/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://transmute-app.github.io/" />
+    <meta property="og:title" content="Transmute — Self-Hosted File Converter" />
+    <meta property="og:description" content="Convert images, video, audio, data, and documents on your own hardware. Free, open-source, no limits." />
+    <meta property="og:image" content="https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/converter.png" />
+    <meta property="og:site_name" content="Transmute" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://transmute-app.github.io/" />
+    <meta name="twitter:title" content="Transmute — Self-Hosted File Converter" />
+    <meta name="twitter:description" content="Convert images, video, audio, data, and documents on your own hardware. Free, open-source, no limits." />
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/converter.png" />
+
+    <!-- Additional SEO signals -->
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Transmute Contributors" />
+    <meta name="theme-color" content="#0f172a" />
+
+    <!-- Structured Data: SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Transmute",
+      "url": "https://transmute-app.github.io/",
+      "description": "A free, open-source, self-hosted file converter for images, video, audio, data, and documents. Deploy with Docker and convert anything on your own hardware.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Linux, macOS, Windows (via Docker)",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "license": "https://opensource.org/licenses/MIT",
+      "sourceOrganization": {
+        "@type": "Organization",
+        "name": "transmute-app",
+        "url": "https://github.com/transmute-app"
+      },
+      "codeRepository": "https://github.com/transmute-app/transmute",
+      "featureList": [
+        "Self-hosted file converter",
+        "Image conversion (PNG, JPG, WebP, SVG, BMP)",
+        "Video conversion (MKV, MP4, MOV, AVI, WebM)",
+        "Audio conversion (MP3, WAV, FLAC, AAC, OGG)",
+        "Audio extraction from video",
+        "Data conversion (CSV, JSON, YAML)",
+        "Document conversion (PDF, DOCX, TXT, Markdown)",
+        "Diagram conversion (draw.io to PNG, SVG, PDF)",
+        "No file size limits",
+        "No watermarks",
+        "Docker deployment",
+        "REST API with Swagger docs",
+        "7 built-in themes"
+      ]
+    }
+    </script>
+
+    <!-- Structured Data: WebSite (for sitelinks search) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Transmute",
+      "url": "https://transmute-app.github.io/"
+    }
+    </script>
+
     <!-- GitHub Pages SPA redirect script -->
     <script type="text/javascript">
       // Single Page Apps for GitHub Pages
@@ -23,6 +100,29 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Noscript fallback: gives crawlers content even without JS -->
+    <noscript>
+      <div style="max-width:800px;margin:0 auto;padding:40px 20px;font-family:system-ui,sans-serif;color:#f8fafc;background:#0f172a;">
+        <h1>Transmute — Self-Hosted File Converter</h1>
+        <p>Transmute is a free, open-source, self-hosted file converter that lets you convert images, video, audio, data, and documents on your own hardware.</p>
+        <h2>Why Use a Self-Hosted File Converter?</h2>
+        <p>Unlike cloud-based converters, Transmute keeps your files completely private. There are no file size limits, no watermarks, no rate limits, and no paid tiers. Deploy with a single Docker command and start converting.</p>
+        <h2>Supported Conversions</h2>
+        <ul>
+          <li><strong>Image:</strong> PNG, JPG, WebP, SVG, BMP</li>
+          <li><strong>Video:</strong> MKV, MP4, MOV, AVI, WebM</li>
+          <li><strong>Audio:</strong> MP3, WAV, FLAC, AAC, OGG</li>
+          <li><strong>Data:</strong> CSV, JSON, YAML</li>
+          <li><strong>Documents:</strong> PDF, DOCX, TXT, Markdown, HTML</li>
+          <li><strong>Diagrams:</strong> draw.io to PNG, SVG, PDF</li>
+        </ul>
+        <h2>Quickstart</h2>
+        <p>Deploy in seconds: <code>wget "https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/docker-compose.yml" && docker compose up -d</code></p>
+        <p><a href="https://github.com/transmute-app/transmute">View on GitHub</a></p>
+      </div>
+    </noscript>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

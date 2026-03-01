@@ -4,6 +4,7 @@ import fm from 'front-matter'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
+import { useSEO } from '../hooks/useSEO'
 
 function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false)
@@ -68,6 +69,12 @@ export default function Docs() {
   const [loading, setLoading] = useState(true)
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
+  useSEO({
+    title: activeMeta?.title ? `${activeMeta.title} — Docs` : 'Documentation',
+    description: activeMeta?.description ?? 'Transmute documentation — learn how to install, configure, and use the self-hosted file converter.',
+    path: slug ? `/docs/${slug}` : '/docs',
+  })
+
   // Load manifest + all frontmatter once
   useEffect(() => {
     const base = import.meta.env.BASE_URL
@@ -124,7 +131,7 @@ export default function Docs() {
       {/* Mobile sidebar toggle */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="lg:hidden fixed bottom-6 right-6 z-50 bg-primary text-white p-3 rounded-full shadow-lg"
+        className="lg:hidden fixed bottom-6 right-6 z-50 bg-primary text-white p-3 rounded-full shadow-lg shadow-primary/25"
         aria-label="Toggle sidebar"
       >
         <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -136,7 +143,7 @@ export default function Docs() {
       <aside
         className={`
           fixed lg:sticky top-16 left-0 z-40 h-[calc(100vh-4rem)] w-64 shrink-0
-          bg-surface-dark lg:bg-transparent border-r border-gray-800 lg:border-r-0
+          bg-surface-dark/95 backdrop-blur-xl lg:bg-transparent border-r border-gray-800/60 lg:border-r-0
           overflow-y-auto transition-transform lg:translate-x-0
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
@@ -151,11 +158,11 @@ export default function Docs() {
               to={`/docs/${entry.slug}`}
               onClick={() => setSidebarOpen(false)}
               className={`
-                block px-3 py-2 rounded-md text-sm font-medium transition-colors
+                block px-3 py-2 rounded-lg text-sm font-medium transition-colors
                 ${
                   slug === entry.slug
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-text-muted hover:text-white hover:bg-surface-light'
+                    ? 'bg-primary/10 text-primary border-l-2 border-primary'
+                    : 'text-text-muted hover:text-white hover:bg-surface-light/50'
                 }
               `}
             >
@@ -168,7 +175,7 @@ export default function Docs() {
       {/* Backdrop */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-30 bg-black/50 lg:hidden"
+          className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -182,11 +189,11 @@ export default function Docs() {
         ) : content ? (
           <>
             {activeMeta?.description && (
-              <p className="text-text-muted text-lg mb-8 border-l-4 border-primary pl-4">
+              <p className="text-text-muted text-lg mb-8 border-l-4 border-primary pl-4 bg-primary/5 py-3 pr-4 rounded-r-lg">
                 {activeMeta.description}
               </p>
             )}
-            <div className="prose prose-invert prose-headings:text-white prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-code:text-primary-light prose-pre:bg-[#1e293b] prose-pre:border prose-pre:border-gray-700 prose-blockquote:border-primary prose-th:text-left prose-img:rounded-lg max-w-none">
+            <div className="prose prose-invert prose-headings:text-white prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-code:text-primary-light prose-pre:bg-[#1e293b] prose-pre:border prose-pre:border-gray-700/50 prose-pre:rounded-xl prose-blockquote:border-primary prose-th:text-left prose-img:rounded-xl max-w-none">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[[rehypeHighlight, { detect: false, ignoreMissing: true }]]}
