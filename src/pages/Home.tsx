@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
 import yaml from 'react-syntax-highlighter/dist/esm/languages/hljs/yaml'
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
-import { FaRegImage, FaFilm, FaMusic, FaHeadphones, FaTable, FaPenRuler, FaLock, FaBolt, FaInfinity } from 'react-icons/fa6'
+import { FaRegImage, FaFilm, FaMusic, FaHeadphones, FaTable, FaPenRuler, FaLock, FaBolt, FaInfinity, FaFile } from 'react-icons/fa6'
 import type { IconType } from 'react-icons'
 
 SyntaxHighlighter.registerLanguage('yaml', yaml)
@@ -19,7 +19,7 @@ const conversions: { category: string; formats: string[]; icon: IconType }[] = [
     icon: FaFilm,
   },
   {
-    category: 'Video → Audio',
+    category: 'Extract Audio from Video',
     formats: ['MKV → MP3', 'MP4 → AAC', 'MOV → WAV'],
     icon: FaMusic,
   },
@@ -38,6 +38,16 @@ const conversions: { category: string; formats: string[]; icon: IconType }[] = [
     formats: ['draw.io → PNG', 'draw.io → SVG', 'draw.io → PDF'],
     icon: FaPenRuler,
   },
+  {
+    category: 'Documents',
+    formats: ['PDF → HTML', 'DOCX → TXT', 'MD → PDF'],
+    icon: FaFile,
+  },
+  {
+    category: 'Cad (Coming Soon)',
+    formats: ['DWG → DXF', 'STL → OBJ', 'STEP → IGES'],
+    icon: FaFile,
+  }
 ]
 
 export default function Home() {
