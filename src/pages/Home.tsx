@@ -45,6 +45,7 @@ const competitors = [
   { name: 'freeconvert.com', sizeLimit: true, paidApi: true, thirdParty: true },
   { name: 'convertio.co', sizeLimit: true, paidApi: true, thirdParty: true },
   { name: 'vert.sh', sizeLimit: false, paidApi: true, thirdParty: false },
+  { name: 'convertx.org', sizeLimit: false, paidApi: true, thirdParty: false },
   { name: 'Transmute', sizeLimit: false, paidApi: false, thirdParty: false },
 ]
 
