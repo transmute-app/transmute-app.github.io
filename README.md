@@ -1,73 +1,104 @@
-# React + TypeScript + Vite
+# Transmute Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The marketing and documentation website for [Transmute](https://github.com/transmute-app/transmute) — a free, open-source, self-hosted file converter.
 
-Currently, two official plugins are available:
+**Live at [transmute.sh](https://transmute.sh/)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## About Transmute
 
-## React Compiler
+Transmute lets you convert images, video, audio, data, documents, and diagrams on your own hardware — no file size limits, no watermarks, and full privacy. See the [main repository](https://github.com/transmute-app/transmute) for the application itself.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+| Layer | Technology |
+| --- | --- |
+| Framework | React 19 · TypeScript |
+| Build | Vite 7 |
+| Styling | Tailwind CSS 3 · `@tailwindcss/typography` |
+| Routing | React Router v7 |
+| Markdown | react-markdown · remark-gfm · rehype-highlight |
+| Linting | ESLint 9 · TypeScript-ESLint |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- [Node.js](https://nodejs.org/) 18+
+- npm (or any compatible package manager)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Install & Run
+
+```bash
+# Clone the repository
+git clone https://github.com/transmute-app/transmute-app.github.io.git
+cd transmute-app.github.io
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The site will be available at `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Available Scripts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the Vite dev server with HMR |
+| `npm run build` | Type-check and build for production |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run ESLint across the project |
+
+## Project Structure
+
 ```
+├── public/
+│   ├── docs/           # Markdown documentation served at /docs/*
+│   ├── icons/          # Favicons and app icons
+│   ├── 404.html        # SPA fallback for GitHub Pages
+│   ├── robots.txt
+│   └── sitemap.xml
+├── src/
+│   ├── components/     # Shared layout components (Header, Footer, Layout)
+│   ├── hooks/          # Custom hooks (useSEO)
+│   ├── pages/          # Route-level page components
+│   ├── App.tsx         # Router configuration
+│   ├── main.tsx        # Application entry point
+│   └── index.css       # Global styles & Tailwind directives
+├── index.html          # HTML shell with SEO meta tags
+├── tailwind.config.js
+├── vite.config.ts
+└── tsconfig.json
+```
+
+## Documentation
+
+Documentation lives as Markdown files in [`public/docs/`](public/docs/) and is rendered client-side via `react-markdown`. To add or edit a docs page:
+
+1. Create or modify a `.md` file in `public/docs/`.
+2. Update [`public/docs/manifest.json`](public/docs/manifest.json) to include the new page in the sidebar navigation.
+3. The page will be accessible at `https://transmute.sh/docs/<filename>`.
+
+## Deployment
+
+This site is deployed to **GitHub Pages** with a custom domain (`transmute.sh`). Pushes to the `main` branch trigger a build and deploy workflow.
+
+To build locally:
+
+```bash
+npm run build
+```
+
+The output is written to `dist/`.
+
+## Contributing
+
+Contributions are welcome! See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for guidelines.
+
+For issues with the Transmute application itself, please use the [main repository](https://github.com/transmute-app/transmute/issues).
+
+## License
+
+This project is open source under the [MIT License](https://github.com/transmute-app/transmute/blob/main/LICENSE).
