@@ -41,12 +41,12 @@ const conversions: { category: string; formats: string[]; icon: IconType; coming
 ]
 
 const competitors = [
-  { name: 'cloudconvert.com', sizeLimit: true, paidApi: true, thirdParty: true },
-  { name: 'freeconvert.com', sizeLimit: true, paidApi: true, thirdParty: true },
-  { name: 'convertio.co', sizeLimit: true, paidApi: true, thirdParty: true },
-  { name: 'vert.sh', sizeLimit: false, paidApi: true, thirdParty: false },
-  { name: 'convertx.org', sizeLimit: false, paidApi: true, thirdParty: false },
-  { name: 'Transmute', sizeLimit: false, paidApi: false, thirdParty: false },
+  { name: 'cloudconvert.com', sizeLimit: true, paidApi: true, thirdParty: true, supportedFormats: 200 },
+  { name: 'freeconvert.com', sizeLimit: true, paidApi: true, thirdParty: true, supportedFormats: 1500 },
+  { name: 'convertio.co', sizeLimit: true, paidApi: true, thirdParty: true, supportedFormats: 300 },
+  { name: 'vert.sh', sizeLimit: false, paidApi: true, thirdParty: false, supportedFormats: 250 },
+  { name: 'convertx.org', sizeLimit: false, paidApi: true, thirdParty: false, supportedFormats: 1000 },
+  { name: 'Transmute', sizeLimit: false, paidApi: false, thirdParty: false, supportedFormats: 50 },
 ]
 
 const themes = [
@@ -341,6 +341,7 @@ export default function Home() {
                   <th className="px-6 py-4 font-semibold text-text-muted text-center">No Size Limits</th>
                   <th className="px-6 py-4 font-semibold text-text-muted text-center">Free API</th>
                   <th className="px-6 py-4 font-semibold text-text-muted text-center">Private</th>
+                  <th className="px-6 py-4 font-semibold text-text-muted text-center">Supported Formats</th>
                 </tr>
               </thead>
               <tbody>
@@ -370,6 +371,9 @@ export default function Home() {
                         {!c.thirdParty
                           ? <FaCheck className="inline h-4 w-4 text-green-400" />
                           : <FaXmark className="inline h-4 w-4 text-red-400/60" />}
+                      </td>
+                      <td className={`px-6 py-4 text-center font-medium ${isTransmute ? 'text-primary' : 'text-text-muted'}`}>
+                        {c.supportedFormats}+
                       </td>
                     </tr>
                   )
