@@ -66,7 +66,8 @@ export default function Docs() {
   const [entries, setEntries] = useState<DocEntry[]>([])
   const [content, setContent] = useState<string>('')
   const [activeMeta, setActiveMeta] = useState<DocMeta | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [loadedSlug, setLoadedSlug] = useState<string | null>(null)
+  const loading = slug !== loadedSlug
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useSEO({
@@ -106,7 +107,6 @@ export default function Docs() {
   // Load selected doc content
   useEffect(() => {
     if (!slug) return
-    setLoading(true)
     const base = import.meta.env.BASE_URL
     fetch(`${base}docs/${slug}.md`)
       .then((r) => {
@@ -117,12 +117,12 @@ export default function Docs() {
         const { attributes, body } = fm<DocMeta>(text)
         setActiveMeta(attributes)
         setContent(body)
-        setLoading(false)
+        setLoadedSlug(slug)
       })
       .catch(() => {
         setContent('')
         setActiveMeta(null)
-        setLoading(false)
+        setLoadedSlug(slug)
       })
   }, [slug])
 
