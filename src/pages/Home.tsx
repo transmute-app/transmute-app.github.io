@@ -41,10 +41,11 @@ const conversions: { category: string; formats: string[]; icon: IconType; coming
 ]
 
 const competitors = [
-  { name: 'cloudconvert.com', sizeLimit: true, paid: true, thirdParty: true },
-  { name: 'freeconvert.com', sizeLimit: true, paid: false, thirdParty: true },
-  { name: 'convertio.co', sizeLimit: true, paid: false, thirdParty: true },
-  { name: 'Transmute', sizeLimit: false, paid: false, thirdParty: false },
+  { name: 'cloudconvert.com', sizeLimit: true, paidApi: true, thirdParty: true },
+  { name: 'freeconvert.com', sizeLimit: true, paidApi: true, thirdParty: true },
+  { name: 'convertio.co', sizeLimit: true, paidApi: true, thirdParty: true },
+  { name: 'vert.sh', sizeLimit: true, paidApi: true, thirdParty: false },
+  { name: 'Transmute', sizeLimit: false, paidApi: false, thirdParty: false },
 ]
 
 const themes = [
@@ -337,7 +338,7 @@ export default function Home() {
                 <tr className="border-b border-gray-700/50">
                   <th className="text-left px-6 py-4 font-semibold text-text-muted">Service</th>
                   <th className="px-6 py-4 font-semibold text-text-muted text-center">No Size Limits</th>
-                  <th className="px-6 py-4 font-semibold text-text-muted text-center">Free</th>
+                  <th className="px-6 py-4 font-semibold text-text-muted text-center">Free API</th>
                   <th className="px-6 py-4 font-semibold text-text-muted text-center">Private</th>
                 </tr>
               </thead>
@@ -360,7 +361,7 @@ export default function Home() {
                           : <FaXmark className="inline h-4 w-4 text-red-400/60" />}
                       </td>
                       <td className="px-6 py-4 text-center">
-                        {!c.paid
+                        {!c.paidApi
                           ? <FaCheck className="inline h-4 w-4 text-green-400" />
                           : <FaXmark className="inline h-4 w-4 text-red-400/60" />}
                       </td>
