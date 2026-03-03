@@ -46,7 +46,7 @@ const competitors = [
   { name: 'convertio.co', sizeLimit: true, paidApi: true, thirdParty: true, supportedFormats: 300 },
   { name: 'vert.sh', sizeLimit: false, paidApi: true, thirdParty: false, supportedFormats: 250 },
   { name: 'convertx.org', sizeLimit: false, paidApi: true, thirdParty: false, supportedFormats: 1000 },
-  { name: 'Transmute', sizeLimit: false, paidApi: false, thirdParty: false, supportedFormats: 50 },
+  { name: 'Transmute', sizeLimit: false, paidApi: false, thirdParty: false, supportedFormats: 75 },
 ]
 
 const themes = [
