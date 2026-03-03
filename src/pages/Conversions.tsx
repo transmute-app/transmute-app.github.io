@@ -53,7 +53,7 @@ const SUBTITLE_FORMATS = new Set<string>([
   'srt', 'vtt', 'ass', 'ssa', 'sub',
 ])
 
-function getCategory(fmt: string): string {
+function getCategory(fmt: string, outputs?: string[]): string {
   const f = fmt.toLowerCase()
   if (DIAGRAM_FORMATS.has(f)) return 'Diagrams'
   // gif is ambiguous; treat it as Image when it appears as input to image converters
@@ -69,6 +69,19 @@ function getCategory(fmt: string): string {
   if (ARCHIVE_FORMATS.has(f)) return 'Archive'
   if (FONT_FORMATS.has(f)) return 'Font'
   if (SUBTITLE_FORMATS.has(f)) return 'Subtitle'
+
+  // Unknown input format — infer from output formats (most common non-Other category wins)
+  if (outputs && outputs.length > 0) {
+    const counts = new Map<string, number>()
+    for (const o of outputs) {
+      const cat = getCategory(o)
+      if (cat !== 'Other') counts.set(cat, (counts.get(cat) ?? 0) + 1)
+    }
+    if (counts.size > 0) {
+      return Array.from(counts.entries()).sort((a, b) => b[1] - a[1])[0][0]
+    }
+  }
+
   return 'Other'
 }
 
@@ -139,11 +152,10 @@ export default function Conversions() {
   // Flat list enriched with category, sorted by category order then alphabetically
   const entries = useMemo(() => {
     return Array.from(grouped.entries())
-      .map(([input, outputSet]) => ({
-        input,
-        outputs: Array.from(outputSet).sort(),
-        category: getCategory(input),
-      }))
+      .map(([input, outputSet]) => {
+        const outputs = Array.from(outputSet).sort()
+        return { input, outputs, category: getCategory(input, outputs) }
+      })
       .sort((a, b) => {
         const ci =
           CATEGORY_ORDER.indexOf(a.category) - CATEGORY_ORDER.indexOf(b.category)
