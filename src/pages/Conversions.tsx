@@ -109,6 +109,21 @@ const CATEGORY_STYLES: Record<string, { badge: string; dot: string }> = {
   Other:     { badge: 'text-gray-400 bg-gray-400/10 border-gray-400/20',      dot: 'bg-gray-400' },
 }
 
+function Highlight({ text, query }: { text: string; query: string }) {
+  if (!query) return <>{text}</>
+  const idx = text.toLowerCase().indexOf(query.toLowerCase())
+  if (idx === -1) return <>{text}</>
+  return (
+    <>
+      {text.slice(0, idx)}
+      <mark className="bg-primary/30 text-white rounded-sm px-0.5">
+        {text.slice(idx, idx + query.length)}
+      </mark>
+      {text.slice(idx + query.length)}
+    </>
+  )
+}
+
 export default function Conversions() {
   useSEO({
     title: 'Supported Conversions | Transmute',
@@ -170,10 +185,17 @@ export default function Conversions() {
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase().trim()
-    return entries.filter((e) => {
+    const results = entries.filter((e) => {
       if (activeCategory && e.category !== activeCategory) return false
       if (!q) return true
       return e.input.includes(q) || e.outputs.some((o) => o.includes(q))
+    })
+    if (!q) return results
+    return results.sort((a, b) => {
+      const aMatch = a.input.includes(q)
+      const bMatch = b.input.includes(q)
+      if (aMatch !== bMatch) return aMatch ? -1 : 1
+      return 0
     })
   }, [entries, search, activeCategory])
 
@@ -275,6 +297,7 @@ export default function Conversions() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filtered.map(({ input, outputs, category }) => {
                 const style = CATEGORY_STYLES[category] ?? CATEGORY_STYLES.Other
+                const q = search.toLowerCase().trim()
                 return (
                   <div
                     key={input}
@@ -283,7 +306,7 @@ export default function Conversions() {
                     {/* Card header */}
                     <div className="flex items-center justify-between mb-4">
                       <span className="font-mono font-bold text-white text-base uppercase tracking-wide">
-                        .{input}
+                        .<Highlight text={input} query={q} />
                       </span>
                       <span
                         className={`text-xs font-medium px-2 py-0.5 rounded-full border ${style.badge}`}
@@ -301,7 +324,7 @@ export default function Conversions() {
                             key={o}
                             className="font-mono text-xs bg-surface-dark/70 border border-gray-700/40 text-text-muted px-2 py-0.5 rounded-md hover:text-white hover:border-gray-600 transition-colors"
                           >
-                            {o}
+                            <Highlight text={o} query={q} />
                           </span>
                         ))}
                       </div>
