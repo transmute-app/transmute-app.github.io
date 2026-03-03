@@ -18,7 +18,7 @@ export default function Header() {
             alt="Transmute logo"
             className="h-8 w-8"
           />
-          <span className="text-2xl font-bold text-primary">
+          <span className="hidden sm:inline text-2xl font-bold text-primary">
             Transmute
           </span>
         </Link>
@@ -37,7 +37,7 @@ export default function Header() {
                 }`}
               >
                 <Icon className="h-3.5 w-3.5" />
-                {label}
+                <span className="hidden sm:inline">{label}</span>
               </Link>
             )
           })}
