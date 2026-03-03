@@ -211,11 +211,13 @@ export default function Home() {
             Supported Conversions
           </h2>
           <p className="text-text-muted max-w-xl mx-auto mb-6">
-            Powered by FFmpeg, Pillow, pandas, draw.io, PyMuPDF, and Pandoc; covering images, video, audio, documents, data, and more.
+            Powered by FFmpeg, Pillow, Pandoc, and more, Transmute converts images, video, documents, fonts, and many other formats.
           </p>
 
           <div className="flex flex-wrap justify-center gap-2 mb-10">
-            {['Image', 'Video', 'Audio', 'Document', 'Data', 'Diagrams'].map((cat) => (
+            {[
+              'Image', 'Video', 'Audio', 'Document', 'Data', 'Diagrams', 'Fonts', 'Subtitles'
+            ].map((cat) => (
               <span
                 key={cat}
                 className="px-3 py-1.5 rounded-lg text-sm font-medium bg-surface-light/50 border border-gray-700/50 text-text-muted"
