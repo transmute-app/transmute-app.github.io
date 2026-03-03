@@ -475,7 +475,7 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a
-              href="https://github.com/transmute-app/openapi-specifications"
+              href="https://github.com/transmute-app/openapi-specifications/blob/main/openapi.json"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-gray-700 text-text-muted font-semibold hover:text-white hover:border-gray-500 transition-all hover:-translate-y-0.5"
