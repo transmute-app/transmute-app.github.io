@@ -1,26 +1,20 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
 import yaml from 'react-syntax-highlighter/dist/esm/languages/hljs/yaml'
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import {
-  FaRegImage,
-  FaFilm,
-  FaMusic,
-  FaHeadphones,
-  FaTable,
-  FaPenRuler,
   FaLock,
   FaBolt,
   FaInfinity,
-  FaFile,
   FaDocker,
   FaGithub,
   FaPalette,
   FaArrowRight,
+  FaRightLeft,
   FaCheck,
   FaXmark,
 } from 'react-icons/fa6'
-import type { IconType } from 'react-icons'
 import { useSEO } from '../hooks/useSEO'
 
 SyntaxHighlighter.registerLanguage('yaml', yaml)
@@ -28,17 +22,6 @@ SyntaxHighlighter.registerLanguage('yaml', yaml)
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
 /* ------------------------------------------------------------------ */
-
-const conversions: { category: string; formats: string[]; icon: IconType; coming?: boolean }[] = [
-  { category: 'Image', formats: ['PNG → JPG', 'JPG → WebP', 'SVG → PNG', 'BMP → PNG'], icon: FaRegImage },
-  { category: 'Video', formats: ['MKV → MP4', 'MOV → MKV', 'AVI → MP4', 'WebM → MP4'], icon: FaFilm },
-  { category: 'Extract Audio', formats: ['MKV → MP3', 'MP4 → AAC', 'MOV → WAV'], icon: FaMusic },
-  { category: 'Audio', formats: ['MP3 → WAV', 'FLAC → AAC', 'OGG → MP3'], icon: FaHeadphones },
-  { category: 'Data', formats: ['CSV → JSON', 'JSON → YAML', 'YAML → CSV'], icon: FaTable },
-  { category: 'Diagrams', formats: ['draw.io → PNG', 'draw.io → SVG', 'draw.io → PDF'], icon: FaPenRuler },
-  { category: 'Documents', formats: ['PDF → HTML', 'DOCX → TXT', 'MD → PDF'], icon: FaFile },
-  { category: 'CAD (Coming Soon)', formats: ['DWG → DXF', 'STL → OBJ', 'STEP → IGES'], icon: FaFile, coming: true },
-]
 
 const competitors = [
   { name: 'cloudconvert.com', sizeLimit: true, paidApi: true, thirdParty: true },
@@ -113,7 +96,7 @@ export default function Home() {
             <div className="relative">
               <img
                 src={`${import.meta.env.BASE_URL}icons/beaker-red-bg.png`}
-                alt="Transmute — self-hosted file converter logo"
+                alt="Transmute: self-hosted file converter logo"
                 className="h-24 w-24 sm:h-28 sm:w-28 drop-shadow-2xl"
               />
               <div className="absolute -inset-4 bg-primary/10 rounded-full blur-2xl animate-pulse-slow" />
@@ -131,7 +114,7 @@ export default function Home() {
 
           <p className="text-lg sm:text-xl text-text-muted max-w-3xl mx-auto mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
             Transmute is an open-source, self-hosted file converter that handles images,
-            video, audio, data, documents, and more — all on your own hardware.
+            video, audio, data, documents, and more; all on your own hardware.
             <span className="block mt-2 text-text-muted/80">No uploads to third-party servers. No file size limits. No watermarks.</span>
           </p>
 
@@ -220,48 +203,35 @@ export default function Home() {
       {/* ────────────── Supported Conversions ────────────── */}
       <section className="py-20 sm:py-28 bg-surface-dark bg-grid relative">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-surface-dark/50 to-transparent pointer-events-none" />
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary mb-4 tracking-wide uppercase">
-              Format Support
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-3">
-              Supported Conversions
-            </h2>
-            <p className="text-text-muted max-w-xl mx-auto">
-              Powered by FFmpeg, Pillow, pandas, draw.io, PyMuPDF, and Pandoc, with more converters added regularly.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {conversions.map((item) => {
-              const Icon = item.icon
-              return (
-                <div
-                  key={item.category}
-                  className={`card-hover rounded-2xl p-6 border bg-surface-light/40 backdrop-blur-sm text-center flex flex-col items-center ${
-                    item.coming ? 'border-gray-700/50 opacity-60' : 'border-gray-700/50'
-                  }`}
-                >
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary mb-4">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <h3 className="font-semibold text-lg mb-3">{item.category}</h3>
-                  <ul className="space-y-1.5">
-                    {item.formats.map((line) => (
-                      <li key={line} className="text-sm text-text-muted font-mono whitespace-nowrap">
-                        {line}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )
-            })}
-          </div>
-
-          <p className="text-center text-sm text-text-muted mt-8">
-            …and many more combinations.
+        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary mb-4 tracking-wide uppercase">
+            Format Support
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+            Supported Conversions
+          </h2>
+          <p className="text-text-muted max-w-xl mx-auto mb-6">
+            Powered by FFmpeg, Pillow, pandas, draw.io, PyMuPDF, and Pandoc; covering images, video, audio, documents, data, and more.
           </p>
+
+          <div className="flex flex-wrap justify-center gap-2 mb-10">
+            {['Image', 'Video', 'Audio', 'Document', 'Data', 'Diagrams'].map((cat) => (
+              <span
+                key={cat}
+                className="px-3 py-1.5 rounded-lg text-sm font-medium bg-surface-light/50 border border-gray-700/50 text-text-muted"
+              >
+                {cat}
+              </span>
+            ))}
+          </div>
+
+          <Link
+            to="/conversions"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-semibold hover:bg-primary-dark transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5"
+          >
+            <FaRightLeft className="h-4 w-4" />
+            Browse All Conversions
+          </Link>
         </div>
       </section>
 
@@ -329,7 +299,7 @@ export default function Home() {
               What Does Transmute Replace?
             </h2>
             <p className="text-text-muted max-w-xl mx-auto">
-              These are great services — but a self-hosted file converter means you never have to upload private files to convert them.
+              These are great services, but a self-hosted file converter means you never have to upload private files to convert them.
             </p>
           </div>
 
