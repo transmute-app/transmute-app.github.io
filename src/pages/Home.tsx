@@ -469,7 +469,7 @@ export default function Home() {
           </h2>
           <p className="text-text-muted max-w-lg mx-auto mb-8 leading-relaxed">
             Every conversion available through the UI is also available via a REST API.
-            Interactive Swagger docs are served at{' '}
+            ReDocly formatted docs are served at{' '}
             <code className="text-primary-light bg-surface-light px-1.5 py-0.5 rounded text-xs">/api/docs</code>{' '}
             when the app is running.
           </p>
