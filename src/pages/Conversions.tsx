@@ -188,8 +188,7 @@ export default function Conversions() {
           Supported Conversions
         </h1>
         <p className="text-text-muted text-lg max-w-2xl mx-auto">
-          Every file format conversion Transmute can perform, loaded live from the
-          source of truth.
+          Every file format conversion Transmute can perform.
         </p>
         {!loading && !error && (
           <p className="mt-3 text-sm text-text-muted">
