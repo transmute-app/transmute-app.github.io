@@ -1,10 +1,11 @@
 import { Link, useLocation } from 'react-router-dom'
-import { FaGithub, FaBook } from 'react-icons/fa6'
+import { FaGithub, FaBook, FaRightLeft } from 'react-icons/fa6'
 
 export default function Header() {
   const { pathname } = useLocation()
 
   const navItems = [
+    { to: '/conversions', label: 'Conversions', icon: FaRightLeft },
     { to: '/docs', label: 'Docs', icon: FaBook },
   ]
 
