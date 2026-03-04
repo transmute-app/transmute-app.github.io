@@ -251,7 +251,7 @@ export default function Conversions() {
                 placeholder="Search formats — e.g. mp4, png, docx…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 bg-surface-light rounded-xl border border-gray-700/50 text-white placeholder-text-muted focus:outline-none focus:border-primary/50 transition-colors text-sm"
+                className="w-full pl-10 pr-4 py-2.5 bg-surface-light rounded-xl border border-gray-700/50 text-white placeholder-text-muted focus:outline-none focus:border-primary/50 transition-colors text-base sm:text-sm"
               />
             </div>
 
