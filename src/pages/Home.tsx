@@ -48,6 +48,10 @@ const screenshots = [
     url: 'https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/converter.png',
   },
   {
+    label: 'Post-Conversion',
+    url: 'https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/post-conversion.png',
+  },
+  {
     label: 'Files',
     url: 'https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/files.png',
   },
