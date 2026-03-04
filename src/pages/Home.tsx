@@ -172,12 +172,12 @@ export default function Home() {
           </div>
 
           {/* Tab buttons */}
-          <div className="flex justify-center gap-2 mb-8">
+          <div className="flex justify-start sm:justify-center gap-2 mb-8 overflow-x-auto pb-2 scrollbar-hide">
             {screenshots.map((s, i) => (
               <button
                 key={s.label}
                 onClick={() => setActiveScreenshot(i)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                className={`whitespace-nowrap px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   i === activeScreenshot
                     ? 'bg-primary/15 text-primary border border-primary/30'
                     : 'text-text-muted hover:text-white border border-transparent hover:border-gray-700'
