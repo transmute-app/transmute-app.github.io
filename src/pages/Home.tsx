@@ -127,15 +127,13 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <a
-              href="https://github.com/transmute-app/transmute#quickstart"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/docs/getting-started"
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-primary text-white font-semibold hover:bg-primary-dark transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5"
             >
               Get Started
               <FaArrowRight className="h-4 w-4" />
-            </a>
+            </Link>
             <a
               href="https://github.com/transmute-app/transmute"
               target="_blank"
