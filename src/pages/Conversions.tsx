@@ -26,7 +26,10 @@ const AUDIO_FORMATS = new Set([
 const DOCUMENT_FORMATS = new Set([
   'pdf', 'docx', 'odt', 'epub', 'md', 'txt', 'html', 'rst', 'tex', 'org',
   'rtf', 'latex', 'textile', 'dbk', 'mediawiki', 'ipynb', 'muse', 'opml',
-  'jira', 'pptx', 'asciidoc', 'fb2',
+  'jira', 'asciidoc', 'fb2',
+])
+const PRESENTATION_FORMATS = new Set<string>([
+  'pptx', 'ppt', 'odp', 'key', 'pps', 'ppsx', 'pot', 'potx',
 ])
 const DATA_FORMATS = new Set([
   'csv', 'json', 'xlsx', 'yaml', 'parquet',
@@ -64,6 +67,7 @@ function getCategory(fmt: string, outputs?: string[]): string {
   if (AUDIOBOOK_FORMATS.has(f)) return 'Audiobook'
   if (DOCUMENT_FORMATS.has(f)) return 'Document'
   if (DATA_FORMATS.has(f)) return 'Data'
+  if (PRESENTATION_FORMATS.has(f)) return 'Presentation'
   if (CAD_FORMATS.has(f)) return 'CAD'
   if (MODEL_3D_FORMATS.has(f)) return '3D Model'
   if (ARCHIVE_FORMATS.has(f)) return 'Archive'
@@ -88,7 +92,7 @@ function getCategory(fmt: string, outputs?: string[]): string {
 // Categories are shown in this order; empty ones are automatically hidden by presentCategories.
 const CATEGORY_ORDER = [
   'Image', 'Video', 'Audio', 'Audiobook',
-  'Document', 'Data', 'Diagrams',
+  'Document', 'Presentation', 'Data', 'Diagrams',
   'CAD', '3D Model', 'Archive', 'Font', 'Subtitle',
   'Other',
 ]
@@ -99,8 +103,9 @@ const CATEGORY_STYLES: Record<string, { badge: string; dot: string }> = {
   Audio:     { badge: 'text-green-400 bg-green-400/10 border-green-400/20',   dot: 'bg-green-400' },
   Audiobook: { badge: 'text-lime-400 bg-lime-400/10 border-lime-400/20',      dot: 'bg-lime-400' },
   Document:  { badge: 'text-amber-400 bg-amber-400/10 border-amber-400/20',   dot: 'bg-amber-400' },
-  Data:      { badge: 'text-cyan-400 bg-cyan-400/10 border-cyan-400/20',      dot: 'bg-cyan-400' },
-  Diagrams:  { badge: 'text-primary bg-primary/10 border-primary/20',         dot: 'bg-primary' },
+  Data:         { badge: 'text-cyan-400 bg-cyan-400/10 border-cyan-400/20',      dot: 'bg-cyan-400' },
+  Presentation: { badge: 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20', dot: 'bg-yellow-400' },
+  Diagrams:     { badge: 'text-primary bg-primary/10 border-primary/20',         dot: 'bg-primary' },
   CAD:       { badge: 'text-orange-400 bg-orange-400/10 border-orange-400/20', dot: 'bg-orange-400' },
   '3D Model':{ badge: 'text-rose-400 bg-rose-400/10 border-rose-400/20',      dot: 'bg-rose-400' },
   Archive:   { badge: 'text-indigo-400 bg-indigo-400/10 border-indigo-400/20', dot: 'bg-indigo-400' },
