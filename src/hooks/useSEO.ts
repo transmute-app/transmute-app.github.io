@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { formatPageTitle, SITE_URL } from '../seo.ts'
 
 interface SEOProps {
   title: string
@@ -6,17 +7,16 @@ interface SEOProps {
   path?: string
 }
 
-const BASE_TITLE = 'Transmute'
-const SITE_URL = 'https://transmute.sh'
-
 /**
  * Updates document title, meta description, canonical, and OG tags on route change.
  * Falls back to the static values in index.html when the component unmounts.
  */
 export function useSEO({ title, description, path }: SEOProps) {
   useEffect(() => {
+    const fullTitle = formatPageTitle(title)
+
     // Title
-    document.title = `${title} — ${BASE_TITLE}`
+    document.title = fullTitle
 
     // Meta description
     if (description) {
@@ -37,9 +37,9 @@ export function useSEO({ title, description, path }: SEOProps) {
 
     // OG title
     const ogTitle = document.querySelector('meta[property="og:title"]') as HTMLMetaElement | null
-    if (ogTitle) ogTitle.content = `${title} — ${BASE_TITLE}`
+    if (ogTitle) ogTitle.content = fullTitle
     const twTitle = document.querySelector('meta[name="twitter:title"]') as HTMLMetaElement | null
-    if (twTitle) twTitle.content = `${title} — ${BASE_TITLE}`
+    if (twTitle) twTitle.content = fullTitle
 
     // Canonical + OG URL
     if (path !== undefined) {

@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
 import { useSEO } from '../hooks/useSEO'
+import { DOCS_METADATA } from '../seo.ts'
 
 function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false)
@@ -72,7 +73,7 @@ export default function Docs() {
 
   useSEO({
     title: activeMeta?.title ? `${activeMeta.title} — Docs` : 'Documentation',
-    description: activeMeta?.description ?? 'Transmute documentation — learn how to install, configure, and use the self-hosted file converter.',
+    description: activeMeta?.description ?? DOCS_METADATA.description,
     path: slug ? `/docs/${slug}` : '/docs',
   })
 

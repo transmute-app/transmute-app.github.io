@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react'
 import { FaArrowRight, FaMagnifyingGlass, FaCircleNotch } from 'react-icons/fa6'
 import { useSEO } from '../hooks/useSEO'
+import { CONVERSIONS_METADATA } from '../seo.ts'
 
 const CONVERSIONS_URL =
   'https://raw.githubusercontent.com/transmute-app/conversion-compatibility/refs/heads/main/supported_conversions.json'
@@ -131,10 +132,9 @@ function Highlight({ text, query }: { text: string; query: string }) {
 
 export default function Conversions() {
   useSEO({
-    title: 'Supported Conversions | Transmute',
-    description:
-      'Browse every file format conversion supported by Transmute — images, video, audio, documents, data, and diagrams.',
-    path: '/conversions',
+    title: CONVERSIONS_METADATA.title,
+    description: CONVERSIONS_METADATA.description,
+    path: CONVERSIONS_METADATA.path,
   })
 
   const [conversions, setConversions] = useState<Conversion[]>([])

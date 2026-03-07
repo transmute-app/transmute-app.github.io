@@ -17,6 +17,7 @@ import {
   FaXmark,
 } from 'react-icons/fa6'
 import { useSEO } from '../hooks/useSEO'
+import { HOME_METADATA } from '../seo.ts'
 
 SyntaxHighlighter.registerLanguage('yaml', yaml)
 
@@ -73,9 +74,9 @@ export default function Home() {
   const [activeScreenshot, setActiveScreenshot] = useState(0)
 
   useSEO({
-    title: 'Self-Hosted File Converter for Images, Video, Audio & More',
-    description: 'Transmute is a free, open-source, self-hosted file converter. Convert images, video, audio, data, and documents on your own hardware with no file size limits, no watermarks, and full privacy.',
-    path: '/',
+    title: HOME_METADATA.title,
+    description: HOME_METADATA.description,
+    path: HOME_METADATA.path,
   })
 
   const handleCopy = () => {
