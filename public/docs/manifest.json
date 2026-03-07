@@ -3,5 +3,6 @@
   "authentication.md",
   "themes.md",
   "api-reference.md",
-  "settings-reference.md"
+  "settings-reference.md",
+  "environment-variables.md"
 ]
