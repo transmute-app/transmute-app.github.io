@@ -12,6 +12,7 @@ import {
   FaPalette,
   FaArrowRight,
   FaRightLeft,
+  FaTriangleExclamation,
   FaCheck,
   FaXmark,
 } from 'react-icons/fa6'
@@ -413,6 +414,22 @@ export default function Home() {
             <p className="text-text-muted max-w-md mx-auto">
               Deploy in seconds with Docker Compose. One command, fully running.
             </p>
+          </div>
+
+          <div className="mb-6 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-5 py-4 text-left">
+            <div className="flex items-start gap-3">
+              <FaTriangleExclamation className="mt-0.5 h-5 w-5 shrink-0 text-amber-300" />
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wide text-amber-200">Warning</p>
+                <p className="mt-1 text-sm leading-relaxed text-amber-50/90">
+                  Bind Transmute only to networks you trust. Do not port-forward it to the internet,
+                  expose it directly through your router, or publish it on a public VPS without
+                  adding your own protective layer in front of it. There is currently no
+                  authentication or rate-limiting, and it allows uncontrolled file uploads. These
+                  features are in progress, but they need to be implemented properly.
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* One-liner */}

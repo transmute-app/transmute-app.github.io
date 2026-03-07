@@ -14,6 +14,8 @@ Transmute is a self-hosted file converter. Follow the steps below to get up and 
 
 ## Quick Start
 
+> **Warning:** Bind Transmute only to networks you trust. Do not port-forward it to the internet, expose it directly through your router, or publish it on a public VPS without adding your own protective layer in front of it. There is currently no authentication or rate-limiting, and it allows uncontrolled file uploads. These features are in progress, but they need to be implemented properly.
+
 Download the compose file and and start the stack with a single command:
 
 ```bash
