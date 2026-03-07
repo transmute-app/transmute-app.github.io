@@ -1,7 +1,7 @@
 ---
 title: Settings Reference
 description: A complete reference for every option on the Transmute Settings page.
-order: 5
+order: 4
 ---
 
 # Settings Reference

@@ -1,12 +1,12 @@
 ---
 title: API Reference
 description: Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.
-order: 4
+order: 5
 ---
 
 # API Reference
 
-Transmute exposes a REST API so you can automate file conversions without the web UI. No authentication is required.
+Transmute exposes a REST API so you can automate file conversions without the web UI. All endpoints (except health checks and bootstrap status) require a valid Bearer token — see [Authentication & Users](/docs/authentication) for details on obtaining one.
 
 > **Interactive docs** — Every Transmute instance serves auto-generated ReDoc documentation at [`/api/docs`](http://localhost:3313/api/docs). The full OpenAPI specification is also available on [GitHub](https://github.com/transmute-app/openapi-specifications/blob/main/openapi.json).
 
