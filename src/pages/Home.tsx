@@ -42,6 +42,7 @@ const themes = [
   { name: 'Viriditas', type: 'Dark' },
   { name: 'Caelum', type: 'Light' },
   { name: 'Nigredo', type: 'Dark' },
+  { name: 'Argentum', type: 'Light' },
 ]
 
 const screenshots = [
@@ -423,11 +424,10 @@ export default function Home() {
               <div>
                 <p className="text-sm font-semibold uppercase tracking-wide text-amber-200">Warning</p>
                 <p className="mt-1 text-sm leading-relaxed text-amber-50/90">
-                  Bind Transmute only to networks you trust. Do not port-forward it to the internet,
-                  expose it directly through your router, or publish it on a public VPS without
-                  adding your own protective layer in front of it. There is currently no
-                  authentication or rate-limiting, and it allows uncontrolled file uploads. These
-                  features are in progress, but they need to be implemented properly.
+                  Think carefully before exposing Transmute to the public internet / WAN. Transmute includes 
+                  built-in authentication and per-user data isolation, but is designed for trusted networks. 
+                  If you expose it beyond your LAN, place it behind a reverse proxy with TLS and rate limiting. 
+                  The maintainers are not responsible for security issues arising from your deployment configuration.
                 </p>
               </div>
             </div>
