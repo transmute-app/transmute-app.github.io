@@ -1,0 +1,27 @@
+# Transmute
+
+> Transmute is a free, open-source, self-hosted file converter. Convert images, video, audio, data, documents, and more on your own hardware with Docker. No file size limits, no watermarks, no third-party uploads — full privacy.
+
+Transmute is a self-hosted alternative to cloud-based file converters like CloudConvert, FreeConvert, and Convertio. It runs entirely on your own hardware via Docker, keeping all files private. It supports converting between hundreds of formats across images (PNG, JPG, WebP, SVG, BMP, HEIC), video (MKV, MP4, MOV, AVI, WebM), audio (MP3, WAV, FLAC, AAC, OGG), documents (PDF, DOCX, TXT, Markdown, HTML), data (CSV, JSON, YAML, Parquet), diagrams (draw.io), fonts, subtitles, and more. It has a clean web UI, a full REST API, built-in authentication with per-user data isolation, and seven built-in themes.
+
+- License: MIT
+- Source Code: https://github.com/transmute-app/transmute
+- Docker Image: ghcr.io/transmute-app/transmute:main
+
+## Documentation
+
+- [Getting Started](https://transmute.sh/docs/getting-started/): How to install and run Transmute for the first time.
+- [Authentication & Users](https://transmute.sh/docs/authentication/): How Transmute handles accounts, roles, API keys, and authentication.
+- [Themes](https://transmute.sh/docs/themes/): Browse all available Transmute themes with side-by-side screenshots.
+- [Settings Reference](https://transmute.sh/docs/settings-reference/): A complete reference for every option on the Transmute Settings page.
+- [API Reference](https://transmute.sh/docs/api-reference/): Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.
+- [Environment Variables](https://transmute.sh/docs/environment-variables/): Configure Transmute's default behaviour using environment variables in your Docker Compose file.
+
+## Pages
+
+- [Home](https://transmute.sh/): Overview of the self-hosted file converter.
+- [Supported Conversions](https://transmute.sh/conversions/): Browse every file format conversion supported by Transmute.
+
+## Optional
+
+- [Full Documentation for LLMs](https://transmute.sh/llms-full.txt): Complete documentation content in a single file.

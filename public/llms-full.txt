@@ -1,0 +1,704 @@
+# Transmute
+
+> Transmute is a free, open-source, self-hosted file converter. Convert images, video, audio, data, documents, and more on your own hardware with Docker. No file size limits, no watermarks, no third-party uploads — full privacy.
+
+Transmute is a self-hosted alternative to cloud-based file converters like CloudConvert, FreeConvert, and Convertio. It runs entirely on your own hardware via Docker, keeping all files private. It supports converting between hundreds of formats across images (PNG, JPG, WebP, SVG, BMP, HEIC), video (MKV, MP4, MOV, AVI, WebM), audio (MP3, WAV, FLAC, AAC, OGG), documents (PDF, DOCX, TXT, Markdown, HTML), data (CSV, JSON, YAML, Parquet), diagrams (draw.io), fonts, subtitles, and more. It has a clean web UI, a full REST API, built-in authentication with per-user data isolation, and seven built-in themes.
+
+- License: MIT
+- Source Code: https://github.com/transmute-app/transmute
+- Docker Image: ghcr.io/transmute-app/transmute:main
+
+---
+
+# Getting Started
+
+Transmute is a self-hosted file converter. Follow the steps below to get up and running.
+
+## Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) and Docker Compose installed on your machine.
+
+## Quick Start
+
+> **Warning:** Think carefully before exposing Transmute to the public internet. Transmute includes built-in [authentication and per-user data isolation](/docs/authentication), but is designed for trusted networks. If you expose it beyond your LAN, place it behind a reverse proxy with TLS and rate limiting. The maintainers are not responsible for security issues arising from your deployment configuration.
+
+Download the compose file and and start the stack with a single command:
+
+```bash
+wget "https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/docker-compose.yml" && docker compose up -d
+```
+
+Then open [http://localhost:3313](http://localhost:3313) in your browser.
+
+## Verifying the Installation
+
+Run the following command to check all services are healthy:
+
+```bash
+docker compose ps
+```
+
+You should see output similar to:
+
+```bash
+NAME                STATUS
+transmute           running (healthy)
+```
+
+> **Tip:** If a container shows `unhealthy`, check its logs with `docker compose logs <service>`.
+
+---
+
+# Authentication & Users
+
+Transmute requires every user to authenticate before uploading, converting, or downloading files. Each user's data (uploads, conversions, settings, default formats) is fully isolated — you can only see and manage your own files.
+
+---
+
+## First-Time Setup
+
+When Transmute starts with an empty database, it enters **bootstrap mode**. The first screen you see is a **Create Admin** form instead of the usual login page.
+
+1. Choose a **username** and **password** (minimum 8 characters).
+2. Optionally fill in an **email** and **full name**.
+3. Click **Create Admin**.
+
+This account becomes the initial administrator. Once created, bootstrap mode is permanently disabled and all future visitors see the standard login page.
+
+> **Tip:** If you're deploying with Docker and want to script the initial setup, you can `POST` to `/api/users` with a JSON body — the first user created is always promoted to admin regardless of the `role` field.
+
+---
+
+## Roles
+
+Transmute has two roles:
+
+| Role | Capabilities |
+|------|-------------|
+| **Admin** | Full access — manage all users, configure cleanup settings, and access everything a member can |
+| **Member** | Upload, convert, and download their own files; manage their own account, settings, default formats, and API keys |
+
+Key differences:
+
+- Only admins can **create, edit, disable, or delete** other users.
+- Only admins can change **cleanup TTL** and **cleanup interval** settings (under Settings → Data Management).
+- Admins **cannot demote themselves** or **delete their own account** — another admin must do it.
+- Members cannot see or access other users' files or conversion history.
+
+---
+
+## Logging In
+
+Navigate to your Transmute instance in a browser. Enter your **username** and **password**, then click **Log In**. A session token (JWT) is issued and stored in your browser — you stay logged in until the token expires (default: 60 minutes) or you log out.
+
+---
+
+## Managing Your Account
+
+Click your **username** in the header to open the **Account** page. From here you can:
+
+- Update your **username**, **email**, or **full name**
+- Change your **password** (minimum 8 characters)
+- Manage your **API keys** (see below)
+
+Changes take effect immediately after clicking **Save Changes**.
+
+---
+
+## Managing Users (Admin)
+
+Admins can access the **Users** page from the navigation bar. From this page you can:
+
+### Create a User
+
+1. Click **Create User**.
+2. Fill in the username, password, and optionally email and full name.
+3. Choose a **role** (admin or member).
+4. Click **Create**.
+
+### Edit a User
+
+Click the **edit** button on any user card to change their username, email, full name, password, or role. You cannot edit your own role or disabled status from the Users page — use the Account page for self-service changes.
+
+### Disable a User
+
+Toggle the **Disabled** switch on a user card. Disabled users cannot log in or use API keys, but their data is preserved. Re-enable them at any time.
+
+### Delete a User
+
+Click the **delete** button on a user card. This permanently removes the user and **cascade-deletes all of their data** — uploads, conversions, conversion history, settings, default formats, and API keys. This action cannot be undone.
+
+> **Warning:** You cannot delete your own admin account. If you need to remove yourself, another admin must do it.
+
+---
+
+## API Keys
+
+API keys let you authenticate with the Transmute API without using a username and password. They're ideal for scripts, CI pipelines, and other automated workflows.
+
+### Creating an API Key
+
+1. Go to **Account** → **API Keys**.
+2. Enter a descriptive **name** (e.g. "CI pipeline" or "Backup script").
+3. Click **Create**.
+4. **Copy the key immediately** — it is shown only once and cannot be retrieved later.
+
+Each user can have up to **25 API keys**.
+
+### Using an API Key
+
+Pass the key as a Bearer token in the `Authorization` header, exactly as you would with a JWT:
+
+```bash
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  http://localhost:3313/api/files
+```
+
+API keys have the same permissions as the user who created them. If the user account is disabled, all of its API keys stop working immediately.
+
+### Deleting an API Key
+
+Click the **×** button next to any key on the Account page. The key is revoked immediately.
+
+---
+
+## Using Authentication with the API
+
+All API endpoints (except health checks and bootstrap status) require a valid Bearer token. You can obtain one in two ways:
+
+### Option 1 — Username & Password (JWT)
+
+```bash
+curl -X POST http://localhost:3313/api/users/authenticate \
+  -H "Content-Type: application/json" \
+  -d '{ "username": "alice", "password": "correct horse battery staple" }'
+```
+
+**Response:**
+
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIs...",
+  "token_type": "bearer",
+  "expires_in": 3600,
+  "user": {
+    "uuid": "...",
+    "username": "alice",
+    "role": "member",
+    "disabled": false
+  }
+}
+```
+
+Use the `access_token` value in subsequent requests:
+
+```bash
+curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIs..." \
+  http://localhost:3313/api/files
+```
+
+JWTs expire after the configured lifetime (default: 60 minutes). Request a new token when the current one expires.
+
+> **Tip:** The OAuth2 token endpoint `POST /api/users/token` is also available if your HTTP client supports the standard `application/x-www-form-urlencoded` OAuth2 password flow.
+
+### Option 2 — API Key
+
+Generate an API key from the Account page (or via `POST /api/api-keys`) and pass it directly as a Bearer token:
+
+```bash
+curl -H "Authorization: Bearer tm_abc123..." \
+  http://localhost:3313/api/files
+```
+
+API keys do not expire on their own — they remain valid until deleted or the owning user is disabled.
+
+---
+
+## Quick Reference
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| `GET` | `/api/users/bootstrap-status` | None | Check if first-time setup is needed |
+| `POST` | `/api/users` | None (bootstrap) / Admin | Create a user |
+| `POST` | `/api/users/authenticate` | None | Log in with username & password |
+| `POST` | `/api/users/token` | None | OAuth2 password-flow token endpoint |
+| `GET` | `/api/users/me` | User | Get the authenticated user |
+| `PATCH` | `/api/users/me` | User | Update your own account |
+| `GET` | `/api/users` | Admin | List all users |
+| `GET` | `/api/users/{uuid}` | Admin | Get a user by UUID |
+| `PATCH` | `/api/users/{uuid}` | Admin | Update a user |
+| `DELETE` | `/api/users/{uuid}` | Admin | Delete a user and all their data |
+| `GET` | `/api/api-keys` | User | List your API keys |
+| `POST` | `/api/api-keys` | User | Create an API key |
+| `DELETE` | `/api/api-keys/{id}` | User | Delete an API key |
+
+---
+
+# Themes
+
+Transmute ships with several built-in themes. Choose between dark and light variants to suit your preference.
+
+---
+
+## Dark Themes
+
+### Rubedo (Default)
+
+![Rubedo theme](https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/rubedo.png)
+
+### Citrinitas
+
+![Citrinitas theme](https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/citrinitas.png)
+
+### Viriditas
+
+![Viriditas theme](https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/viriditas.png)
+
+### Nigredo
+
+![Nigredo theme](https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/nigredo.png)
+
+---
+
+## Light Themes
+
+### Albedo
+
+![Albedo theme](https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/albedo.png)
+
+### Aurora
+
+![Aurora theme](https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/aurora.png)
+
+### Caelum
+
+![Caelum theme](https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/caelum.png)
+
+### Argentum
+
+![Argentum theme](https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/argentum.png)
+
+---
+
+# Settings Reference
+
+The Settings page lets you configure Transmute's appearance, conversion behaviour, default output formats, and data management. Changes to appearance and conversion options take effect after clicking **Save Changes**.
+
+---
+
+## Appearance
+
+### Theme
+
+Choose the colour theme applied across the entire application. Transmute ships with seven built-in themes:
+
+| Theme | Style |
+|-------|-------|
+| **Rubedo** *(default)* | Dark — red accent on dark blue |
+| **Citrinitas** | Dark — gold accent on deep violet |
+| **Viriditas** | Dark — green accent on black |
+| **Nigredo** | Dark — purple accent on black |
+| **Albedo** | Light — silver tones |
+| **Aurora** | Light — orange accent on warm cream |
+| **Caelum** | Light — sky blue accent on cool white |
+
+See the [Themes](/docs/themes) page for screenshots of each theme.
+
+---
+
+## Conversion
+
+### Auto-download on Completion
+
+**Default: off**
+
+When enabled, the browser will automatically trigger a file download as soon as a conversion finishes. When disabled, converted files remain available in the History view for manual download at any time.
+
+### Keep Original Files
+
+**Default: on**
+
+When enabled, the original uploaded file is retained on disk after a conversion completes, and will continue to appear in the Files view. When disabled, the source file is deleted once the conversion job finishes and only the converted output is kept.
+
+### Cleanup TTL
+
+**Default: on**
+
+Enables automatic background cleanup of uploads and conversions after they age out. When toggled off, files and conversion records are kept indefinitely (or until removed manually).
+
+### Cleanup Interval
+
+**Default: 60 minutes** · Visible only when Cleanup TTL is enabled · Range: 1–10080 minutes (1 minute to 1 week)
+
+The number of minutes Transmute waits before automatically deleting an uploaded file or conversion record. For example, a value of `60` means any file or conversion older than one hour will be removed by the background cleanup task.
+
+Use the **−** / **+** buttons or type a value directly into the field.
+
+> **Tip:** 1440 minutes = 1 day, 10080 minutes = 1 week.
+
+---
+
+## Save Changes
+
+The **Save Changes** button persists all Appearance and Conversion settings to the server. Settings are sent as a `PATCH /api/settings` request and take effect immediately after saving.
+
+---
+
+## Data Management
+
+These actions are immediate and irreversible. A confirmation dialog is shown before any deletion takes place.
+
+### Clear Conversions
+
+Deletes all completed conversion records and their associated output files from the server. Uploaded source files are not affected. Equivalent to `DELETE /api/conversions/all`.
+
+### Clear Uploads
+
+Deletes all uploaded source files from the server. Conversion records and output files are not affected. Equivalent to `DELETE /api/files/all`.
+
+---
+
+## Default Formats
+
+Default formats let you pin a preferred output format for a given input type. When a file of that type is uploaded on the Converter page, the output format dropdown will be pre-selected to your configured default, saving you from choosing it manually each time. You can still override the selection per file before starting a conversion.
+
+### Adding a default
+
+1. Select an input format from the left dropdown — only formats that don't already have a default configured are shown.
+2. Select the desired output format from the right dropdown.
+3. Click **Add**.
+
+### Changing a default
+
+Use the output format dropdown in the existing mappings table to choose a different output format. The change is saved immediately.
+
+### Removing a default
+
+Click the **×** button on the right side of any row to remove that mapping. The change takes effect immediately and the input format becomes available to configure again.
+
+---
+
+# API Reference
+
+Transmute exposes a REST API so you can automate file conversions without the web UI. All endpoints (except health checks and bootstrap status) require a valid Bearer token — see [Authentication & Users](/docs/authentication) for details on obtaining one.
+
+> **Interactive docs** — Every Transmute instance serves auto-generated ReDoc documentation at [`/api/docs`](http://localhost:3313/api/docs). The full OpenAPI specification is also available on [GitHub](https://github.com/transmute-app/openapi-specifications/blob/main/openapi.json).
+
+---
+
+## Core Workflow
+
+The typical automation flow is: **upload → convert → download**. Each step is a single API call.
+
+### 1. Upload a File
+
+```bash
+curl -X POST http://localhost:3313/api/files \
+  -F "file=@photo.jpg"
+```
+
+**Response** (`200 OK`):
+
+```json
+{
+  "message": "File uploaded successfully",
+  "metadata": {
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "original_filename": "photo.jpg",
+    "media_type": "jpg",
+    "extension": ".jpg",
+    "size_bytes": 204800,
+    "sha256_checksum": "abc123def456...",
+    "compatible_formats": ["png", "gif", "webp", "bmp", "tiff", "ico"]
+  }
+}
+```
+
+The `compatible_formats` array tells you exactly which output formats are supported for this file. Use one of these values in the next step.
+
+---
+
+### 2. Start a Conversion
+
+```bash
+curl -X POST http://localhost:3313/api/conversions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "output_format": "png"
+  }'
+```
+
+**Response** (`200 OK`):
+
+```json
+{
+  "id": "987fcdeb-51a2-43f1-b789-123456789abc",
+  "original_filename": "photo.png",
+  "media_type": "png",
+  "extension": ".png",
+  "size_bytes": 153600,
+  "sha256_checksum": "def789abc123..."
+}
+```
+
+The returned `id` is the converted file's identifier — use it to download the result.
+
+---
+
+### 3. Download the Result
+
+```bash
+curl -OJ http://localhost:3313/api/files/987fcdeb-51a2-43f1-b789-123456789abc
+```
+
+The response is the raw file binary (`application/octet-stream`).
+
+---
+
+### 4. Batch Download as ZIP
+
+If you have multiple converted files, you can download them all at once as a ZIP archive:
+
+```bash
+curl -X POST http://localhost:3313/api/files/batch \
+  -H "Content-Type: application/json" \
+  -d '{
+    "file_ids": [
+      "987fcdeb-51a2-43f1-b789-123456789abc",
+      "aabbccdd-1122-3344-5566-778899aabbcc"
+    ]
+  }' \
+  --output converted_files.zip
+```
+
+The response is an `application/zip` archive containing all requested files.
+
+---
+
+## Other Endpoints
+
+### List Uploaded Files
+
+```bash
+curl http://localhost:3313/api/files
+```
+
+Returns a `files` array with metadata for every uploaded file.
+
+### List Completed Conversions
+
+```bash
+curl http://localhost:3313/api/conversions/complete
+```
+
+Returns a `conversions` array with metadata for every completed conversion, including reference to the original file.
+
+### Delete a File
+
+```bash
+curl -X DELETE http://localhost:3313/api/files/{file_id}
+```
+
+### Delete a Conversion
+
+```bash
+curl -X DELETE http://localhost:3313/api/conversions/{conversion_id}
+```
+
+### Delete All Files / Conversions
+
+```bash
+# Delete all uploaded files
+curl -X DELETE http://localhost:3313/api/files/all
+
+# Delete all conversions
+curl -X DELETE http://localhost:3313/api/conversions/all
+```
+
+---
+
+## Health Check Endpoints
+
+Use these for monitoring and container orchestration (Docker health checks, Kubernetes probes, etc.).
+
+### Liveness — `GET /api/health/live`
+
+Confirms the server process is running.
+
+```bash
+curl http://localhost:3313/api/health/live
+```
+
+```json
+{ "status": "alive" }
+```
+
+### Readiness — `GET /api/health/ready`
+
+Confirms the server is ready to handle requests (database and storage are accessible).
+
+```bash
+curl http://localhost:3313/api/health/ready
+```
+
+```json
+{
+  "status": "ready",
+  "checks": {
+    "database": "ok",
+    "storage": "ok"
+  }
+}
+```
+
+Returns `503` if any check fails.
+
+### App Info — `GET /api/health/info`
+
+Returns the application name and version.
+
+```bash
+curl http://localhost:3313/api/health/info
+```
+
+```json
+{
+  "name": "Transmute",
+  "version": "v1.0.0"
+}
+```
+
+---
+
+## Settings
+
+You can read and update application settings (theme, auto-download, cleanup TTL, etc.) via the API.
+
+### Get Current Settings
+
+```bash
+curl http://localhost:3313/api/settings
+```
+
+```json
+{
+  "theme": "rubedo",
+  "auto_download": false,
+  "keep_originals": true,
+  "cleanup_ttl_minutes": 60
+}
+```
+
+### Update Settings
+
+```bash
+curl -X PATCH http://localhost:3313/api/settings \
+  -H "Content-Type: application/json" \
+  -d '{ "theme": "nigredo", "auto_download": true }'
+```
+
+Only the fields you include are updated.
+
+---
+
+## Quick Reference
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/files` | Upload a file |
+| `GET` | `/api/files` | List uploaded files |
+| `GET` | `/api/files/{id}` | Download a file |
+| `DELETE` | `/api/files/{id}` | Delete a file |
+| `DELETE` | `/api/files/all` | Delete all files |
+| `POST` | `/api/files/batch` | Batch download as ZIP |
+| `POST` | `/api/conversions` | Start a conversion |
+| `GET` | `/api/conversions/complete` | List completed conversions |
+| `DELETE` | `/api/conversions/{id}` | Delete a conversion |
+| `DELETE` | `/api/conversions/all` | Delete all conversions |
+| `GET` | `/api/health/live` | Liveness check |
+| `GET` | `/api/health/ready` | Readiness check |
+| `GET` | `/api/health/info` | App metadata |
+| `GET` | `/api/settings` | Get settings |
+| `PATCH` | `/api/settings` | Update settings |
+
+---
+
+# Environment Variables
+
+Transmute is configured through environment variables. Set them in the `environment` section of your `docker-compose.yml`, in a `.env` file mounted into the container, or as standard OS environment variables. Variable names are **case-insensitive**.
+
+---
+
+## Example Docker Compose
+
+```yaml
+services:
+  transmute:
+    image: ghcr.io/transmute-app/transmute:main
+    container_name: transmute
+    restart: unless-stopped
+    ports:
+      - 3313:3313
+    volumes:
+      - transmute_data:/app/data
+    environment:
+      - AUTH_SECRET_KEY=replace-with-a-long-random-string
+      - AUTH_ACCESS_TOKEN_EXPIRE_MINUTES=120
+      - PORT=3313
+
+volumes:
+  transmute_data:
+```
+
+---
+
+## Reference
+
+### Authentication
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `AUTH_SECRET_KEY` | *(auto-generated)* | Secret key used to sign JWT tokens. If not set, a random 64-byte key is generated on every startup — meaning all existing tokens are invalidated when the container restarts. **Set this to a fixed value** for persistent sessions across restarts. |
+| `AUTH_ALGORITHM` | `HS256` | Algorithm used for JWT signing. Unless you have a specific reason to change this, leave it as the default. |
+| `AUTH_ACCESS_TOKEN_EXPIRE_MINUTES` | `60` | How long a JWT access token remains valid, in minutes. |
+
+> **Important:** If you don't set `AUTH_SECRET_KEY`, a new random key is generated each time the container starts. This means all logged-in users will be signed out and all existing JWTs will stop working after a restart. For production use, always set a fixed `AUTH_SECRET_KEY`.
+
+**Generating a strong secret key:**
+
+```bash
+# Using Python
+python3 -c "import secrets; print(secrets.token_urlsafe(64))"
+
+# Using OpenSSL
+openssl rand -base64 64
+```
+
+### Server
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `HOST` | `0.0.0.0` | Network interface the server binds to. The default binds to all interfaces, which is required inside Docker. |
+| `PORT` | `3313` | Port the server listens on inside the container. If you change this, update the `ports` mapping and health check URL in your Compose file to match. |
+| `API_DISPLAY_HOST` | `YOUR_TRANSMUTE_IP` | The hostname shown in the auto-generated API documentation. Set this to your server's IP or domain so the docs display correct example URLs. |
+
+### Storage
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DATA_DIR` | `data` | Base directory for all persistent data (database, uploads, outputs, temp files). Inside Docker this is typically `/app/data` and should be backed by a volume. |
+
+> **Tip:** You generally don't need to change `DATA_DIR` when using Docker — just mount a volume to `/app/data` as shown in the example Compose file above.
+
+### Database Table Names
+
+These control the SQLite table names. You should not change them unless you have a very specific reason.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `FILE_TABLE_NAME` | `FILES_METADATA` | Table for uploaded file metadata |
+| `CONVERSION_TABLE_NAME` | `CONVERSIONS_METADATA` | Table for conversion output metadata |
+| `CONVERSION_RELATIONS_TABLE_NAME` | `CONVERSION_RELATIONS` | Table linking conversions to source files |
+| `APP_SETTINGS_TABLE_NAME` | `APP_SETTINGS` | Table for per-user application settings |
+| `USER_TABLE_NAME` | `USERS` | Table for user accounts |
