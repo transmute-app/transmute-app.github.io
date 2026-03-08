@@ -26,12 +26,12 @@ SyntaxHighlighter.registerLanguage('yaml', yaml)
 /* ------------------------------------------------------------------ */
 
 const competitors = [
-  { name: 'cloudconvert.com', sizeLimit: true, paidApi: true, thirdParty: true },
-  { name: 'freeconvert.com', sizeLimit: true, paidApi: true, thirdParty: true },
-  { name: 'convertio.co', sizeLimit: true, paidApi: true, thirdParty: true },
-  { name: 'vert.sh', sizeLimit: false, paidApi: true, thirdParty: false },
-  //{ name: 'convertx.org', sizeLimit: false, paidApi: true, thirdParty: false },
-  { name: 'Transmute', sizeLimit: false, paidApi: false, thirdParty: false },
+  { name: 'cloudconvert.com', noSizeLimit: false, freeApi: false, private: false },
+  { name: 'freeconvert.com', noSizeLimit: false, freeApi: false, private: false },
+  { name: 'convertio.co', noSizeLimit: false, freeApi: false, private: false },
+  { name: 'vert.sh', noSizeLimit: true, freeApi: false, private: true },
+  { name: 'convertx.org', noSizeLimit: true, freeApi: false, private: true },
+  { name: 'Transmute', noSizeLimit: true, freeApi: true, private: true },
 ]
 
 const themes = [
@@ -320,8 +320,8 @@ export default function Home() {
                 <tr className="border-b border-gray-700/50">
                   <th className="text-left px-6 py-4 font-semibold text-text-muted">Service</th>
                   <th className="px-6 py-4 font-semibold text-text-muted text-center">No Size Limits</th>
-                  <th className="px-6 py-4 font-semibold text-text-muted text-center">Free API</th>
                   <th className="px-6 py-4 font-semibold text-text-muted text-center">Private</th>
+                  <th className="px-6 py-4 font-semibold text-text-muted text-center">Free API</th>
                 </tr>
               </thead>
               <tbody>
@@ -338,17 +338,17 @@ export default function Home() {
                         {c.name}
                       </td>
                       <td className="px-6 py-4 text-center">
-                        {!c.sizeLimit
+                        {c.noSizeLimit
                           ? <FaCheck className="inline h-4 w-4 text-green-400" />
                           : <FaXmark className="inline h-4 w-4 text-red-400/60" />}
                       </td>
                       <td className="px-6 py-4 text-center">
-                        {!c.paidApi
+                        {c.private
                           ? <FaCheck className="inline h-4 w-4 text-green-400" />
                           : <FaXmark className="inline h-4 w-4 text-red-400/60" />}
                       </td>
                       <td className="px-6 py-4 text-center">
-                        {!c.thirdParty
+                        {c.freeApi
                           ? <FaCheck className="inline h-4 w-4 text-green-400" />
                           : <FaXmark className="inline h-4 w-4 text-red-400/60" />}
                       </td>
