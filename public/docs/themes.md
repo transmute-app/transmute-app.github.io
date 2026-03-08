@@ -43,3 +43,7 @@ Transmute ships with several built-in themes. Choose between dark and light vari
 ### Caelum
 
 ![Caelum theme](https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/caelum.png)
+
+### Argentum
+
+![Argentum theme](https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/argentum.png)
