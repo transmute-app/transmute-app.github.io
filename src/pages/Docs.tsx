@@ -74,7 +74,7 @@ export default function Docs() {
   useSEO({
     title: activeMeta?.title ? `${activeMeta.title} — Docs` : 'Documentation',
     description: activeMeta?.description ?? DOCS_METADATA.description,
-    path: slug ? `/docs/${slug}` : '/docs',
+    path: slug ? `/docs/${slug}/` : '/docs/',
   })
 
   // Load manifest + all frontmatter once
@@ -99,7 +99,7 @@ export default function Docs() {
 
         // If no slug selected, redirect to first doc
         if (!slug && parsed.length > 0) {
-          navigate(`/docs/${parsed[0].slug}`, { replace: true })
+          navigate(`/docs/${parsed[0].slug}/`, { replace: true })
         }
       })
       .catch(() => setEntries([]))
@@ -156,7 +156,7 @@ export default function Docs() {
           {entries.map((entry) => (
             <Link
               key={entry.slug}
-              to={`/docs/${entry.slug}`}
+              to={`/docs/${entry.slug}/`}
               onClick={() => setSidebarOpen(false)}
               className={`
                 block px-3 py-2 rounded-lg text-sm font-medium transition-colors
@@ -234,7 +234,7 @@ export default function Docs() {
         ) : (
           <div className="text-center py-20">
             <p className="text-text-muted text-lg">Document not found.</p>
-            <Link to="/docs" className="text-primary hover:underline mt-4 inline-block">
+            <Link to="/docs/" className="text-primary hover:underline mt-4 inline-block">
               ← Back to docs
             </Link>
           </div>

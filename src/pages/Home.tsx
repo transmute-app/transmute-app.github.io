@@ -131,7 +131,7 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             <Link
-              to="/docs/getting-started"
+              to="/docs/getting-started/"
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-primary text-white font-semibold hover:bg-primary-dark transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5"
             >
               Get Started
@@ -237,7 +237,7 @@ export default function Home() {
           </div>
 
           <Link
-            to="/conversions"
+            to="/conversions/"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-semibold hover:bg-primary-dark transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5"
           >
             <FaRightLeft className="h-4 w-4" />

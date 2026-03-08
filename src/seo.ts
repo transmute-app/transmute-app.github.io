@@ -19,14 +19,14 @@ export const DOCS_METADATA: RouteMetadata = {
   title: 'Documentation',
   description:
     'Transmute documentation — learn how to install, configure, and use the self-hosted file converter.',
-  path: '/docs',
+  path: '/docs/',
 }
 
 export const CONVERSIONS_METADATA: RouteMetadata = {
   title: 'Supported Conversions',
   description:
     'Browse every file format conversion supported by Transmute — images, video, audio, documents, data, and diagrams.',
-  path: '/conversions',
+  path: '/conversions/',
 }
 
 export function formatPageTitle(title: string) {

@@ -26,12 +26,12 @@ export default function Footer() {
             <h4 className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-3">Resources</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/docs" className="text-text-muted hover:text-white transition-colors">
+                <Link to="/docs/" className="text-text-muted hover:text-white transition-colors">
                   Documentation
                 </Link>
               </li>
               <li>
-                <Link to="/docs/getting-started" className="text-text-muted hover:text-white transition-colors">
+                <Link to="/docs/getting-started/" className="text-text-muted hover:text-white transition-colors">
                   Quickstart Guide
                 </Link>
               </li>
