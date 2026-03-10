@@ -47,6 +47,10 @@ const themes = [
 
 const screenshots = [
   {
+    label: 'Login',
+    url: 'https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/login.png',
+  },
+  {
     label: 'Converter',
     url: 'https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/converter.png',
   },
@@ -65,6 +69,14 @@ const screenshots = [
   {
     label: 'Settings',
     url: 'https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/settings.png',
+  },
+  {
+    label: 'Account',
+    url: 'https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/account.png',
+  },
+  {
+    label: 'User Management',
+    url: 'https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/user-management.png',
   },
 ]
 
@@ -173,20 +185,22 @@ export default function Home() {
           </div>
 
           {/* Tab buttons */}
-          <div className="flex justify-start sm:justify-center gap-2 mb-8 overflow-x-auto pb-2 scrollbar-hide">
-            {screenshots.map((s, i) => (
-              <button
-                key={s.label}
-                onClick={() => setActiveScreenshot(i)}
-                className={`whitespace-nowrap px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                  i === activeScreenshot
-                    ? 'bg-primary/15 text-primary border border-primary/30'
-                    : 'text-text-muted hover:text-white border border-transparent hover:border-gray-700'
-                }`}
-              >
-                {s.label}
-              </button>
-            ))}
+          <div className="mb-8 overflow-x-auto pb-2 scrollbar-hide">
+            <div className="flex w-max min-w-full justify-start gap-2 sm:justify-center">
+              {screenshots.map((s, i) => (
+                <button
+                  key={s.label}
+                  onClick={() => setActiveScreenshot(i)}
+                  className={`whitespace-nowrap px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                    i === activeScreenshot
+                      ? 'bg-primary/15 text-primary border border-primary/30'
+                      : 'text-text-muted hover:text-white border border-transparent hover:border-gray-700'
+                  }`}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Screenshot display */}
