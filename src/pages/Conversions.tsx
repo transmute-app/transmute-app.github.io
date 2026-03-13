@@ -56,6 +56,9 @@ const FONT_FORMATS = new Set<string>([
 const SUBTITLE_FORMATS = new Set<string>([
   'srt', 'vtt', 'ass', 'ssa', 'sub',
 ])
+const EMAIL_FORMATS = new Set<string>([
+  'eml', 'msg', 'mbox',
+])
 
 function getCategory(fmt: string, outputs?: string[]): string {
   const f = fmt.toLowerCase()
@@ -74,7 +77,7 @@ function getCategory(fmt: string, outputs?: string[]): string {
   if (ARCHIVE_FORMATS.has(f)) return 'Archive'
   if (FONT_FORMATS.has(f)) return 'Font'
   if (SUBTITLE_FORMATS.has(f)) return 'Subtitle'
-
+  if (EMAIL_FORMATS.has(f)) return 'Email'
   // Unknown input format — infer from output formats (most common non-Other category wins)
   if (outputs && outputs.length > 0) {
     const counts = new Map<string, number>()
@@ -94,7 +97,7 @@ function getCategory(fmt: string, outputs?: string[]): string {
 const CATEGORY_ORDER = [
   'Image', 'Video', 'Audio', 'Audiobook',
   'Document', 'Presentation', 'Data', 'Diagrams',
-  'CAD', '3D Model', 'Archive', 'Font', 'Subtitle',
+  'CAD', '3D Model', 'Archive', 'Font', 'Subtitle', 'Email',
   'Other',
 ]
 
@@ -112,6 +115,7 @@ const CATEGORY_STYLES: Record<string, { badge: string; dot: string }> = {
   Archive:   { badge: 'text-indigo-400 bg-indigo-400/10 border-indigo-400/20', dot: 'bg-indigo-400' },
   Font:      { badge: 'text-fuchsia-400 bg-fuchsia-400/10 border-fuchsia-400/20', dot: 'bg-fuchsia-400' },
   Subtitle:  { badge: 'text-sky-400 bg-sky-400/10 border-sky-400/20',         dot: 'bg-sky-400' },
+  Email:     { badge: 'text-violet-400 bg-violet-400/10 border-violet-400/20',   dot: 'bg-violet-400' },
   Other:     { badge: 'text-gray-400 bg-gray-400/10 border-gray-400/20',      dot: 'bg-gray-400' },
 }
 
