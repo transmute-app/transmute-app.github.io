@@ -33,7 +33,8 @@ const PRESENTATION_FORMATS = new Set<string>([
   'pptx', 'ppt', 'odp', 'key', 'pps', 'ppsx', 'pot', 'potx',
 ])
 const DATA_FORMATS = new Set([
-  'csv', 'json', 'xlsx', 'yaml', 'parquet',
+  'csv', 'json', 'xlsx', 'yaml', 'parquet', 'xml', 'sqlite', 'parquet', 'feather', 
+  'vcf', 'dbf', 'jsonl', 'toon', 'sav', 'dta', 'tsv', 'xls', 'xlsx', 'xpt'
 ])
 const DIAGRAM_FORMATS = new Set([
   'drawio',
@@ -49,6 +50,7 @@ const AUDIOBOOK_FORMATS = new Set<string>([
 ])
 const ARCHIVE_FORMATS = new Set<string>([
   'zip', 'tar', 'gz', 'bz2', '7z', 'rar', 'xz', 'zst',
+  'tar.gz', 'tar.bz2', 'tar.xz', 'tar.zst',
 ])
 const FONT_FORMATS = new Set<string>([
   'ttf', 'otf', 'woff', 'woff2', 'eot',
