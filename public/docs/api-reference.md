@@ -12,6 +12,11 @@ Transmute exposes a REST API so you can automate file conversions without the we
 
 ---
 
+## Examples & Samples
+Sample files for testing and real examples using our API can be found in [transmute-app/samples-examples](https://github.com/transmute-app/samples-examples).
+
+---
+
 ## Core Workflow
 
 The typical automation flow is: **upload → convert → download**. Each step is a single API call.
