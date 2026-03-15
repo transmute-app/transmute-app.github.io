@@ -25,9 +25,12 @@ const AUDIO_FORMATS = new Set([
   'mka', 'mp2', 'aiff',
 ])
 const DOCUMENT_FORMATS = new Set([
-  'pdf', 'docx', 'odt', 'epub', 'md', 'txt', 'html', 'rst', 'tex', 'org',
+  'pdf', 'docx', 'odt', 'md', 'txt', 'html', 'rst', 'tex', 'org',
   'rtf', 'latex', 'textile', 'dbk', 'mediawiki', 'ipynb', 'muse', 'opml',
-  'jira', 'asciidoc', 'fb2',
+  'jira', 'asciidoc',
+])
+const EBOOK_FORMATS = new Set([
+  'azw3', 'epub', 'fb2', 'mobi', 'pdb', 'snb', 'lrf',
 ])
 const PRESENTATION_FORMATS = new Set<string>([
   'pptx', 'ppt', 'odp', 'key', 'pps', 'ppsx', 'pot', 'potx',
@@ -72,6 +75,7 @@ function getCategory(fmt: string, outputs?: string[]): string {
   if (AUDIO_FORMATS.has(f)) return 'Audio'
   if (AUDIOBOOK_FORMATS.has(f)) return 'Audiobook'
   if (DOCUMENT_FORMATS.has(f)) return 'Document'
+  if (EBOOK_FORMATS.has(f)) return 'Ebook'
   if (DATA_FORMATS.has(f)) return 'Data'
   if (PRESENTATION_FORMATS.has(f)) return 'Presentation'
   if (CAD_FORMATS.has(f)) return 'CAD'
@@ -98,7 +102,7 @@ function getCategory(fmt: string, outputs?: string[]): string {
 // Categories are shown in this order; empty ones are automatically hidden by presentCategories.
 const CATEGORY_ORDER = [
   'Image', 'Video', 'Audio', 'Audiobook',
-  'Document', 'Presentation', 'Data', 'Diagrams',
+  'Document', 'Presentation', 'Ebook', 'Data', 'Diagrams',
   'CAD', '3D Model', 'Archive', 'Font', 'Subtitle', 'Email',
   'Other',
 ]
@@ -109,6 +113,7 @@ const CATEGORY_STYLES: Record<string, { badge: string; dot: string }> = {
   Audio:     { badge: 'text-green-400 bg-green-400/10 border-green-400/20',   dot: 'bg-green-400' },
   Audiobook: { badge: 'text-lime-400 bg-lime-400/10 border-lime-400/20',      dot: 'bg-lime-400' },
   Document:  { badge: 'text-amber-400 bg-amber-400/10 border-amber-400/20',   dot: 'bg-amber-400' },
+  Ebook:     { badge: 'text-pink-400 bg-pink-400/10 border-pink-400/20',      dot: 'bg-pink-400' },
   Data:         { badge: 'text-cyan-400 bg-cyan-400/10 border-cyan-400/20',      dot: 'bg-cyan-400' },
   Presentation: { badge: 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20', dot: 'bg-yellow-400' },
   Diagrams:     { badge: 'text-primary bg-primary/10 border-primary/20',         dot: 'bg-primary' },
