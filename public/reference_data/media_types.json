@@ -1,0 +1,1657 @@
+[
+  {
+    "id": "3gp",
+    "full_name": "3rd Generation Partnership Project",
+    "classification": "video",
+    "description": "3GP is a multimedia container format designed by the Third Generation Partnership Project (3GPP) specifically for 3G mobile devices to store, stream, and share audio and video over cellular networks. It utilizes efficient compression (H.263, H.264, or MPEG-4 Part 2) to minimize file size and bandwidth, making it ideal for low-memory, low-bandwidth environments.",
+    "extensions": [
+      "3gp",
+      "3gpp"
+    ],
+    "aliases": [
+      "3gp",
+      "3gpp"
+    ]
+  },
+  {
+    "id": "7z",
+    "full_name": "7-Zip",
+    "classification": "archive",
+    "description": "7-Zip is a free, open-source file archiver and compression utility used to reduce file sizes and bundle multiple files into a single container. It is highly regarded for its superior compression ratio using the proprietary .7z format, while also supporting many others like ZIP, TAR, and RAR. It is primarily for Windows but has versions for other systems.",
+    "extensions": [
+      "7z"
+    ],
+    "aliases": [
+      "7z",
+      "7zip"
+    ]
+  },
+  {
+    "id": "aac",
+    "full_name": "Advanced Audio Coding",
+    "classification": "audio",
+    "description": "AAC, or Advanced Audio Coding, is a lossy audio compression format designed to be the successor of MP3. It offers improved sound quality at similar bit rates and is widely used in streaming, broadcasting, and digital music distribution. AAC supports various audio channels and sample rates, making it versatile for different applications.",
+    "extensions": [
+      "aac"
+    ],
+    "aliases": [
+      "aac"
+    ]
+  },
+  {
+    "id": "ac3",
+    "full_name": "Audio Codec 3 (Dolby Digital)",
+    "classification": "audio",
+    "description": "AC3, also known as Audio Codec 3 or Dolby Digital, is a digital audio compression format developed by Dolby Laboratories. It is widely used in cinema, home theater, and broadcasting for delivering high-quality surround sound. AC3 supports multiple audio channels providing an immersive audio experience.",
+    "extensions": [
+      "ac3"
+    ],
+    "aliases": [
+      "ac3"
+    ]
+  },
+  {
+    "id": "adoc",
+    "full_name": "AsciiDoc",
+    "classification": "document",
+    "description": "AsciiDoc is a text document format for writing notes, documentation, articles, books, and more. It allows for easy conversion to HTML, PDF, and other formats, making it suitable for technical documentation and publishing.",
+    "extensions": [
+      "adoc",
+      "asciidoc"
+    ],
+    "aliases": [
+      "adoc",
+      "asciidoc"
+    ]
+  },
+  {
+    "id": "aiff",
+    "full_name": "Audio Interchange File Format",
+    "classification": "audio",
+    "description": "AIFF, or Audio Interchange File Format, is an audio file format standard used for storing sound data for personal computers and other electronic audio devices. It was developed by Apple Inc. and is commonly used for storing high-quality, uncompressed audio.",
+    "extensions": [
+      "aif",
+      "aiff"
+    ],
+    "aliases": [
+      "aif",
+      "aiff"
+    ]
+  },
+  {
+    "id": "asf",
+    "full_name": "Advanced Systems Format",
+    "classification": "video",
+    "description": "ASF, or Advanced Systems Format, is a digital audio/video container format developed by Microsoft. It is primarily used for streaming media and supports playback from a variety of sources, including local storage and network streams.",
+    "extensions": [
+      "asf"
+    ],
+    "aliases": [
+      "asf"
+    ]
+  },
+  {
+    "id": "ass",
+    "full_name": "Advanced SubStation Alpha",
+    "classification": "subtitle",
+    "description": "ASS, or Advanced SubStation Alpha, is a subtitle file format used for creating and displaying subtitles in video content. It supports advanced styling, positioning, and timing features, making it popular for fansubbing and professional subtitle production.",
+    "extensions": [
+      "ass"
+    ],
+    "aliases": [
+      "ass"
+    ]
+  },
+  {
+    "id": "avi",
+    "full_name": "AVI",
+    "classification": "video",
+    "description": "AVI, or Audio Video Interleave, is a multimedia container format introduced by Microsoft. It allows synchronous audio-with-video playback and is commonly used for storing video and audio data on personal computers.",
+    "extensions": [
+      "avi"
+    ],
+    "aliases": [
+      "avi"
+    ]
+  },
+  {
+    "id": "avif",
+    "full_name": "AV1 Image File Format",
+    "classification": "image",
+    "description": "AVIF, or AV1 Image File Format, is an image format that uses the AV1 video codec for compression. It provides high-quality images with efficient compression, making it suitable for web and mobile applications.",
+    "extensions": [
+      "avif"
+    ],
+    "aliases": [
+      "avif"
+    ]
+  },
+  {
+    "id": "azw3",
+    "full_name": "Amazon Kindle Format 8",
+    "classification": "ebook",
+    "description": "AZW3, also known as Amazon Kindle Format 8, is an eBook format developed by Amazon for use on Kindle devices. It supports advanced formatting, including HTML5 and CSS3, allowing for rich and interactive eBook content.",
+    "extensions": [
+      "azw3"
+    ],
+    "aliases": [
+      "azw3"
+    ]
+  },
+  {
+    "id": "blp",
+    "full_name": "Blizzard Picture",
+    "classification": "image",
+    "description": "BLP, or Blizzard Picture, is an image file format used by Blizzard Entertainment for storing textures and images in their games. It is commonly used for game assets such as minimaps, icons, and other graphical elements.",
+    "extensions": [
+      "blp"
+    ],
+    "aliases": [
+      "blp"
+    ]
+  },
+  {
+    "id": "bmp",
+    "full_name": "Bitmap Image File",
+    "classification": "image",
+    "description": "BMP, or Bitmap Image File, is a raster graphics image file format used to store bitmap digital images. It is widely supported on Windows platforms and is known for its simplicity.",
+    "extensions": [
+      "bmp"
+    ],
+    "aliases": [
+      "bmp"
+    ]
+  },
+  {
+    "id": "csv",
+    "full_name": "Comma-Separated Values",
+    "classification": "data",
+    "description": "CSV, or Comma-Separated Values, is a simple file format used to store tabular data, such as a spreadsheet or database. Each line in a CSV file corresponds to a row in the table, and each field in the row is separated by a comma.",
+    "extensions": [
+      "csv"
+    ],
+    "aliases": [
+      "csv"
+    ]
+  },
+  {
+    "id": "cur",
+    "full_name": "Microsoft Cursor Icon",
+    "classification": "image",
+    "description": "CUR, or Microsoft Cursor Icon, is a file format used to store cursor images for Windows operating systems. It supports multiple sizes and color depths, allowing for customizable cursor appearances.",
+    "extensions": [
+      "cur"
+    ],
+    "aliases": [
+      "cur"
+    ]
+  },
+  {
+    "id": "dbk",
+    "full_name": "DocBook",
+    "classification": "document",
+    "description": "DocBook is a semantic markup language for technical documentation. It is used to create structured documents such as books, articles, and manuals, and can be transformed into various output formats like HTML, PDF, and EPUB.",
+    "extensions": [
+      "dbk"
+    ],
+    "aliases": [
+      "dbk"
+    ]
+  },
+  {
+    "id": "dcx",
+    "full_name": "Multipage PCX Image File",
+    "classification": "image",
+    "description": "DCX, or Multipage PCX Image File, is an image file format used to store multiple PCX images in a single file. It is commonly used for storing scanned documents and fax images.",
+    "extensions": [
+      "dcx"
+    ],
+    "aliases": [
+      "dcx"
+    ]
+  },
+  {
+    "id": "dds",
+    "full_name": "DirectDraw Surface",
+    "classification": "image",
+    "description": "DDS, or DirectDraw Surface, is a file format used to store textures and environments in 3D applications and games. It supports compression and mipmaps, making it suitable for real-time rendering.",
+    "extensions": [
+      "dds"
+    ],
+    "aliases": [
+      "dds"
+    ]
+  },
+  {
+    "id": "dib",
+    "full_name": "Device-Independent Bitmap",
+    "classification": "image",
+    "description": "DIB, or Device-Independent Bitmap, is a bitmap image format that allows for device-independent representation of images. It is commonly used in Windows applications for storing images in a format that can be easily manipulated and displayed.",
+    "extensions": [
+      "dib"
+    ],
+    "aliases": [
+      "dib"
+    ]
+  },
+  {
+    "id": "docx",
+    "full_name": "Microsoft Word Document",
+    "classification": "document",
+    "description": "DOCX, or Microsoft Word Document, is a file format used by Microsoft Word for storing text documents. It supports various features such as text formatting, images, tables, and other document elements.",
+    "extensions": [
+      "docx"
+    ],
+    "aliases": [
+      "docx"
+    ]
+  },
+  {
+    "id": "drawio",
+    "full_name": "draw.io Diagram",
+    "classification": "diagram",
+    "description": "draw.io, also known as diagrams.net, is a web-based diagramming tool used to create flowcharts, network diagrams, UML diagrams, and other types of visual representations. The draw.io file format is used to store these diagrams.",
+    "extensions": [
+      "drawio"
+    ],
+    "aliases": [
+      "drawio"
+    ]
+  },
+  {
+    "id": "dta",
+    "full_name": "Stata Data File",
+    "classification": "data",
+    "description": "DTA, or Stata Data File, is a file format used by Stata, a statistical software package, to store datasets. It supports various data types and structures, allowing for efficient data analysis and manipulation.",
+    "extensions": [
+      "dta"
+    ],
+    "aliases": [
+      "dta"
+    ]
+  },
+  {
+    "id": "eml",
+    "full_name": "Electronic Mail",
+    "classification": "email",
+    "description": "EML, or Electronic Mail, is a file format used to store email messages. It contains the email content, metadata, and attachments, allowing for easy transfer and storage of email messages.",
+    "extensions": [
+      "eml"
+    ],
+    "aliases": [
+      "eml"
+    ]
+  },
+  {
+    "id": "env",
+    "full_name": "Environment File",
+    "classification": "data",
+    "description": "ENV, or Environment File, is a file format used to store environment variables and configuration settings for software applications. It allows for easy management and customization of application settings.",
+    "extensions": [
+      "env"
+    ],
+    "aliases": [
+      "env"
+    ]
+  },
+  {
+    "id": "epub",
+    "full_name": "Electronic Publication",
+    "classification": "ebook",
+    "description": "EPUB, or Electronic Publication, is a file format used for eBooks. It is designed for reflowable content, meaning that the text display can be optimized for the particular display device used by the reader.",
+    "extensions": [
+      "epub"
+    ],
+    "aliases": [
+      "epub"
+    ]
+  },
+  {
+    "id": "f4v",
+    "full_name": "Flash Video",
+    "classification": "video",
+    "description": "F4V, or Flash Video, is a file format used to deliver video content over the Internet using Adobe Flash Player. It is an evolution of the FLV format and supports H.264 video and AAC audio.",
+    "extensions": [
+      "f4v"
+    ],
+    "aliases": [
+      "f4v"
+    ]
+  },
+  {
+    "id": "fb2",
+    "full_name": "FictionBook 2",
+    "classification": "ebook",
+    "description": "FB2, or FictionBook 2, is an eBook file format designed for storing fictional literature. It uses XML to structure the content, allowing for rich formatting and metadata.",
+    "extensions": [
+      "fb2"
+    ],
+    "aliases": [
+      "fb2"
+    ]
+  },
+  {
+    "id": "feather",
+    "full_name": "Feather",
+    "classification": "data",
+    "description": "Feather is a binary columnar data format optimized for use with data frames. It is designed to be fast and efficient for both reading and writing operations, making it suitable for large datasets.",
+    "extensions": [
+      "feather"
+    ],
+    "aliases": [
+      "feather"
+    ]
+  },
+  {
+    "id": "flac",
+    "full_name": "Free Lossless Audio Codec",
+    "classification": "audio",
+    "description": "FLAC, or Free Lossless Audio Codec, is an audio file format that provides lossless compression, meaning that the audio is compressed without any loss in quality. It is commonly used for high-quality audio storage and streaming.",
+    "extensions": [
+      "flac"
+    ],
+    "aliases": [
+      "flac"
+    ]
+  },
+  {
+    "id": "flc",
+    "full_name": "New Autodesk Animator FLiC",
+    "classification": "image",
+    "description": "FLC, the newer Autodesk Animator FLiC, is a file format used for animated graphics. It is an evolution of the FLI format, supporting higher color depths and improved compression.",
+    "extensions": [
+      "flc",
+      "flic"
+    ],
+    "aliases": [
+      "flc",
+      "flic"
+    ]
+  },
+  {
+    "id": "fli",
+    "full_name": "Old Autodesk Animator FLiC",
+    "classification": "image",
+    "description": "FLI, the older Autodesk Animator FLiC, is a file format used for animated graphics. It was the predecessor to the FLC format, supporting lower color depths and simpler compression.",
+    "extensions": [
+      "fli"
+    ],
+    "aliases": [
+      "fli"
+    ]
+  },
+  {
+    "id": "flv",
+    "full_name": "Flash Video",
+    "classification": "video",
+    "description": "FLV, or Flash Video, is a file format used to deliver video content over the Internet using Adobe Flash Player. It is commonly used for streaming video on websites.",
+    "extensions": [
+      "flv"
+    ],
+    "aliases": [
+      "flv"
+    ]
+  },
+  {
+    "id": "fwf",
+    "full_name": "Fixed-Width Format",
+    "classification": "data",
+    "description": "FWF, or Fixed-Width Format, is a file format used for storing tabular data where each column has a fixed width. It is commonly used for data exchange between different systems.",
+    "extensions": [
+      "fwf"
+    ],
+    "aliases": [
+      "fwf"
+    ]
+  },
+  {
+    "id": "gif",
+    "full_name": "Graphics Interchange Format",
+    "classification": "image",
+    "description": "GIF, or Graphics Interchange Format, is a bitmap image format that supports both static and animated images. It is widely used on the web for its ability to display simple animations and support transparency.",
+    "extensions": [
+      "gif"
+    ],
+    "aliases": [
+      "gif"
+    ]
+  },
+  {
+    "id": "heic",
+    "full_name": "High Efficiency Image Container",
+    "classification": "image",
+    "description": "HEIC, or High Efficiency Image Container, is a file format used for storing images and image sequences. It is based on the High Efficiency Video Coding (HEVC) standard, allowing for high-quality images with efficient compression.",
+    "extensions": [
+      "heic"
+    ],
+    "aliases": [
+      "heic"
+    ]
+  },
+  {
+    "id": "heif",
+    "full_name": "High Efficiency Image File Format",
+    "classification": "image",
+    "description": "HEIF, or High Efficiency Image File Format, is a file format for individual images and image sequences. It is based on the High Efficiency Video Coding (HEVC) standard, allowing for high-quality images with efficient compression.",
+    "extensions": [
+      "heif"
+    ],
+    "aliases": [
+      "heif"
+    ]
+  },
+  {
+    "id": "html",
+    "full_name": "HyperText Markup Language",
+    "classification": "document",
+    "description": "HTML, or HyperText Markup Language, is the standard markup language used for creating web pages and web applications. It structures the content on the web and is often used in conjunction with CSS and JavaScript.",
+    "extensions": [
+      "htm",
+      "html"
+    ],
+    "aliases": [
+      "htm",
+      "html"
+    ]
+  },
+  {
+    "id": "icns",
+    "full_name": "Apple Icon",
+    "classification": "image",
+    "description": "ICNS, or Apple Icon Image, is a file format used for storing icons on macOS. It supports multiple sizes and color depths, allowing for high-quality icons in different contexts.",
+    "extensions": [
+      "icns"
+    ],
+    "aliases": [
+      "icns"
+    ]
+  },
+  {
+    "id": "ico",
+    "full_name": "Windows Icon",
+    "classification": "image",
+    "description": "ICO, or Windows Icon, is a file format used for storing icons on Microsoft Windows. It supports multiple sizes and color depths, allowing for high-quality icons in different contexts.",
+    "extensions": [
+      "ico"
+    ],
+    "aliases": [
+      "ico"
+    ]
+  },
+  {
+    "id": "ini",
+    "full_name": "Initialization Configuration",
+    "classification": "data",
+    "description": "INI, or Initialization Configuration, is a file format used for configuration files in software applications. It consists of sections, properties, and values, allowing for easy customization of application settings.",
+    "extensions": [
+      "ini"
+    ],
+    "aliases": [
+      "ini"
+    ]
+  },
+  {
+    "id": "ipynb",
+    "full_name": "Jupyter Notebook",
+    "classification": "document",
+    "description": "IPYNB, or Jupyter Notebook, is a file format used for interactive computing notebooks. It allows for the integration of code, text, and visualizations in a single document, commonly used in data science and research.",
+    "extensions": [
+      "ipynb"
+    ],
+    "aliases": [
+      "ipynb"
+    ]
+  },
+  {
+    "id": "jp2",
+    "full_name": "JPEG 2000",
+    "classification": "image",
+    "description": "JP2, or JPEG 2000, is an image file format that uses wavelet compression to provide high-quality images with efficient compression. It is designed to be a successor to the original JPEG format, offering improved performance and features.",
+    "extensions": [
+      "jp2"
+    ],
+    "aliases": [
+      "jp2"
+    ]
+  },
+  {
+    "id": "jpeg",
+    "full_name": "Joint Photographic Experts Group",
+    "classification": "image",
+    "description": "JPEG, or Joint Photographic Experts Group, is a commonly used method of lossy compression for digital images, particularly for those images produced by digital photography.",
+    "extensions": [
+      "jpeg",
+      "jpg"
+    ],
+    "aliases": [
+      "jpeg",
+      "jpg"
+    ]
+  },
+  {
+    "id": "json",
+    "full_name": "JavaScript Object Notation",
+    "classification": "data",
+    "description": "JSON, or JavaScript Object Notation, is a lightweight data interchange format that is easy for humans to read and write, and easy for machines to parse and generate. It is commonly used for transmitting data in web applications.",
+    "extensions": [
+      "json"
+    ],
+    "aliases": [
+      "json"
+    ]
+  },
+  {
+    "id": "jsonl",
+    "full_name": "JSON Lines",
+    "classification": "data",
+    "description": "JSONL, or JSON Lines, is a file format for storing structured data where each line is a valid JSON value. It is commonly used for streaming data and large datasets.",
+    "extensions": [
+      "jsonl",
+      "ndjson"
+    ],
+    "aliases": [
+      "jsonl",
+      "ndjson"
+    ]
+  },
+  {
+    "id": "jxl",
+    "full_name": "JPEG XL",
+    "classification": "image",
+    "description": "JXL, or JPEG XL, is an image file format that aims to provide high compression efficiency while maintaining image quality. It supports both lossy and lossless compression, as well as advanced features like animation and wide color gamut.",
+    "extensions": [
+      "jxl"
+    ],
+    "aliases": [
+      "jxl"
+    ]
+  },
+  {
+    "id": "key",
+    "full_name": "Apple Keynote",
+    "classification": "document",
+    "description": "Key, or Apple Keynote, is a presentation file format used by Apple's Keynote software. It allows users to create and deliver visually appealing presentations with various multimedia elements.",
+    "extensions": [
+      "key"
+    ],
+    "aliases": [
+      "key"
+    ]
+  },
+  {
+    "id": "lrf",
+    "full_name": "Sony BroadBand eBook",
+    "classification": "ebook",
+    "description": "LRF, or Sony BroadBand eBook, is a file format used for eBooks, primarily supported by Sony's eBook readers.",
+    "extensions": [
+      "lrf"
+    ],
+    "aliases": [
+      "lrf"
+    ]
+  },
+  {
+    "id": "m4a",
+    "full_name": "MPEG-4 Audio",
+    "classification": "audio",
+    "description": "M4A, or MPEG-4 Audio, is an audio file container used for storing digital audio data. It is commonly used for music files and supports high-quality audio compression.",
+    "extensions": [
+      "alac",
+      "m4a"
+    ],
+    "aliases": [
+      "alac",
+      "m4a"
+    ]
+  },
+  {
+    "id": "m4v",
+    "full_name": "MPEG-4 Video",
+    "classification": "video",
+    "description": "M4V, or MPEG-4 Video, is a video file container used for storing digital video data. It is commonly used for video files and supports high-quality video compression.",
+    "extensions": [
+      "m4v"
+    ],
+    "aliases": [
+      "m4v"
+    ]
+  },
+  {
+    "id": "md",
+    "full_name": "Markdown",
+    "classification": "document",
+    "description": "Markdown, or MD, is a lightweight markup language with plain text formatting syntax. It is commonly used for creating formatted text using a plain text editor.",
+    "extensions": [
+      "md"
+    ],
+    "aliases": [
+      "md"
+    ]
+  },
+  {
+    "id": "mediawiki",
+    "full_name": "Mediawiki",
+    "classification": "document",
+    "description": "Mediawiki is a markup language used for creating and formatting content on MediaWiki-based websites, such as Wikipedia. It allows users to create and edit pages using a simple syntax for formatting text, creating links, and adding multimedia content.",
+    "extensions": [
+      "mediawiki"
+    ],
+    "aliases": [
+      "mediawiki"
+    ]
+  },
+  {
+    "id": "mka",
+    "full_name": "Matroska Audio",
+    "classification": "audio",
+    "description": "MKA, or Matroska Audio, is an audio file container used for storing multiple audio tracks in a single file. It is part of the Matroska multimedia container format.",
+    "extensions": [
+      "mka"
+    ],
+    "aliases": [
+      "mka"
+    ]
+  },
+  {
+    "id": "mkv",
+    "full_name": "Matroska Video",
+    "classification": "video",
+    "description": "MKV, or Matroska Video, is a video file container used for storing multiple video, audio, and subtitle tracks in a single file. It is part of the Matroska multimedia container format.",
+    "extensions": [
+      "mkv"
+    ],
+    "aliases": [
+      "mkv"
+    ]
+  },
+  {
+    "id": "mobi",
+    "full_name": "Mobipocket eBook",
+    "classification": "ebook",
+    "description": "MOBI, or Mobipocket eBook, is a file format used for eBooks, primarily supported by Mobipocket Reader software.",
+    "extensions": [
+      "mobi"
+    ],
+    "aliases": [
+      "mobi"
+    ]
+  },
+  {
+    "id": "mov",
+    "full_name": "QuickTime Movie",
+    "classification": "video",
+    "description": "MOV, or QuickTime Movie, is a multimedia container file format developed by Apple. It is commonly used for storing video, audio, and text tracks.",
+    "extensions": [
+      "mov"
+    ],
+    "aliases": [
+      "mov"
+    ]
+  },
+  {
+    "id": "mp2",
+    "full_name": "MPEG-1 Audio Layer II",
+    "classification": "audio",
+    "description": "MP2, or MPEG-1 Audio Layer II, is an audio file format used for storing digital audio data. It is commonly used for music files and supports high-quality audio compression.",
+    "extensions": [
+      "mp2"
+    ],
+    "aliases": [
+      "mp2"
+    ]
+  },
+  {
+    "id": "mp3",
+    "full_name": "MPEG Audio Layer III",
+    "classification": "audio",
+    "description": "MP3, or MPEG Audio Layer III, is an audio file format used for storing digital audio data. It is commonly used for music files and supports high-quality audio compression.",
+    "extensions": [
+      "mp3"
+    ],
+    "aliases": [
+      "mp3"
+    ]
+  },
+  {
+    "id": "mp4",
+    "full_name": "MPEG-4 Part 14",
+    "classification": "video",
+    "description": "MP4, or MPEG-4 Part 14, is a digital multimedia container format commonly used to store video and audio. It is widely supported across various platforms and devices.",
+    "extensions": [
+      "mp4"
+    ],
+    "aliases": [
+      "mp4"
+    ]
+  },
+  {
+    "id": "mpeg",
+    "full_name": "Moving Picture Experts Group Video",
+    "classification": "video",
+    "description": "MPEG, or Moving Picture Experts Group Video, is a video file format used for storing digital video data. It is commonly used for movies and video clips and supports various compression methods.",
+    "extensions": [
+      "mpeg",
+      "mpg"
+    ],
+    "aliases": [
+      "mpeg",
+      "mpg"
+    ]
+  },
+  {
+    "id": "mpl",
+    "full_name": "MPL2 Subtitle",
+    "classification": "subtitle",
+    "description": "MPL, or MPL2 Subtitle, is a subtitle file format used for storing subtitle text and timing information. It is commonly used for adding subtitles to video content.",
+    "extensions": [
+      "mpl"
+    ],
+    "aliases": [
+      "mpl"
+    ]
+  },
+  {
+    "id": "msg",
+    "full_name": "Microsoft Outlook Message",
+    "classification": "email",
+    "description": "MSG, or Microsoft Outlook Message, is a file format used for storing email messages, including the message body, attachments, and metadata. It is primarily used by Microsoft Outlook.",
+    "extensions": [
+      "msg"
+    ],
+    "aliases": [
+      "msg"
+    ]
+  },
+  {
+    "id": "msp",
+    "full_name": "Microsoft Paint Image",
+    "classification": "image",
+    "description": "MSP, or Microsoft Paint Image, is an image file format used for storing raster graphics. It is commonly used with Microsoft Paint software.",
+    "extensions": [
+      "msp"
+    ],
+    "aliases": [
+      "msp"
+    ]
+  },
+  {
+    "id": "muse",
+    "full_name": "Adobe Muse Document",
+    "classification": "document",
+    "description": "MUSE, or Adobe Muse Document, is a file format used for storing web design projects created with Adobe Muse. It allows designers to create responsive websites without writing code.",
+    "extensions": [
+      "muse"
+    ],
+    "aliases": [
+      "muse"
+    ]
+  },
+  {
+    "id": "odp",
+    "full_name": "OpenDocument Presentation",
+    "classification": "document",
+    "description": "ODP, or OpenDocument Presentation, is a file format used for creating and storing presentation documents. It is part of the OpenDocument standard and is commonly used for slideshows and presentations.",
+    "extensions": [
+      "odp"
+    ],
+    "aliases": [
+      "odp"
+    ]
+  },
+  {
+    "id": "ods",
+    "full_name": "OpenDocument Spreadsheet",
+    "classification": "data",
+    "description": "ODS, or OpenDocument Spreadsheet, is a file format used for creating and storing spreadsheet documents. It is part of the OpenDocument standard and is commonly used for data analysis and calculations.",
+    "extensions": [
+      "ods"
+    ],
+    "aliases": [
+      "ods"
+    ]
+  },
+  {
+    "id": "odt",
+    "full_name": "OpenDocument Text",
+    "classification": "document",
+    "description": "ODT, or OpenDocument Text, is a file format used for creating and storing text documents. It is part of the OpenDocument standard and is commonly used for word processing.",
+    "extensions": [
+      "odt"
+    ],
+    "aliases": [
+      "odt"
+    ]
+  },
+  {
+    "id": "oga",
+    "full_name": "Ogg Audio Container",
+    "classification": "audio",
+    "description": "OGA, or Ogg Audio Container, is a file format used for storing audio data. It is part of the Ogg multimedia framework and is commonly used for high-quality audio compression.",
+    "extensions": [
+      "oga"
+    ],
+    "aliases": [
+      "oga"
+    ]
+  },
+  {
+    "id": "ogv",
+    "full_name": "Ogg Video Container",
+    "classification": "video",
+    "description": "OGV, or Ogg Video Container, is a file format used for storing video data. It is part of the Ogg multimedia framework and is commonly used for high-quality video compression.",
+    "extensions": [
+      "ogv"
+    ],
+    "aliases": [
+      "ogv"
+    ]
+  },
+  {
+    "id": "opml",
+    "full_name": "Outline Processor Markup Language",
+    "classification": "document",
+    "description": "",
+    "extensions": [
+      "opml"
+    ],
+    "aliases": [
+      "opml"
+    ]
+  },
+  {
+    "id": "opus",
+    "full_name": "Opus Audio Codec",
+    "classification": "audio",
+    "description": "Opus, or Opus Audio Codec, is a file format used for encoding audio data. It is commonly used for real-time communication and streaming due to its low latency and high-quality audio compression.",
+    "extensions": [
+      "opus"
+    ],
+    "aliases": [
+      "opus"
+    ]
+  },
+  {
+    "id": "orc",
+    "full_name": "Optimized Row Columnar",
+    "classification": "data",
+    "description": "ORC, or Optimized Row Columnar, is a file format used for storing data in a columnar format. It is commonly used for big data processing and analytics due to its efficient storage and retrieval capabilities.",
+    "extensions": [
+      "orc"
+    ],
+    "aliases": [
+      "orc"
+    ]
+  },
+  {
+    "id": "org",
+    "full_name": "Emacs Org Mode Document",
+    "classification": "document",
+    "description": "Org, or Emacs Org Mode Document, is a file format used for organizing and managing notes, tasks, and projects. It is commonly used within the Emacs text editor for personal information management.",
+    "extensions": [
+      "org"
+    ],
+    "aliases": [
+      "org"
+    ]
+  },
+  {
+    "id": "otf",
+    "full_name": "OpenType Font",
+    "classification": "font",
+    "description": "OTF, or OpenType Font, is a file format used for scalable computer fonts. It is commonly used for digital typography and supports advanced typographic features.",
+    "extensions": [
+      "otf"
+    ],
+    "aliases": [
+      "otf"
+    ]
+  },
+  {
+    "id": "parquet",
+    "full_name": "Parquet",
+    "classification": "data",
+    "description": "Parquet is a columnar storage file format optimized for use with big data processing frameworks. It is commonly used for efficient data storage and retrieval in analytics applications.",
+    "extensions": [
+      "parquet"
+    ],
+    "aliases": [
+      "parquet"
+    ]
+  },
+  {
+    "id": "pbm",
+    "full_name": "Portable Bitmap",
+    "classification": "image",
+    "description": "PBM, or Portable Bitmap, is a file format used for storing black-and-white images. It is part of the Netpbm format family and is commonly used for simple image storage and manipulation.",
+    "extensions": [
+      "pbm"
+    ],
+    "aliases": [
+      "pbm"
+    ]
+  },
+  {
+    "id": "pcx",
+    "full_name": "PiCture eXchange",
+    "classification": "image",
+    "description": "PCX, or PiCture eXchange, is a file format used for storing raster graphics. It was widely used in early computer graphics applications and supports simple image compression.",
+    "extensions": [
+      "pcx"
+    ],
+    "aliases": [
+      "pcx"
+    ]
+  },
+  {
+    "id": "pdb",
+    "full_name": "Palm Database Ebook",
+    "classification": "ebook",
+    "description": "PDB, or Palm Database Ebook, is a file format used for storing eBooks and other digital publications. It is commonly used on Palm OS devices for reading and managing electronic books.",
+    "extensions": [
+      "pdb"
+    ],
+    "aliases": [
+      "pdb"
+    ]
+  },
+  {
+    "id": "pdf",
+    "full_name": "Portable Document Format",
+    "classification": "document",
+    "description": "PDF, or Portable Document Format, is a file format used for representing documents in a manner independent of application software, hardware, and operating systems. It is commonly used for sharing and printing documents.",
+    "extensions": [
+      "pdf"
+    ],
+    "aliases": [
+      "pdf"
+    ]
+  },
+  {
+    "id": "pgm",
+    "full_name": "Portable Graymap",
+    "classification": "image",
+    "description": "PGM, or Portable Graymap, is a file format used for storing grayscale images. It is part of the Netpbm format family and is commonly used for simple image storage and manipulation.",
+    "extensions": [
+      "pgm"
+    ],
+    "aliases": [
+      "pgm"
+    ]
+  },
+  {
+    "id": "png",
+    "full_name": "Portable Network Graphics",
+    "classification": "image",
+    "description": "PNG, or Portable Network Graphics, is a file format used for lossless image compression. It is commonly used for web graphics and supports transparency and a wide range of colors.",
+    "extensions": [
+      "png"
+    ],
+    "aliases": [
+      "png"
+    ]
+  },
+  {
+    "id": "pot",
+    "full_name": "Microsoft PowerPoint Template",
+    "classification": "document",
+    "description": "POT, or Microsoft PowerPoint Template, is a file format used for creating and saving presentation templates. It is commonly used for designing consistent slide layouts and styles in PowerPoint presentations.",
+    "extensions": [
+      "pot"
+    ],
+    "aliases": [
+      "pot"
+    ]
+  },
+  {
+    "id": "potx",
+    "full_name": "Microsoft PowerPoint Template",
+    "classification": "document",
+    "description": "POTX, or Microsoft PowerPoint Template, is a file format used for creating and saving presentation templates in PowerPoint. It is commonly used for designing consistent slide layouts and styles without macros.",
+    "extensions": [
+      "potx"
+    ],
+    "aliases": [
+      "potx"
+    ]
+  },
+  {
+    "id": "ppm",
+    "full_name": "Portable Pixmap",
+    "classification": "image",
+    "description": "PPM, or Portable Pixmap, is a file format used for storing color images. It is part of the Netpbm format family and is commonly used for simple image storage and manipulation.",
+    "extensions": [
+      "ppm"
+    ],
+    "aliases": [
+      "ppm"
+    ]
+  },
+  {
+    "id": "pps",
+    "full_name": "Microsoft PowerPoint Slide Show",
+    "classification": "document",
+    "description": "PPS, or Microsoft PowerPoint Slide Show, is a file format used for saving PowerPoint presentations as slide shows. It is commonly used for presenting slides without allowing editing of the content.",
+    "extensions": [
+      "pps"
+    ],
+    "aliases": [
+      "pps"
+    ]
+  },
+  {
+    "id": "ppsx",
+    "full_name": "Microsoft PowerPoint Slide Show",
+    "classification": "document",
+    "description": "PPSX, or Microsoft PowerPoint Slide Show, is a file format used for saving PowerPoint presentations as slide shows. It is commonly used for presenting slides without allowing editing of the content, and it supports newer features and formats introduced in recent versions of PowerPoint.",
+    "extensions": [
+      "ppsx"
+    ],
+    "aliases": [
+      "ppsx"
+    ]
+  },
+  {
+    "id": "ppt",
+    "full_name": "Microsoft PowerPoint Presentation",
+    "classification": "document",
+    "description": "PPT, or Microsoft PowerPoint Presentation, is a file format used for creating and saving presentation slides. It is commonly used for designing and delivering presentations in PowerPoint.",
+    "extensions": [
+      "ppt"
+    ],
+    "aliases": [
+      "ppt"
+    ]
+  },
+  {
+    "id": "pptm",
+    "full_name": "Microsoft PowerPoint Macro-Enabled Presentation",
+    "classification": "document",
+    "description": "PPTM, or Microsoft PowerPoint Macro-Enabled Presentation, is a file format used for creating and saving presentation slides that contain macros. It is commonly used for designing and delivering presentations in PowerPoint that require automation or interactive features through macros.",
+    "extensions": [
+      "pptm"
+    ],
+    "aliases": [
+      "pptm"
+    ]
+  },
+  {
+    "id": "pptx",
+    "full_name": "Microsoft PowerPoint Presentation",
+    "classification": "document",
+    "description": "PPTX, or Microsoft PowerPoint Presentation, is a file format used for creating and saving presentation slides. It is commonly used for designing and delivering presentations in PowerPoint, and it supports newer features and formats introduced in recent versions of PowerPoint.",
+    "extensions": [
+      "pptx"
+    ],
+    "aliases": [
+      "pptx"
+    ]
+  },
+  {
+    "id": "psd",
+    "full_name": "Adobe Photoshop Document",
+    "classification": "image",
+    "description": "PSD, or Adobe Photoshop Document, is a file format used for storing images with support for multiple layers, masks, and other advanced features. It is commonly used for image editing and graphic design in Adobe Photoshop.",
+    "extensions": [
+      "psd"
+    ],
+    "aliases": [
+      "psd"
+    ]
+  },
+  {
+    "id": "qoi",
+    "full_name": "Quite OK Image",
+    "classification": "image",
+    "description": "QOI, or Quite OK Image, is a file format used for storing images with a focus on simplicity and speed. It is commonly used for fast image encoding and decoding.",
+    "extensions": [
+      "qoi"
+    ],
+    "aliases": [
+      "qoi"
+    ]
+  },
+  {
+    "id": "rar",
+    "full_name": "Roshal Archive",
+    "classification": "archive",
+    "description": "RAR, or Roshal Archive, is a file format used for data compression and archiving. It is commonly used for creating compressed archives that can contain multiple files and folders.",
+    "extensions": [
+      "rar"
+    ],
+    "aliases": [
+      "rar"
+    ]
+  },
+  {
+    "id": "rst",
+    "full_name": "reStructuredText",
+    "classification": "document",
+    "description": "RST, or reStructuredText, is a file format used for writing structured text. It is commonly used for technical documentation and supports various markup elements for formatting text.",
+    "extensions": [
+      "rst"
+    ],
+    "aliases": [
+      "rst"
+    ]
+  },
+  {
+    "id": "rtf",
+    "full_name": "Rich Text Format",
+    "classification": "document",
+    "description": "RTF, or Rich Text Format, is a file format used for text documents that supports text formatting, images, and other elements. It is commonly used for exchanging documents between different word processors.",
+    "extensions": [
+      "rtf"
+    ],
+    "aliases": [
+      "rtf"
+    ]
+  },
+  {
+    "id": "sav",
+    "full_name": "SPSS Data File",
+    "classification": "data",
+    "description": "SAV, or SPSS Data File, is a file format used for storing data in SPSS (Statistical Package for the Social Sciences). It is commonly used for statistical analysis and data management.",
+    "extensions": [
+      "sav"
+    ],
+    "aliases": [
+      "sav"
+    ]
+  },
+  {
+    "id": "sgi",
+    "full_name": "Silicon Graphics Image",
+    "classification": "image",
+    "description": "SGI, or Silicon Graphics Image, is a file format used for storing images. It is commonly used for graphics and image processing in Silicon Graphics workstations.",
+    "extensions": [
+      "sgi"
+    ],
+    "aliases": [
+      "sgi"
+    ]
+  },
+  {
+    "id": "snb",
+    "full_name": "Shanda Bambook Ebook",
+    "classification": "ebook",
+    "description": "SNB, or Shanda Bambook Ebook, is a file format used for eBooks, primarily supported by Shanda Bambook eReaders.",
+    "extensions": [
+      "snb"
+    ],
+    "aliases": [
+      "snb"
+    ]
+  },
+  {
+    "id": "sqlite",
+    "full_name": "SQLite Database File",
+    "classification": "data",
+    "description": "SQLite, or SQLite Database File, is a file format used for storing structured data in a lightweight, self-contained database. It is commonly used in applications that require a simple, efficient, and reliable database engine.",
+    "extensions": [
+      "sqlite"
+    ],
+    "aliases": [
+      "sqlite"
+    ]
+  },
+  {
+    "id": "srt",
+    "full_name": "SubRip Subtitle",
+    "classification": "subtitle",
+    "description": "SRT, or SubRip Subtitle, is a file format used for subtitle files. It is commonly used for storing subtitles for movies and TV shows, including timing information for each subtitle.",
+    "extensions": [
+      "srt"
+    ],
+    "aliases": [
+      "srt"
+    ]
+  },
+  {
+    "id": "ssa",
+    "full_name": "SubStation Alpha",
+    "classification": "subtitle",
+    "description": "SSA, or SubStation Alpha, is a file format used for subtitle files. It is commonly used for creating and displaying subtitles with advanced formatting and timing options.",
+    "extensions": [
+      "ssa"
+    ],
+    "aliases": [
+      "ssa"
+    ]
+  },
+  {
+    "id": "sub",
+    "full_name": "MicroDVD / VobSub Subtitle",
+    "classification": "subtitle",
+    "description": "SUB, or MicroDVD / VobSub Subtitle, is a file format used for subtitle files. It is used for storing subtitles and is widely supported by players like MPlayer and VLC",
+    "extensions": [
+      "sub"
+    ],
+    "aliases": [
+      "sub"
+    ]
+  },
+  {
+    "id": "svg",
+    "full_name": "Scalable Vector Graphics",
+    "classification": "image",
+    "description": "SVG, or Scalable Vector Graphics, is a file format used for storing vector graphics. It is commonly used for web graphics and supports scalability without loss of quality.",
+    "extensions": [
+      "svg"
+    ],
+    "aliases": [
+      "svg"
+    ]
+  },
+  {
+    "id": "tar",
+    "full_name": "Tape Archive",
+    "classification": "archive",
+    "description": "TAR, or Tape Archive, is a file format used for storing multiple files in a single archive file. It is commonly used for backup and distribution purposes.",
+    "extensions": [
+      "tar"
+    ],
+    "aliases": [
+      "tar"
+    ]
+  },
+  {
+    "id": "tar.bz2",
+    "full_name": "Bzip2-Compressed TAR Archive",
+    "classification": "archive",
+    "description": "Bzip2-Compressed TAR Archive, or TAR.BZ2, is a file format used for storing multiple files in a single archive file with Bzip2 compression. It is commonly used for backup and distribution purposes.",
+    "extensions": [
+      "tar.bz2",
+      "tbz2"
+    ],
+    "aliases": [
+      "tar.bz2",
+      "tbz2"
+    ]
+  },
+  {
+    "id": "tar.gz",
+    "full_name": "Gzip-Compressed TAR Archive",
+    "classification": "archive",
+    "description": "Gzip-Compressed TAR Archive, or TAR.GZ, is a file format used for storing multiple files in a single archive file with Gzip compression. It is commonly used for backup and distribution purposes.",
+    "extensions": [
+      "tar.gz",
+      "tgz"
+    ],
+    "aliases": [
+      "tar.gz",
+      "tgz"
+    ]
+  },
+  {
+    "id": "tar.xz",
+    "full_name": "XZ-Compressed TAR Archive",
+    "classification": "archive",
+    "description": "XZ-Compressed TAR Archive, or TAR.XZ, is a file format used for storing multiple files in a single archive file with XZ compression. It is commonly used for backup and distribution purposes.",
+    "extensions": [
+      "tar.xz",
+      "txz"
+    ],
+    "aliases": [
+      "tar.xz",
+      "txz"
+    ]
+  },
+  {
+    "id": "tar.zst",
+    "full_name": "Zstandard-Compressed TAR Archive",
+    "classification": "archive",
+    "description": "Zstandard-Compressed TAR Archive, or TAR.ZST, is a file format used for storing multiple files in a single archive file with Zstandard compression. It is commonly used for backup and distribution purposes.",
+    "extensions": [
+      "tar.zst",
+      "tzst"
+    ],
+    "aliases": [
+      "tar.zst",
+      "tzst"
+    ]
+  },
+  {
+    "id": "tex",
+    "full_name": "LaTeX",
+    "classification": "document",
+    "description": "TEX, or LaTeX, is a document preparation system and markup language used for creating high-quality documents, especially those containing complex mathematical expressions.",
+    "extensions": [
+      "latex",
+      "tex"
+    ],
+    "aliases": [
+      "latex",
+      "tex"
+    ]
+  },
+  {
+    "id": "textile",
+    "full_name": "Textile",
+    "classification": "document",
+    "description": "Textile is a lightweight markup language that uses a simple syntax to convert plain text into structured HTML. It is commonly used for writing content for web pages and blogs.",
+    "extensions": [
+      "textile"
+    ],
+    "aliases": [
+      "textile"
+    ]
+  },
+  {
+    "id": "tga",
+    "full_name": "Truevision Graphics Adapter",
+    "classification": "image",
+    "description": "TGA, or Truevision Graphics Adapter, is a raster graphics file format created by Truevision Inc. It is commonly used for storing images with high color depth and supports various pixel formats.",
+    "extensions": [
+      "tga"
+    ],
+    "aliases": [
+      "tga"
+    ]
+  },
+  {
+    "id": "tiff",
+    "full_name": "Tagged Image File Format",
+    "classification": "image",
+    "description": "TIFF, or Tagged Image File Format, is a file format used for storing raster graphics images. It is commonly used for high-quality image storage and supports various color depths and compression methods.",
+    "extensions": [
+      "tif",
+      "tiff"
+    ],
+    "aliases": [
+      "tif",
+      "tiff"
+    ]
+  },
+  {
+    "id": "tmp",
+    "full_name": "TMPlayer Subtitle Format",
+    "classification": "subtitle",
+    "description": "TMP, or TMPlayer Subtitle Format, is a file format used for storing subtitle information for video content. It is commonly used for displaying captions and subtitles in media players.",
+    "extensions": [
+      "tmp"
+    ],
+    "aliases": [
+      "tmp"
+    ]
+  },
+  {
+    "id": "toml",
+    "full_name": "Tom's Obvious, Minimal Language",
+    "classification": "data",
+    "description": "TOML, or Tom's Obvious, Minimal Language, is a configuration file format that is easy to read due to its simple syntax. It is commonly used for configuration files in software projects.",
+    "extensions": [
+      "toml"
+    ],
+    "aliases": [
+      "toml"
+    ]
+  },
+  {
+    "id": "toon",
+    "full_name": "Token Oriented Object Notation",
+    "classification": "data",
+    "description": "TOON, or Token Oriented Object Notation, is a data serialization format that is designed to be simple and easy to read. It is commonly used for configuration files and data exchange between applications.",
+    "extensions": [
+      "toon",
+      "toons"
+    ],
+    "aliases": [
+      "toon",
+      "toons"
+    ]
+  },
+  {
+    "id": "ts",
+    "full_name": "MPEG Transport Stream",
+    "classification": "video",
+    "description": "MPEG Transport Stream, or TS, is a standard format for transmitting audio, video, and data. It is commonly used for broadcasting and streaming applications.",
+    "extensions": [
+      "ts"
+    ],
+    "aliases": [
+      "ts"
+    ]
+  },
+  {
+    "id": "tsv",
+    "full_name": "Tab-Separated Values",
+    "classification": "data",
+    "description": "TSV, or Tab-Separated Values, is a simple file format used for storing tabular data. Each line in a TSV file represents a row, and columns are separated by tabs.",
+    "extensions": [
+      "tsv"
+    ],
+    "aliases": [
+      "tsv"
+    ]
+  },
+  {
+    "id": "ttf",
+    "full_name": "TrueType Font",
+    "classification": "font",
+    "description": "TTF, or TrueType Font, is a font file format developed by Apple and Microsoft. It is commonly used for scalable fonts in both desktop and web applications.",
+    "extensions": [
+      "ttf"
+    ],
+    "aliases": [
+      "ttf"
+    ]
+  },
+  {
+    "id": "txt",
+    "full_name": "Plain Text",
+    "classification": "document",
+    "description": "TXT, or Plain Text, is a file format used for storing unformatted text. It is commonly used for simple documents, notes, and configuration files.",
+    "extensions": [
+      "txt"
+    ],
+    "aliases": [
+      "txt"
+    ]
+  },
+  {
+    "id": "vcf",
+    "full_name": "vCard",
+    "classification": "document",
+    "description": "VCF, or vCard, is a file format used for storing contact information. It is commonly used for exchanging contact details between applications and devices.",
+    "extensions": [
+      "vcf"
+    ],
+    "aliases": [
+      "vcf"
+    ]
+  },
+  {
+    "id": "vtt",
+    "full_name": "Web Video Text Tracks",
+    "classification": "subtitle",
+    "description": "VTT, or Web Video Text Tracks, is a file format used for displaying captions and subtitles in web videos. It is commonly used for providing accessibility and translation options.",
+    "extensions": [
+      "vtt"
+    ],
+    "aliases": [
+      "vtt"
+    ]
+  },
+  {
+    "id": "wav",
+    "full_name": "Waveform Audio File Format",
+    "classification": "audio",
+    "description": "WAV, or Waveform Audio File Format, is a file format used for storing audio data. It is commonly used for high-quality audio storage and supports uncompressed audio data.",
+    "extensions": [
+      "wav"
+    ],
+    "aliases": [
+      "wav"
+    ]
+  },
+  {
+    "id": "webm",
+    "full_name": "Web Movie",
+    "classification": "video",
+    "description": "WebM, or Web Movie, is a video file format designed for the web. It is commonly used for streaming and online video content due to its efficient compression and high quality.",
+    "extensions": [
+      "webm"
+    ],
+    "aliases": [
+      "webm"
+    ]
+  },
+  {
+    "id": "webp",
+    "full_name": "Web Picture",
+    "classification": "image",
+    "description": "WebP, or Web Picture, is an image file format designed for the web. It is commonly used for web graphics due to its efficient compression and high quality.",
+    "extensions": [
+      "webp"
+    ],
+    "aliases": [
+      "webp"
+    ]
+  },
+  {
+    "id": "wma",
+    "full_name": "Windows Media Audio",
+    "classification": "audio",
+    "description": "WMA, or Windows Media Audio, is an audio file format developed by Microsoft. It is commonly used for streaming and storing audio content with various levels of compression.",
+    "extensions": [
+      "wma"
+    ],
+    "aliases": [
+      "wma"
+    ]
+  },
+  {
+    "id": "wmv",
+    "full_name": "Windows Media Video",
+    "classification": "video",
+    "description": "WMV, or Windows Media Video, is a video file format developed by Microsoft. It is commonly used for streaming and storing video content with various levels of compression.",
+    "extensions": [
+      "wmv"
+    ],
+    "aliases": [
+      "wmv"
+    ]
+  },
+  {
+    "id": "woff",
+    "full_name": "Web Open Font Format",
+    "classification": "font",
+    "description": "WOFF, or Web Open Font Format, is a font file format used for web fonts. It is commonly used for embedding fonts in web pages while maintaining good performance and compatibility.",
+    "extensions": [
+      "woff"
+    ],
+    "aliases": [
+      "woff"
+    ]
+  },
+  {
+    "id": "woff2",
+    "full_name": "Web Open Font Format 2",
+    "classification": "font",
+    "description": "WOFF2, or Web Open Font Format 2, is an improved version of the WOFF font format. It is commonly used for embedding fonts in web pages with better compression and performance.",
+    "extensions": [
+      "woff2"
+    ],
+    "aliases": [
+      "woff2"
+    ]
+  },
+  {
+    "id": "xbm",
+    "full_name": "X BitMap",
+    "classification": "image",
+    "description": "XBM, or X BitMap, is an image file format used for storing monochrome bitmap images. It is commonly used in X Window System applications.",
+    "extensions": [
+      "xbm"
+    ],
+    "aliases": [
+      "xbm"
+    ]
+  },
+  {
+    "id": "xls",
+    "full_name": "Microsoft Excel Spreadsheet",
+    "classification": "data",
+    "description": "XLS, or Microsoft Excel Spreadsheet, is a file format used for storing spreadsheet data. It is commonly used for data analysis, financial modeling, and other tabular data applications.",
+    "extensions": [
+      "xls"
+    ],
+    "aliases": [
+      "xls"
+    ]
+  },
+  {
+    "id": "xlsx",
+    "full_name": "Microsoft Excel Open XML Spreadsheet",
+    "classification": "data",
+    "description": "XLSX, or Microsoft Excel Open XML Spreadsheet, is a file format used for storing spreadsheet data in an XML-based format. It is commonly used for data analysis, financial modeling, and other tabular data applications.",
+    "extensions": [
+      "xlsx"
+    ],
+    "aliases": [
+      "xlsx"
+    ]
+  },
+  {
+    "id": "xml",
+    "full_name": "Extensible Markup Language",
+    "classification": "document",
+    "description": "XML, or Extensible Markup Language, is a markup language used for encoding documents in a format that is both human-readable and machine-readable. It is commonly used for data interchange and storage.",
+    "extensions": [
+      "xml"
+    ],
+    "aliases": [
+      "xml"
+    ]
+  },
+  {
+    "id": "xpm",
+    "full_name": "X PixMap",
+    "classification": "image",
+    "description": "XPM, or X PixMap, is an image file format used for storing color icons and pixmaps. It is commonly used in X Window System applications.",
+    "extensions": [
+      "xpm"
+    ],
+    "aliases": [
+      "xpm"
+    ]
+  },
+  {
+    "id": "xpt",
+    "full_name": "SAS Transport File",
+    "classification": "data",
+    "description": "XPT, or SAS Transport File, is a file format used for exchanging data between different versions of SAS software. It is commonly used for data analysis and reporting.",
+    "extensions": [
+      "xpt"
+    ],
+    "aliases": [
+      "xpt"
+    ]
+  },
+  {
+    "id": "yaml",
+    "full_name": "YAML Ain't Markup Language",
+    "classification": "data",
+    "description": "YAML, or YAML Ain't Markup Language, is a human-readable data serialization standard that can be used in conjunction with all programming languages and is often used to write configuration files.",
+    "extensions": [
+      "yaml",
+      "yml"
+    ],
+    "aliases": [
+      "yaml",
+      "yml"
+    ]
+  },
+  {
+    "id": "zip",
+    "full_name": "Zip Archive",
+    "classification": "archive",
+    "description": "ZIP, or Zip Archive, is a file format used for compressing and archiving files. It is commonly used for reducing file size and bundling multiple files together.",
+    "extensions": [
+      "zip"
+    ],
+    "aliases": [
+      "zip"
+    ]
+  }
+]

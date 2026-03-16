@@ -5,6 +5,7 @@ import { CONVERSIONS_METADATA } from '../seo.ts'
 
 const CONVERSIONS_URL =
   'https://raw.githubusercontent.com/transmute-app/conversion-compatibility/refs/heads/main/supported_conversions.json'
+const MEDIA_TYPES_URL = '/reference_data/media_types.json'
 
 interface Conversion {
   converter_name: string
@@ -12,118 +13,87 @@ interface Conversion {
   output_format: string
 }
 
-const IMAGE_FORMATS = new Set([
-  'png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'tiff', 'tif', 'svg', 'ico',
-  'heic', 'heif', 'pbm', 'pgm', 'ppm', 'sgi', 'tga', 'pcx', 'jp2',
-])
-const VIDEO_FORMATS = new Set([
-  'mp4', 'mkv', 'avi', 'mov', 'webm', 'wmv', 'flv', 'mpg', 'mpeg', 'ts',
-  'm4v', '3gp', 'f4v', 'ogv', 'asf', 'gif',
-])
-const AUDIO_FORMATS = new Set([
-  'mp3', 'wav', 'flac', 'aac', 'm4a', 'ogg', 'oga', 'opus', 'wma', 'ac3',
-  'mka', 'mp2', 'aiff',
-])
-const DOCUMENT_FORMATS = new Set([
-  'pdf', 'docx', 'odt', 'md', 'txt', 'html', 'rst', 'tex', 'org',
-  'rtf', 'latex', 'textile', 'dbk', 'mediawiki', 'ipynb', 'muse', 'opml',
-  'jira', 'asciidoc',
-])
-const EBOOK_FORMATS = new Set([
-  'azw3', 'epub', 'fb2', 'mobi', 'pdb', 'snb', 'lrf',
-])
-const PRESENTATION_FORMATS = new Set<string>([
-  'pptx', 'ppt', 'odp', 'key', 'pps', 'ppsx', 'pot', 'potx',
-])
-const DATA_FORMATS = new Set([
-  'csv', 'json', 'xlsx', 'yaml', 'parquet', 'xml', 'sqlite', 'parquet', 'feather', 
-  'vcf', 'dbf', 'jsonl', 'toon', 'sav', 'dta', 'tsv', 'xls', 'xlsx', 'xpt'
-])
-const DIAGRAM_FORMATS = new Set([
-  'drawio',
-])
-const CAD_FORMATS = new Set<string>([
-  'dwg', 'dxf', 'step', 'stp', 'iges', 'igs',
-])
-const MODEL_3D_FORMATS = new Set<string>([
-  'stl', 'obj', 'fbx', 'gltf', 'glb', '3ds', 'blend', 'ply', 'dae', 'amf', '3mf',
-])
-const AUDIOBOOK_FORMATS = new Set<string>([
-  'm4b', 'aax', 'aa',
-])
-const ARCHIVE_FORMATS = new Set<string>([
-  'zip', 'tar', 'gz', 'bz2', '7z', 'rar', 'xz', 'zst',
-  'tar.gz', 'tar.bz2', 'tar.xz', 'tar.zst',
-])
-const FONT_FORMATS = new Set<string>([
-  'ttf', 'otf', 'woff', 'woff2', 'eot',
-])
-const SUBTITLE_FORMATS = new Set<string>([
-  'srt', 'vtt', 'ass', 'ssa', 'sub',
-])
-const EMAIL_FORMATS = new Set<string>([
-  'eml', 'msg', 'mbox',
-])
+interface MediaType {
+  id?: string
+  classification?: string
+  extensions?: string[]
+  aliases?: string[]
+}
 
-function getCategory(fmt: string, outputs?: string[]): string {
-  const f = fmt.toLowerCase()
-  if (DIAGRAM_FORMATS.has(f)) return 'Diagrams'
-  // gif is ambiguous; treat it as Image when it appears as input to image converters
-  // but the set membership already handles it — VIDEO_FORMATS wins because we check Image first here
-  if (IMAGE_FORMATS.has(f) && !VIDEO_FORMATS.has(f)) return 'Image'
-  if (VIDEO_FORMATS.has(f)) return 'Video'
-  if (AUDIO_FORMATS.has(f)) return 'Audio'
-  if (AUDIOBOOK_FORMATS.has(f)) return 'Audiobook'
-  if (DOCUMENT_FORMATS.has(f)) return 'Document'
-  if (EBOOK_FORMATS.has(f)) return 'Ebook'
-  if (DATA_FORMATS.has(f)) return 'Data'
-  if (PRESENTATION_FORMATS.has(f)) return 'Presentation'
-  if (CAD_FORMATS.has(f)) return 'CAD'
-  if (MODEL_3D_FORMATS.has(f)) return '3D Model'
-  if (ARCHIVE_FORMATS.has(f)) return 'Archive'
-  if (FONT_FORMATS.has(f)) return 'Font'
-  if (SUBTITLE_FORMATS.has(f)) return 'Subtitle'
-  if (EMAIL_FORMATS.has(f)) return 'Email'
-  // Unknown input format — infer from output formats (most common non-Other category wins)
-  if (outputs && outputs.length > 0) {
-    const counts = new Map<string, number>()
-    for (const o of outputs) {
-      const cat = getCategory(o)
-      if (cat !== 'Other') counts.set(cat, (counts.get(cat) ?? 0) + 1)
-    }
-    if (counts.size > 0) {
-      return Array.from(counts.entries()).sort((a, b) => b[1] - a[1])[0][0]
+type CategoryStyle = { badge: string; dot: string }
+
+const OTHER_CATEGORY = 'Other'
+const RAINBOW_STYLES: CategoryStyle[] = [
+  { badge: 'text-red-400 bg-red-400/10 border-red-400/20', dot: 'bg-red-400' },
+  { badge: 'text-orange-400 bg-orange-400/10 border-orange-400/20', dot: 'bg-orange-400' },
+  { badge: 'text-amber-400 bg-amber-400/10 border-amber-400/20', dot: 'bg-amber-400' },
+  { badge: 'text-green-400 bg-green-400/10 border-green-400/20', dot: 'bg-green-400' },
+  { badge: 'text-cyan-400 bg-cyan-400/10 border-cyan-400/20', dot: 'bg-cyan-400' },
+  { badge: 'text-blue-400 bg-blue-400/10 border-blue-400/20', dot: 'bg-blue-400' },
+  { badge: 'text-violet-400 bg-violet-400/10 border-violet-400/20', dot: 'bg-violet-400' },
+]
+const OTHER_CATEGORY_STYLE: CategoryStyle = {
+  badge: 'text-gray-400 bg-gray-400/10 border-gray-400/20',
+  dot: 'bg-gray-400',
+}
+
+function toCategoryLabel(classification: string | undefined): string {
+  const normalized = classification?.trim().toLowerCase()
+  if (!normalized) return OTHER_CATEGORY
+
+  return normalized
+    .split(/[_\s-]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ')
+}
+
+function buildCategoryMetadata(mediaTypes: MediaType[]) {
+  const formatToCategory = new Map<string, string>()
+  const categoryCounts = new Map<string, number>()
+
+  for (const mediaType of mediaTypes) {
+    const category = toCategoryLabel(mediaType.classification)
+    categoryCounts.set(category, (categoryCounts.get(category) ?? 0) + 1)
+
+    const formats = new Set<string>()
+    if (mediaType.id) formats.add(mediaType.id)
+    for (const extension of mediaType.extensions ?? []) formats.add(extension)
+    for (const alias of mediaType.aliases ?? []) formats.add(alias)
+
+    for (const format of formats) {
+      const normalizedFormat = format.trim().toLowerCase()
+      if (!normalizedFormat) continue
+      if (!formatToCategory.has(normalizedFormat)) {
+        formatToCategory.set(normalizedFormat, category)
+      }
     }
   }
 
-  return 'Other'
+  categoryCounts.delete(OTHER_CATEGORY)
+
+  const orderedCategories = Array.from(categoryCounts.entries())
+    .sort((a, b) => {
+      if (b[1] !== a[1]) return b[1] - a[1]
+      return a[0].localeCompare(b[0])
+    })
+    .map(([category]) => category)
+
+  const categoryStyles = new Map<string, CategoryStyle>()
+  orderedCategories.forEach((category, index) => {
+    categoryStyles.set(category, RAINBOW_STYLES[index % RAINBOW_STYLES.length])
+  })
+  categoryStyles.set(OTHER_CATEGORY, OTHER_CATEGORY_STYLE)
+
+  return {
+    formatToCategory,
+    orderedCategories: [...orderedCategories, OTHER_CATEGORY],
+    categoryStyles,
+  }
 }
 
-// Categories are shown in this order; empty ones are automatically hidden by presentCategories.
-const CATEGORY_ORDER = [
-  'Image', 'Video', 'Audio', 'Audiobook',
-  'Document', 'Presentation', 'Ebook', 'Data', 'Diagrams',
-  'CAD', '3D Model', 'Archive', 'Font', 'Subtitle', 'Email',
-  'Other',
-]
-
-const CATEGORY_STYLES: Record<string, { badge: string; dot: string }> = {
-  Image:     { badge: 'text-blue-400 bg-blue-400/10 border-blue-400/20',     dot: 'bg-blue-400' },
-  Video:     { badge: 'text-purple-400 bg-purple-400/10 border-purple-400/20', dot: 'bg-purple-400' },
-  Audio:     { badge: 'text-green-400 bg-green-400/10 border-green-400/20',   dot: 'bg-green-400' },
-  Audiobook: { badge: 'text-lime-400 bg-lime-400/10 border-lime-400/20',      dot: 'bg-lime-400' },
-  Document:  { badge: 'text-amber-400 bg-amber-400/10 border-amber-400/20',   dot: 'bg-amber-400' },
-  Ebook:     { badge: 'text-pink-400 bg-pink-400/10 border-pink-400/20',      dot: 'bg-pink-400' },
-  Data:         { badge: 'text-cyan-400 bg-cyan-400/10 border-cyan-400/20',      dot: 'bg-cyan-400' },
-  Presentation: { badge: 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20', dot: 'bg-yellow-400' },
-  Diagrams:     { badge: 'text-primary bg-primary/10 border-primary/20',         dot: 'bg-primary' },
-  CAD:       { badge: 'text-orange-400 bg-orange-400/10 border-orange-400/20', dot: 'bg-orange-400' },
-  '3D Model':{ badge: 'text-rose-400 bg-rose-400/10 border-rose-400/20',      dot: 'bg-rose-400' },
-  Archive:   { badge: 'text-indigo-400 bg-indigo-400/10 border-indigo-400/20', dot: 'bg-indigo-400' },
-  Font:      { badge: 'text-fuchsia-400 bg-fuchsia-400/10 border-fuchsia-400/20', dot: 'bg-fuchsia-400' },
-  Subtitle:  { badge: 'text-sky-400 bg-sky-400/10 border-sky-400/20',         dot: 'bg-sky-400' },
-  Email:     { badge: 'text-violet-400 bg-violet-400/10 border-violet-400/20',   dot: 'bg-violet-400' },
-  Other:     { badge: 'text-gray-400 bg-gray-400/10 border-gray-400/20',      dot: 'bg-gray-400' },
+function getCategory(formatToCategory: Map<string, string>, fmt: string): string {
+  return formatToCategory.get(fmt.toLowerCase()) ?? OTHER_CATEGORY
 }
 
 function Highlight({ text, query }: { text: string; query: string }) {
@@ -149,19 +119,26 @@ export default function Conversions() {
   })
 
   const [conversions, setConversions] = useState<Conversion[]>([])
+  const [mediaTypes, setMediaTypes] = useState<MediaType[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch(CONVERSIONS_URL)
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`)
-        return r.json() as Promise<Conversion[]>
+    Promise.all([
+      fetch(CONVERSIONS_URL).then((response) => {
+        if (!response.ok) throw new Error(`Conversions HTTP ${response.status}`)
+        return response.json() as Promise<Conversion[]>
+      }),
+      fetch(MEDIA_TYPES_URL).then((response) => {
+        if (!response.ok) throw new Error(`Media types HTTP ${response.status}`)
+        return response.json() as Promise<MediaType[]>
       })
-      .then((data) => {
-        setConversions(data)
+    ])
+      .then(([conversionData, mediaTypeData]) => {
+        setConversions(conversionData)
+        setMediaTypes(mediaTypeData)
         setLoading(false)
       })
       .catch((err: Error) => {
@@ -169,6 +146,11 @@ export default function Conversions() {
         setLoading(false)
       })
   }, [])
+
+  const categoryMetadata = useMemo(
+    () => buildCategoryMetadata(mediaTypes),
+    [mediaTypes],
+  )
 
   // Group by input_format → Set of output_formats
   const grouped = useMemo(() => {
@@ -185,18 +167,26 @@ export default function Conversions() {
     return Array.from(grouped.entries())
       .map(([input, outputSet]) => {
         const outputs = Array.from(outputSet).sort()
-        return { input, outputs, category: getCategory(input, outputs) }
+        return {
+          input,
+          outputs,
+          category: getCategory(categoryMetadata.formatToCategory, input),
+        }
       })
       .sort((a, b) => {
         const ci =
-          CATEGORY_ORDER.indexOf(a.category) - CATEGORY_ORDER.indexOf(b.category)
+          categoryMetadata.orderedCategories.indexOf(a.category) -
+          categoryMetadata.orderedCategories.indexOf(b.category)
         return ci !== 0 ? ci : a.input.localeCompare(b.input)
       })
-  }, [grouped])
+  }, [categoryMetadata, grouped])
 
   const presentCategories = useMemo(
-    () => CATEGORY_ORDER.filter((c) => entries.some((e) => e.category === c)),
-    [entries],
+    () =>
+      categoryMetadata.orderedCategories.filter((category) =>
+        entries.some((entry) => entry.category === category),
+      ),
+    [categoryMetadata, entries],
   )
 
   const filtered = useMemo(() => {
@@ -204,12 +194,15 @@ export default function Conversions() {
     const results = entries.filter((e) => {
       if (activeCategory && e.category !== activeCategory) return false
       if (!q) return true
-      return e.input.includes(q) || e.outputs.some((o) => o.includes(q))
+      return (
+        e.input.toLowerCase().includes(q) ||
+        e.outputs.some((o) => o.toLowerCase().includes(q))
+      )
     })
     if (!q) return results
     return results.sort((a, b) => {
-      const aMatch = a.input.includes(q)
-      const bMatch = b.input.includes(q)
+      const aMatch = a.input.toLowerCase().includes(q)
+      const bMatch = b.input.toLowerCase().includes(q)
       if (aMatch !== bMatch) return aMatch ? -1 : 1
       return 0
     })
@@ -284,7 +277,8 @@ export default function Conversions() {
                 All
               </button>
               {presentCategories.map((cat) => {
-                const style = CATEGORY_STYLES[cat] ?? CATEGORY_STYLES.Other
+                const style =
+                  categoryMetadata.categoryStyles.get(cat) ?? OTHER_CATEGORY_STYLE
                 const isActive = activeCategory === cat
                 return (
                   <button
@@ -312,7 +306,9 @@ export default function Conversions() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filtered.map(({ input, outputs, category }) => {
-                const style = CATEGORY_STYLES[category] ?? CATEGORY_STYLES.Other
+                const style =
+                  categoryMetadata.categoryStyles.get(category) ??
+                  OTHER_CATEGORY_STYLE
                 const q = search.toLowerCase().trim()
                 return (
                   <div
