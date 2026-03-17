@@ -1,5 +1,71 @@
 [
   {
+    "id": "apng",
+    "full_name": "Animated Portable Network Graphics",
+    "classification": "image",
+    "description": "APNG, or Animated Portable Network Graphics, is an extension of the PNG image format that supports animation. It allows for multiple frames to be stored in a single file, enabling the creation of animated images while maintaining the lossless compression and transparency features of PNG.",
+    "extensions": [
+      "apng"
+    ],
+    "aliases": [
+      "apng"
+    ]
+  },
+  {
+    "id": "eps",
+    "full_name": "Encapsulated PostScript",
+    "classification": "image",
+    "description": "EPS, or Encapsulated PostScript, is a file format used for vector graphics and images. It is commonly used in desktop publishing and graphic design applications for storing high-quality graphics that can be scaled without loss of quality.",
+    "extensions": [
+      "eps"
+    ],
+    "aliases": [
+      "eps"
+    ]
+  },
+  {
+    "id": "mpo",
+    "full_name": "Multi-Picture Object",
+    "classification": "image",
+    "description": "MPO, or Multi-Picture Object, is a file format used for storing multiple images in a single file. It is commonly used for 3D images and allows for the storage of multiple views of the same scene.",
+    "extensions": [
+      "mpo"
+    ],
+    "aliases": [
+      "mpo"
+    ]
+  },
+  {
+    "id": "pfm",
+    "full_name": "Portable FloatMap",
+    "classification": "image",
+    "description": "PFM, or Portable FloatMap, is a file format used for storing high dynamic range images. It supports floating-point pixel values, allowing for a wide range of brightness levels and precise color representation.",
+    "extensions": [
+      "pfm"
+    ],
+    "aliases": [
+      "pfm"
+    ]
+  },
+  {
+    "id": "pnm",
+    "full_name": "Portable Any Map",
+    "classification": "image",
+    "description": "PNM, or Portable Any Map, is a family of file formats used for storing raster graphics. It includes three subformats: PBM (Portable Bitmap), PGM (Portable Graymap), and PPM (Portable Pixmap), each designed for different types of images.",
+    "extensions": [
+      "pnm",
+      "pbm",
+      "pgm",
+      "ppm"
+    ],
+    "aliases": [
+      "pnm",
+      "pbm",
+      "pgm",
+      "ppm"
+    ]
+  },
+  {
     "id": "3gp",
     "full_name": "3rd Generation Partnership Project",
     "classification": "video",
