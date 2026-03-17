@@ -1,7 +1,9 @@
 import { useEffect, useState, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { FaArrowRight, FaMagnifyingGlass, FaCircleNotch } from 'react-icons/fa6'
 import { useSEO } from '../hooks/useSEO'
 import { CONVERSIONS_METADATA } from '../seo.ts'
+import { buildCategoryMetadata, getCategory } from '../lib/categories'
 
 const CONVERSIONS_URL =
   'https://raw.githubusercontent.com/transmute-app/conversion-compatibility/refs/heads/main/supported_conversions.json'
@@ -15,85 +17,10 @@ interface Conversion {
 
 interface MediaType {
   id?: string
+  full_name?: string
   classification?: string
   extensions?: string[]
   aliases?: string[]
-}
-
-type CategoryStyle = { badge: string; dot: string }
-
-const OTHER_CATEGORY = 'Other'
-const RAINBOW_STYLES: CategoryStyle[] = [
-  { badge: 'text-red-400 bg-red-400/10 border-red-400/20', dot: 'bg-red-400' },
-  { badge: 'text-orange-400 bg-orange-400/10 border-orange-400/20', dot: 'bg-orange-400' },
-  { badge: 'text-amber-400 bg-amber-400/10 border-amber-400/20', dot: 'bg-amber-400' },
-  { badge: 'text-green-400 bg-green-400/10 border-green-400/20', dot: 'bg-green-400' },
-  { badge: 'text-cyan-400 bg-cyan-400/10 border-cyan-400/20', dot: 'bg-cyan-400' },
-  { badge: 'text-blue-400 bg-blue-400/10 border-blue-400/20', dot: 'bg-blue-400' },
-  { badge: 'text-violet-400 bg-violet-400/10 border-violet-400/20', dot: 'bg-violet-400' },
-]
-const OTHER_CATEGORY_STYLE: CategoryStyle = {
-  badge: 'text-gray-400 bg-gray-400/10 border-gray-400/20',
-  dot: 'bg-gray-400',
-}
-
-function toCategoryLabel(classification: string | undefined): string {
-  const normalized = classification?.trim().toLowerCase()
-  if (!normalized) return OTHER_CATEGORY
-
-  return normalized
-    .split(/[_\s-]+/)
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ')
-}
-
-function buildCategoryMetadata(mediaTypes: MediaType[]) {
-  const formatToCategory = new Map<string, string>()
-  const categoryCounts = new Map<string, number>()
-
-  for (const mediaType of mediaTypes) {
-    const category = toCategoryLabel(mediaType.classification)
-    categoryCounts.set(category, (categoryCounts.get(category) ?? 0) + 1)
-
-    const formats = new Set<string>()
-    if (mediaType.id) formats.add(mediaType.id)
-    for (const extension of mediaType.extensions ?? []) formats.add(extension)
-    for (const alias of mediaType.aliases ?? []) formats.add(alias)
-
-    for (const format of formats) {
-      const normalizedFormat = format.trim().toLowerCase()
-      if (!normalizedFormat) continue
-      if (!formatToCategory.has(normalizedFormat)) {
-        formatToCategory.set(normalizedFormat, category)
-      }
-    }
-  }
-
-  categoryCounts.delete(OTHER_CATEGORY)
-
-  const orderedCategories = Array.from(categoryCounts.entries())
-    .sort((a, b) => {
-      if (b[1] !== a[1]) return b[1] - a[1]
-      return a[0].localeCompare(b[0])
-    })
-    .map(([category]) => category)
-
-  const categoryStyles = new Map<string, CategoryStyle>()
-  orderedCategories.forEach((category, index) => {
-    categoryStyles.set(category, RAINBOW_STYLES[index % RAINBOW_STYLES.length])
-  })
-  categoryStyles.set(OTHER_CATEGORY, OTHER_CATEGORY_STYLE)
-
-  return {
-    formatToCategory,
-    orderedCategories: [...orderedCategories, OTHER_CATEGORY],
-    categoryStyles,
-  }
-}
-
-function getCategory(formatToCategory: Map<string, string>, fmt: string): string {
-  return formatToCategory.get(fmt.toLowerCase()) ?? OTHER_CATEGORY
 }
 
 function Highlight({ text, query }: { text: string; query: string }) {
@@ -151,6 +78,14 @@ export default function Conversions() {
     () => buildCategoryMetadata(mediaTypes),
     [mediaTypes],
   )
+
+  const fullNameMap = useMemo(() => {
+    const map = new Map<string, string>()
+    for (const mt of mediaTypes) {
+      if (mt.id && mt.full_name) map.set(mt.id.toLowerCase(), mt.full_name)
+    }
+    return map
+  }, [mediaTypes])
 
   // Group by input_format → Set of output_formats
   const grouped = useMemo(() => {
@@ -278,7 +213,7 @@ export default function Conversions() {
               </button>
               {presentCategories.map((cat) => {
                 const style =
-                  categoryMetadata.categoryStyles.get(cat) ?? OTHER_CATEGORY_STYLE
+                  categoryMetadata.categoryStyles.get(cat) ?? categoryMetadata.OTHER_CATEGORY_STYLE
                 const isActive = activeCategory === cat
                 return (
                   <button
@@ -308,15 +243,16 @@ export default function Conversions() {
               {filtered.map(({ input, outputs, category }) => {
                 const style =
                   categoryMetadata.categoryStyles.get(category) ??
-                  OTHER_CATEGORY_STYLE
+                  categoryMetadata.OTHER_CATEGORY_STYLE
                 const q = search.toLowerCase().trim()
                 return (
-                  <div
+                  <Link
                     key={input}
-                    className="bg-surface-light/40 border border-gray-700/50 rounded-xl p-5 hover:border-gray-600/70 transition-colors"
+                    to={`/conversions/${input.toLowerCase()}/`}
+                    className="block bg-surface-light/40 border border-gray-700/50 rounded-xl p-5 hover:border-gray-600/70 transition-colors"
                   >
                     {/* Card header */}
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-1">
                       <span className="font-mono font-bold text-white text-base uppercase tracking-wide">
                         .<Highlight text={input} query={q} />
                       </span>
@@ -326,22 +262,30 @@ export default function Conversions() {
                         {category}
                       </span>
                     </div>
+                    {fullNameMap.get(input.toLowerCase()) && (
+                      <p className="text-xs text-text-muted mb-4">
+                        {fullNameMap.get(input.toLowerCase())}
+                      </p>
+                    )}
+                    {!fullNameMap.get(input.toLowerCase()) && <div className="mb-3" />}
 
                     {/* Outputs */}
                     <div className="flex items-start gap-2">
                       <FaArrowRight className="text-text-muted mt-0.5 h-3 w-3 shrink-0" />
                       <div className="flex flex-wrap gap-1.5">
                         {outputs.map((o) => (
-                          <span
+                          <Link
                             key={o}
+                            to={`/conversions/${o.toLowerCase()}/`}
+                            onClick={(e) => e.stopPropagation()}
                             className="font-mono text-xs bg-surface-dark/70 border border-gray-700/40 text-text-muted px-2 py-0.5 rounded-md hover:text-white hover:border-gray-600 transition-colors"
                           >
                             <Highlight text={o} query={q} />
-                          </span>
+                          </Link>
                         ))}
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 )
               })}
             </div>

@@ -19,6 +19,7 @@ import fm from 'front-matter'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const PUBLIC = resolve(__dirname, '..', 'public')
 const DOCS = resolve(PUBLIC, 'docs')
+const MEDIA_TYPES_PATH = resolve(PUBLIC, 'reference_data', 'media_types.json')
 
 const SITE_URL = 'https://transmute.sh'
 
@@ -55,6 +56,11 @@ const docs = manifest
   })
   .sort((a, b) => a.order - b.order)
 
+// ── Load media types ─────────────────────────────────────────────────
+
+const mediaTypes = JSON.parse(readFileSync(MEDIA_TYPES_PATH, 'utf-8'))
+  .filter((mt) => mt.id)
+
 // ── Generate sitemap.xml ─────────────────────────────────────────────
 
 function generateSitemap() {
@@ -64,6 +70,9 @@ function generateSitemap() {
     ),
     ...docs.map(({ slug }) =>
       `  <url>\n    <loc>${SITE_URL}/docs/${slug}/</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>`
+    ),
+    ...mediaTypes.map(({ id }) =>
+      `  <url>\n    <loc>${SITE_URL}/conversions/${id}/</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.6</priority>\n  </url>`
     ),
   ]
 

@@ -64,10 +64,37 @@ function applyRouteMetadata(html: string, metadata: RouteMetadata) {
   }, html)
 }
 
+interface MediaTypeEntry {
+  id?: string
+  full_name?: string
+  classification?: string
+  description?: string
+}
+
+function formatDetailMetadata(mt: MediaTypeEntry): RouteMetadata {
+  const id = mt.id!
+  const fullName = mt.full_name ?? id.toUpperCase()
+  return {
+    title: `${id.toUpperCase()} Converter — Convert ${fullName} Files`,
+    description: mt.description
+      ? `Convert ${id.toUpperCase()} (${fullName}) files with Transmute. ${mt.description}`
+      : `Convert ${id.toUpperCase()} files with Transmute — a free, self-hosted file converter.`,
+    path: `/conversions/${id}`,
+  }
+}
+
 async function getPublicRouteMetadata(publicDir: string) {
   const docsManifestPath = path.join(publicDir, 'docs', 'manifest.json')
-  const manifestRaw = await readFile(docsManifestPath, 'utf8')
+  const mediaTypesPath = path.join(publicDir, 'reference_data', 'media_types.json')
+
+  const [manifestRaw, mediaTypesRaw] = await Promise.all([
+    readFile(docsManifestPath, 'utf8'),
+    readFile(mediaTypesPath, 'utf8'),
+  ])
+
   const docFiles = JSON.parse(manifestRaw) as string[]
+  const mediaTypes = JSON.parse(mediaTypesRaw) as MediaTypeEntry[]
+
   const docRouteMetadata = await Promise.all(
     docFiles.map(async (file) => {
       const markdown = await readFile(path.join(publicDir, 'docs', file), 'utf8')
@@ -82,7 +109,11 @@ async function getPublicRouteMetadata(publicDir: string) {
     }),
   )
 
-  return [HOME_METADATA, DOCS_METADATA, CONVERSIONS_METADATA, ...docRouteMetadata]
+  const formatRouteMetadata = mediaTypes
+    .filter((mt) => mt.id)
+    .map(formatDetailMetadata)
+
+  return [HOME_METADATA, DOCS_METADATA, CONVERSIONS_METADATA, ...docRouteMetadata, ...formatRouteMetadata]
 }
 
 function staticRouteHtmlPlugin(): Plugin {

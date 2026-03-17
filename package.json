@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "generate-seo": "node scripts/generate-seo.js",
+    "check-coverage": "node scripts/check-coverage.js",
     "build": "node scripts/generate-seo.js && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"

@@ -4,6 +4,7 @@ import Layout from './components/Layout'
 import Home from './pages/Home'
 import Docs from './pages/Docs'
 import Conversions from './pages/Conversions'
+import FormatDetail from './pages/FormatDetail'
 import NotFound from './pages/NotFound'
 
 function ScrollToTop() {
@@ -32,6 +33,7 @@ function App() {
         <Route path="/docs/" element={<Docs />} />
         <Route path="/docs/:slug/" element={<Docs />} />
         <Route path="/conversions/" element={<Conversions />} />
+        <Route path="/conversions/:format/" element={<FormatDetail />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
