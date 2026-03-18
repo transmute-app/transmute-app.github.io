@@ -21,7 +21,7 @@ const MEDIA_TYPES_PATH = resolve(PUBLIC, 'reference_data', 'media_types.json')
 const CONVERSIONS_URL =
   'https://raw.githubusercontent.com/transmute-app/conversion-compatibility/refs/heads/main/supported_conversions.json'
 const SAMPLES_API_URL =
-  'https://api.github.com/repos/transmute-app/samples-examples/contents/samples'
+  'https://api.github.com/repos/transmute-app/transmute/contents/assets/samples'
 
 // ── Helpers ──────────────────────────────────────────────────────────
 

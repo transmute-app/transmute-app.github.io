@@ -8,9 +8,9 @@ const CONVERSIONS_URL =
   'https://raw.githubusercontent.com/transmute-app/conversion-compatibility/refs/heads/main/supported_conversions.json'
 const MEDIA_TYPES_URL = '/reference_data/media_types.json'
 const SAMPLES_BASE_URL =
-  'https://github.com/transmute-app/samples-examples/blob/main/samples'
+  'https://github.com/transmute-app/transmute/blob/main/assets/samples'
 const SAMPLES_RAW_URL =
-  'https://raw.githubusercontent.com/transmute-app/samples-examples/refs/heads/main/samples'
+  'https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/samples'
 
 interface Conversion {
   converter_name: string
