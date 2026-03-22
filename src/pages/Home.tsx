@@ -312,6 +312,36 @@ export default function Home() {
 
       <div className="divider-gradient h-px" />
 
+      {/* ────────────── OIDC / SSO ────────────── */}
+      <section className="py-20 sm:py-24 bg-surface-dark bg-grid relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-surface-dark/50 to-transparent pointer-events-none" />
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary mb-4 tracking-wide uppercase">
+              Access Control
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3">
+              OIDC / SSO Integration
+            </h2>
+            <p className="text-text-muted max-w-2xl mx-auto">
+              Let users sign in to Transmute with Authentik, Authelia, or any OpenID Connect provider instead of managing separate local credentials.
+            </p>
+          </div>
+
+          <div className="text-center">
+            <Link
+              to="/docs/oidc/"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-semibold hover:bg-primary-dark transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5"
+            >
+              Read the OIDC Docs
+              <FaArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <div className="divider-gradient h-px" />
+
       {/* ────────────── Comparison Table ────────────── */}
       <section className="py-20 sm:py-28 bg-surface-dark bg-grid relative">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-surface-dark/50 to-transparent pointer-events-none" />
