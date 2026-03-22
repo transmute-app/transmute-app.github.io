@@ -4,5 +4,6 @@
   "themes.md",
   "api-reference.md",
   "settings-reference.md",
-  "environment-variables.md"
+  "environment-variables.md",
+  "oidc.md"
 ]

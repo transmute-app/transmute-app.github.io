@@ -1,7 +1,7 @@
 ---
 title: Themes
 description: Browse all available Transmute themes with side-by-side screenshots.
-order: 3
+order: 4
 ---
 
 # Themes
