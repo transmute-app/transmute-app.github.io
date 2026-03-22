@@ -26,12 +26,12 @@ SyntaxHighlighter.registerLanguage('yaml', yaml)
 /* ------------------------------------------------------------------ */
 
 const competitors = [
-  { name: 'cloudconvert.com', noSizeLimit: false, freeApi: false, private: false },
-  { name: 'freeconvert.com', noSizeLimit: false, freeApi: false, private: false },
-  { name: 'convertio.co', noSizeLimit: false, freeApi: false, private: false },
-  { name: 'vert.sh', noSizeLimit: true, freeApi: false, private: true },
-  { name: 'convertx.org', noSizeLimit: true, freeApi: false, private: true },
-  { name: 'Transmute', noSizeLimit: true, freeApi: true, private: true },
+  { name: 'cloudconvert.com', noSizeLimit: false, freeApi: false, private: false, sso: true },
+  { name: 'freeconvert.com', noSizeLimit: false, freeApi: false, private: false, sso: true },
+  { name: 'convertio.co', noSizeLimit: false, freeApi: false, private: false, sso: true },
+  { name: 'vert.sh', noSizeLimit: true, freeApi: false, private: true, sso: false },
+  { name: 'convertx.org', noSizeLimit: true, freeApi: false, private: true, sso: false },
+  { name: 'Transmute', noSizeLimit: true, freeApi: true, private: true, sso: true },
 ]
 
 const themes = [
@@ -354,7 +354,7 @@ export default function Home() {
               What Does Transmute Replace?
             </h2>
             <p className="text-text-muted max-w-xl mx-auto">
-              These are great services, but a self-hosted file converter means you never have to upload private files to convert them.
+              These are great services, but Transmute gives you a feature rich, self-hosted option with full control over your files, workflows, and deployment.
             </p>
           </div>
 
@@ -366,6 +366,7 @@ export default function Home() {
                   <th className="px-6 py-4 font-semibold text-text-muted text-center">No Size Limits</th>
                   <th className="px-6 py-4 font-semibold text-text-muted text-center">Private</th>
                   <th className="px-6 py-4 font-semibold text-text-muted text-center">Free API</th>
+                  <th className="px-6 py-4 font-semibold text-text-muted text-center">SSO</th>
                 </tr>
               </thead>
               <tbody>
@@ -393,6 +394,11 @@ export default function Home() {
                       </td>
                       <td className="px-6 py-4 text-center">
                         {c.freeApi
+                          ? <FaCheck className="inline h-4 w-4 text-green-400" />
+                          : <FaXmark className="inline h-4 w-4 text-red-400/60" />}
+                      </td>
+                      <td className="px-6 py-4 text-center">
+                        {c.sso
                           ? <FaCheck className="inline h-4 w-4 text-green-400" />
                           : <FaXmark className="inline h-4 w-4 text-red-400/60" />}
                       </td>
