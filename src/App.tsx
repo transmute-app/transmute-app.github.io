@@ -1,11 +1,12 @@
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import Layout from './components/Layout'
-import Home from './pages/Home'
-import Docs from './pages/Docs'
-import Conversions from './pages/Conversions'
-import FormatDetail from './pages/FormatDetail'
-import NotFound from './pages/NotFound'
+
+const Home = lazy(() => import('./pages/Home'))
+const Docs = lazy(() => import('./pages/Docs'))
+const Conversions = lazy(() => import('./pages/Conversions'))
+const FormatDetail = lazy(() => import('./pages/FormatDetail'))
+const NotFound = lazy(() => import('./pages/NotFound'))
 
 function ScrollToTop() {
   const { key } = useLocation()
@@ -29,12 +30,12 @@ function App() {
     <TrailingSlash />
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/docs/" element={<Docs />} />
-        <Route path="/docs/:slug/" element={<Docs />} />
-        <Route path="/conversions/" element={<Conversions />} />
-        <Route path="/conversions/:format/" element={<FormatDetail />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/" element={<Suspense><Home /></Suspense>} />
+        <Route path="/docs/" element={<Suspense><Docs /></Suspense>} />
+        <Route path="/docs/:slug/" element={<Suspense><Docs /></Suspense>} />
+        <Route path="/conversions/" element={<Suspense><Conversions /></Suspense>} />
+        <Route path="/conversions/:format/" element={<Suspense><FormatDetail /></Suspense>} />
+        <Route path="*" element={<Suspense><NotFound /></Suspense>} />
       </Route>
     </Routes>
     </>

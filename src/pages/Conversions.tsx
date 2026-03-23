@@ -5,6 +5,9 @@ import { useSEO } from '../hooks/useSEO'
 import { CONVERSIONS_METADATA } from '../seo.ts'
 import { buildCategoryMetadata, getCategory } from '../lib/categories'
 
+/** Convert a format id (e.g. "pdf/a") to a URL-safe slug ("pdf-a"). */
+function toSlug(id: string) { return id.replace(/\//g, '-') }
+
 const CONVERSIONS_URL =
   'https://raw.githubusercontent.com/transmute-app/conversion-compatibility/refs/heads/main/supported_conversions.json'
 const MEDIA_TYPES_URL = '/reference_data/media_types.json'
@@ -248,7 +251,7 @@ export default function Conversions() {
                 return (
                   <Link
                     key={input}
-                    to={`/conversions/${input.toLowerCase()}/`}
+                    to={`/conversions/${toSlug(input.toLowerCase())}/`}
                     className="block bg-surface-light/40 border border-gray-700/50 rounded-xl p-5 hover:border-gray-600/70 transition-colors"
                   >
                     {/* Card header */}
@@ -276,7 +279,7 @@ export default function Conversions() {
                         {outputs.map((o) => (
                           <Link
                             key={o}
-                            to={`/conversions/${o.toLowerCase()}/`}
+                            to={`/conversions/${toSlug(o.toLowerCase())}/`}
                             onClick={(e) => e.stopPropagation()}
                             className="font-mono text-xs bg-surface-dark/70 border border-gray-700/40 text-text-muted px-2 py-0.5 rounded-md hover:text-white hover:border-gray-600 transition-colors"
                           >

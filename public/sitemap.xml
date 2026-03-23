@@ -26,6 +26,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://transmute.sh/docs/oidc/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://transmute.sh/docs/themes/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -72,6 +77,11 @@
   </url>
   <url>
     <loc>https://transmute.sh/conversions/aiff/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://transmute.sh/conversions/apng/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -162,6 +172,11 @@
   </url>
   <url>
     <loc>https://transmute.sh/conversions/env/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://transmute.sh/conversions/eps/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -351,6 +366,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://transmute.sh/conversions/mpo/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://transmute.sh/conversions/msg/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -441,12 +461,47 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://transmute.sh/conversions/pdf-a/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://transmute.sh/conversions/pdf-e/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://transmute.sh/conversions/pdf-ua/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://transmute.sh/conversions/pdf-vt/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://transmute.sh/conversions/pdf-x/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://transmute.sh/conversions/pfm/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://transmute.sh/conversions/pgm/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://transmute.sh/conversions/png/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://transmute.sh/conversions/pnm/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

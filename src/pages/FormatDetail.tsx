@@ -27,9 +27,15 @@ interface MediaType {
   aliases?: string[]
 }
 
+/** Convert a format id (e.g. "pdf/a") to a URL-safe slug ("pdf-a"). */
+function toSlug(id: string) { return id.replace(/\//g, '-') }
+
+/** Convert a URL slug ("pdf-a") back to the canonical format id ("pdf/a"). */
+function fromSlug(slug: string) { return slug.replace(/-/g, '/') }
+
 export default function FormatDetail() {
   const { format } = useParams<{ format: string }>()
-  const formatId = format?.toLowerCase() ?? ''
+  const urlSlug = format?.toLowerCase() ?? ''
 
   const [conversions, setConversions] = useState<Conversion[]>([])
   const [mediaTypes, setMediaTypes] = useState<MediaType[]>([])
@@ -57,6 +63,21 @@ export default function FormatDetail() {
         setLoading(false)
       })
   }, [])
+
+  // Try exact match on the slug first, then try converting hyphens to slashes
+  const formatId = useMemo(() => {
+    const exact = mediaTypes.find((mt) => mt.id?.toLowerCase() === urlSlug)
+    if (exact) return urlSlug
+    const slashed = fromSlug(urlSlug)
+    const found = mediaTypes.find((mt) => mt.id?.toLowerCase() === slashed)
+    if (found) return slashed
+    // Also check conversions for the slash variant
+    const inConversions = conversions.some(
+      (c) => c.input_format.toLowerCase() === slashed || c.output_format.toLowerCase() === slashed,
+    )
+    if (inConversions) return slashed
+    return urlSlug
+  }, [mediaTypes, conversions, urlSlug])
 
   const mediaType = useMemo(
     () => mediaTypes.find((mt) => mt.id?.toLowerCase() === formatId),
@@ -250,7 +271,7 @@ export default function FormatDetail() {
               return (
                 <Link
                   key={fmt}
-                  to={`/conversions/${fmt.toLowerCase()}/`}
+                  to={`/conversions/${toSlug(fmt.toLowerCase())}/`}
                   className={`font-mono text-sm px-3 py-1.5 rounded-lg border transition-colors hover:scale-105 ${fmtStyle.badge}`}
                 >
                   .{fmt}
@@ -278,7 +299,7 @@ export default function FormatDetail() {
               return (
                 <Link
                   key={fmt}
-                  to={`/conversions/${fmt.toLowerCase()}/`}
+                  to={`/conversions/${toSlug(fmt.toLowerCase())}/`}
                   className={`font-mono text-sm px-3 py-1.5 rounded-lg border transition-colors hover:scale-105 ${fmtStyle.badge}`}
                 >
                   .{fmt}

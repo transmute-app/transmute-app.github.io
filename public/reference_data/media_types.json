@@ -1,71 +1,5 @@
 [
   {
-    "id": "apng",
-    "full_name": "Animated Portable Network Graphics",
-    "classification": "image",
-    "description": "APNG, or Animated Portable Network Graphics, is an extension of the PNG image format that supports animation. It allows for multiple frames to be stored in a single file, enabling the creation of animated images while maintaining the lossless compression and transparency features of PNG.",
-    "extensions": [
-      "apng"
-    ],
-    "aliases": [
-      "apng"
-    ]
-  },
-  {
-    "id": "eps",
-    "full_name": "Encapsulated PostScript",
-    "classification": "image",
-    "description": "EPS, or Encapsulated PostScript, is a file format used for vector graphics and images. It is commonly used in desktop publishing and graphic design applications for storing high-quality graphics that can be scaled without loss of quality.",
-    "extensions": [
-      "eps"
-    ],
-    "aliases": [
-      "eps"
-    ]
-  },
-  {
-    "id": "mpo",
-    "full_name": "Multi-Picture Object",
-    "classification": "image",
-    "description": "MPO, or Multi-Picture Object, is a file format used for storing multiple images in a single file. It is commonly used for 3D images and allows for the storage of multiple views of the same scene.",
-    "extensions": [
-      "mpo"
-    ],
-    "aliases": [
-      "mpo"
-    ]
-  },
-  {
-    "id": "pfm",
-    "full_name": "Portable FloatMap",
-    "classification": "image",
-    "description": "PFM, or Portable FloatMap, is a file format used for storing high dynamic range images. It supports floating-point pixel values, allowing for a wide range of brightness levels and precise color representation.",
-    "extensions": [
-      "pfm"
-    ],
-    "aliases": [
-      "pfm"
-    ]
-  },
-  {
-    "id": "pnm",
-    "full_name": "Portable Any Map",
-    "classification": "image",
-    "description": "PNM, or Portable Any Map, is a family of file formats used for storing raster graphics. It includes three subformats: PBM (Portable Bitmap), PGM (Portable Graymap), and PPM (Portable Pixmap), each designed for different types of images.",
-    "extensions": [
-      "pnm",
-      "pbm",
-      "pgm",
-      "ppm"
-    ],
-    "aliases": [
-      "pnm",
-      "pbm",
-      "pgm",
-      "ppm"
-    ]
-  },
-  {
     "id": "3gp",
     "full_name": "3rd Generation Partnership Project",
     "classification": "video",
@@ -142,6 +76,18 @@
     "aliases": [
       "aif",
       "aiff"
+    ]
+  },
+  {
+    "id": "apng",
+    "full_name": "Animated Portable Network Graphics",
+    "classification": "image",
+    "description": "APNG, or Animated Portable Network Graphics, is an extension of the PNG image format that supports animation. It allows for multiple frames to be stored in a single file, enabling the creation of animated images while maintaining the lossless compression and transparency features of PNG.",
+    "extensions": [
+      "apng"
+    ],
+    "aliases": [
+      "apng"
     ]
   },
   {
@@ -358,6 +304,18 @@
     ],
     "aliases": [
       "env"
+    ]
+  },
+  {
+    "id": "eps",
+    "full_name": "Encapsulated PostScript",
+    "classification": "image",
+    "description": "EPS, or Encapsulated PostScript, is a file format used for vector graphics and images. It is commonly used in desktop publishing and graphic design applications for storing high-quality graphics that can be scaled without loss of quality.",
+    "extensions": [
+      "eps"
+    ],
+    "aliases": [
+      "eps"
     ]
   },
   {
@@ -817,6 +775,18 @@
     ]
   },
   {
+    "id": "mpo",
+    "full_name": "Multi-Picture Object",
+    "classification": "image",
+    "description": "MPO, or Multi-Picture Object, is a file format used for storing multiple images in a single file. It is commonly used for 3D images and allows for the storage of multiple views of the same scene.",
+    "extensions": [
+      "mpo"
+    ],
+    "aliases": [
+      "mpo"
+    ]
+  },
+  {
     "id": "msg",
     "full_name": "Microsoft Outlook Message",
     "classification": "email",
@@ -1033,6 +1003,78 @@
     ]
   },
   {
+    "id": "pdf/a",
+    "full_name": "PDF for Archive",
+    "classification": "document",
+    "description": "PDF/A, or PDF for Archive, is the standard format used around the world for archiving electronic documents. It allows documents to be viewed in their original appearance across different software. A PDF/A file differs from a standard PDF file in that it forbids features that aren't suitable for long-term archiving.",
+    "extensions": [
+      "pdf"
+    ],
+    "aliases": [
+      "pdf/a"
+    ]
+  },
+  {
+    "id": "pdf/e",
+    "full_name": "PDF for Engineering",
+    "classification": "document",
+    "description": "PDF/E, or PDF for Engineering, is the international standard file type used for engineering documents, identified by the International Standard Organisation as ISO 24517.",
+    "extensions": [
+      "pdf"
+    ],
+    "aliases": [
+      "pdf/e"
+    ]
+  },
+  {
+    "id": "pdf/ua",
+    "full_name": "PDF for Universal Accessibility",
+    "classification": "document",
+    "description": "PDF/UA, or PDF for Universal Accessibility, is a standard that was designed so that users with disabilities can use the same files and get the same level of value from them.",
+    "extensions": [
+      "pdf"
+    ],
+    "aliases": [
+      "pdf/ua"
+    ]
+  },
+  {
+    "id": "pdf/vt",
+    "full_name": "PDF for Variable Data Printing",
+    "classification": "document",
+    "description": "PDF/VT, or PDF for Variable Data Printing, is a variation of the PDF file format that is specifically designed to support variable data printing (VDP) in various environments.",
+    "extensions": [
+      "pdf"
+    ],
+    "aliases": [
+      "pdf/vt"
+    ]
+  },
+  {
+    "id": "pdf/x",
+    "full_name": "PDF for Graphics Exchange",
+    "classification": "document",
+    "description": "PDF/X, or PDF for Graphics Exchange, is a variant of the classic PDF editor online file format, specially designed to enable graphics exchange and meet specific needs for printing and publishing.",
+    "extensions": [
+      "pdf"
+    ],
+    "aliases": [
+      "pdf/x"
+    ]
+  },
+  {
+    "id": "pfm",
+    "full_name": "Portable FloatMap",
+    "classification": "image",
+    "description": "PFM, or Portable FloatMap, is a file format used for storing high dynamic range images. It supports floating-point pixel values, allowing for a wide range of brightness levels and precise color representation.",
+    "extensions": [
+      "pfm"
+    ],
+    "aliases": [
+      "pfm"
+    ]
+  },
+  {
     "id": "pgm",
     "full_name": "Portable Graymap",
     "classification": "image",
@@ -1054,6 +1096,24 @@
     ],
     "aliases": [
       "png"
+    ]
+  },
+  {
+    "id": "pnm",
+    "full_name": "Portable Any Map",
+    "classification": "image",
+    "description": "PNM, or Portable Any Map, is a family of file formats used for storing raster graphics. It includes three subformats: PBM (Portable Bitmap), PGM (Portable Graymap), and PPM (Portable Pixmap), each designed for different types of images.",
+    "extensions": [
+      "pnm",
+      "pbm",
+      "pgm",
+      "ppm"
+    ],
+    "aliases": [
+      "pnm",
+      "pbm",
+      "pgm",
+      "ppm"
     ]
   },
   {

@@ -151,4 +151,15 @@ function staticRouteHtmlPlugin(): Plugin {
 export default defineConfig({
   base: '/',
   plugins: [react(), staticRouteHtmlPlugin()],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'markdown': ['react-markdown', 'remark-gfm', 'rehype-highlight', 'rehype-raw'],
+          'highlight': ['highlight.js', 'react-syntax-highlighter'],
+        },
+      },
+    },
+  },
 })

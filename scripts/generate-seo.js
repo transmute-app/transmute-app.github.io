@@ -72,7 +72,7 @@ function generateSitemap() {
       `  <url>\n    <loc>${SITE_URL}/docs/${slug}/</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>`
     ),
     ...mediaTypes.map(({ id }) =>
-      `  <url>\n    <loc>${SITE_URL}/conversions/${id}/</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.6</priority>\n  </url>`
+      `  <url>\n    <loc>${SITE_URL}/conversions/${id.replace(/\//g, '-')}/</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.6</priority>\n  </url>`
     ),
   ]
 

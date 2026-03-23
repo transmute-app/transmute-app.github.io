@@ -7,6 +7,8 @@
     "dev": "vite",
     "generate-seo": "node scripts/generate-seo.js",
     "check-coverage": "node scripts/check-coverage.js",
+    "sort-media-types": "node scripts/sort-media-types.js",
+    "add-missing-formats": "node scripts/add-missing-formats.js",
     "build": "node scripts/generate-seo.js && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
