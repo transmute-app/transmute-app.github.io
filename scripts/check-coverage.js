@@ -82,9 +82,22 @@ async function main() {
 
   // ── Check 2: Media types missing a sample file ───────────────────
 
+  // Build a map of id → sample_file override
+  const sampleFileOverrides = new Map()
+  for (const mt of mediaTypes) {
+    if (mt.id && mt.sample_file) {
+      sampleFileOverrides.set(mt.id.toLowerCase(), mt.sample_file.toLowerCase())
+    }
+  }
+
   const missingSamples = Array.from(mediaTypeIds)
     .filter((id) => {
-      // Check for any file starting with "id." in the samples directory
+      // If there's an explicit sample_file override, check for that
+      const override = sampleFileOverrides.get(id)
+      if (override) {
+        return !sampleNames.has(override)
+      }
+      // Otherwise check for any file starting with "id." in the samples directory
       for (const name of sampleNames) {
         if (name === id || name.startsWith(`${id}.`)) return false
       }
