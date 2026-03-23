@@ -25,6 +25,7 @@ interface MediaType {
   description?: string
   extensions?: string[]
   aliases?: string[]
+  sample_file?: string
 }
 
 /** Convert a format id (e.g. "pdf/a") to a URL-safe slug ("pdf-a"). */
@@ -117,7 +118,7 @@ export default function FormatDetail() {
     path: `/conversions/${formatId}/`,
   })
 
-  const sampleFileName = `${formatId}.${formatId}`
+  const sampleFileName = mediaType?.sample_file ?? `${formatId}.${formatId}`
   const sampleViewUrl = `${SAMPLES_BASE_URL}/${sampleFileName}`
   const sampleDownloadUrl = `${SAMPLES_RAW_URL}/${sampleFileName}`
   const category = getCategory(categoryMetadata.formatToCategory, formatId)

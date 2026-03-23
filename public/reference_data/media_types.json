@@ -1007,6 +1007,7 @@
     "full_name": "PDF for Archive",
     "classification": "document",
     "description": "PDF/A, or PDF for Archive, is the standard format used around the world for archiving electronic documents. It allows documents to be viewed in their original appearance across different software. A PDF/A file differs from a standard PDF file in that it forbids features that aren't suitable for long-term archiving.",
+    "sample_file": "pdfa.pdf",
     "extensions": [
       "pdf"
     ],
@@ -1019,6 +1020,7 @@
     "full_name": "PDF for Engineering",
     "classification": "document",
     "description": "PDF/E, or PDF for Engineering, is the international standard file type used for engineering documents, identified by the International Standard Organisation as ISO 24517.",
+    "sample_file": "pdfe.pdf",
     "extensions": [
       "pdf"
     ],
@@ -1031,6 +1033,7 @@
     "full_name": "PDF for Universal Accessibility",
     "classification": "document",
     "description": "PDF/UA, or PDF for Universal Accessibility, is a standard that was designed so that users with disabilities can use the same files and get the same level of value from them.",
+    "sample_file": "pdfua.pdf",
     "extensions": [
       "pdf"
     ],
@@ -1043,6 +1046,7 @@
     "full_name": "PDF for Variable Data Printing",
     "classification": "document",
     "description": "PDF/VT, or PDF for Variable Data Printing, is a variation of the PDF file format that is specifically designed to support variable data printing (VDP) in various environments.",
+    "sample_file": "pdfvt.pdf",
     "extensions": [
       "pdf"
     ],
@@ -1055,6 +1059,7 @@
     "full_name": "PDF for Graphics Exchange",
     "classification": "document",
     "description": "PDF/X, or PDF for Graphics Exchange, is a variant of the classic PDF editor online file format, specially designed to enable graphics exchange and meet specific needs for printing and publishing.",
+    "sample_file": "pdfx.pdf",
     "extensions": [
       "pdf"
     ],
