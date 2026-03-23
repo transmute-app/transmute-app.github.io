@@ -6,8 +6,6 @@ order: 3
 
 OIDC support allows users to sign in to Transmute using an external identity provider such as Authentik, Authelia, or another OpenID Connect compatible SSO solution.
 
-> This feature is currently only available in the development image `:main`. It will be included in `:latest` in the next release
-
 # Configuration
 
 OIDC is configured through the following environment variables:
