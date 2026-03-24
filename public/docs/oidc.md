@@ -4,7 +4,7 @@ description: Allow login and user account creation via OIDC providers such as Au
 order: 3
 ---
 
-OIDC support allows users to sign in to Transmute using an external identity provider such as Authentik, Authelia, or another OpenID Connect compatible SSO solution.
+OIDC support allows users to sign in to Transmute using an external identity provider such as Authentik, Authelia, or another OpenID Connect compatible SSO solution. If you are using Transmute with OIDC, and your Transmute instance is behind a reverse proxy, please make sure to set your APP_URL evironment variable as well. See [environment variables](https://transmute.sh/docs/environment-variables/).
 
 # Configuration
 

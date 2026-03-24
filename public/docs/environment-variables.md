@@ -25,6 +25,8 @@ services:
     environment:
       - AUTH_SECRET_KEY=replace-with-a-long-random-string
       - AUTH_ACCESS_TOKEN_EXPIRE_MINUTES=120
+      - APP_URL=https://transmute.domain.com
+      # - APP_URL=http://http://192.168.1.113:3313
       - PORT=3313
 
 volumes:
@@ -61,7 +63,7 @@ openssl rand -base64 64
 |----------|---------|-------------|
 | `HOST` | `0.0.0.0` | Network interface the server binds to. The default binds to all interfaces, which is required inside Docker. |
 | `PORT` | `3313` | Port the server listens on inside the container. If you change this, update the `ports` mapping and health check URL in your Compose file to match. |
-| `API_DISPLAY_HOST` | `YOUR_TRANSMUTE_IP` | The hostname shown in the auto-generated API documentation. Set this to your server's IP or domain so the docs display correct example URLs. |
+| `APP_URL` | `""` | Used for constructing URLs in OIDC API response, and also used for setting the displayed URL in the API docs. |
 
 ### Storage
 
