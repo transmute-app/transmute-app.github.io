@@ -44,6 +44,7 @@ volumes:
 | `AUTH_SECRET_KEY` | *(auto-generated)* | Secret key used to sign JWT tokens. If not set, a random 64-byte key is generated on every startup — meaning all existing tokens are invalidated when the container restarts. **Set this to a fixed value** for persistent sessions across restarts. |
 | `AUTH_ALGORITHM` | `HS256` | Algorithm used for JWT signing. Unless you have a specific reason to change this, leave it as the default. |
 | `AUTH_ACCESS_TOKEN_EXPIRE_MINUTES` | `60` | How long a JWT access token remains valid, in minutes. |
+| `ALLOW_UNAUTHENTICATED` | `false` | Allow users to use the app as a temporary guest account. WARNING: DO NOT EXPOSE TRANSMUTE PUBLICALLY IF YOU ENABLE THIS. |
 
 > **Important:** If you don't set `AUTH_SECRET_KEY`, a new random key is generated each time the container starts. This means all logged-in users will be signed out and all existing JWTs will stop working after a restart. For production use, always set a fixed `AUTH_SECRET_KEY`.
 
