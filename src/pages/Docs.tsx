@@ -212,7 +212,7 @@ export default function Docs() {
                     if (href && /^\//.test(href)) {
                       return <Link to={href}>{children}</Link>
                     }
-                    return <a href={href} target="_blank" rel="noopener noreferrer" {...props}>{children}</a>
+                    return <a href={href} target="_blank" rel="noopener" {...props}>{children}</a>
                   },
                   code({ className, children, ...props }) {
                     const isInline = !className

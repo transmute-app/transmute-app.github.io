@@ -247,7 +247,7 @@ export default function FormatDetail() {
           <a
             href={sampleViewUrl}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-text-muted border border-gray-700/50 hover:text-white hover:bg-surface-light/60 transition-colors text-sm font-medium"
           >
             View on GitHub

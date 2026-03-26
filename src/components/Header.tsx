@@ -47,7 +47,7 @@ export default function Header() {
           <a
             href="https://github.com/transmute-app/transmute"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-text-muted hover:text-white hover:bg-surface-light/50 transition-colors"
           >
             <FaGithub className="h-4 w-4" />

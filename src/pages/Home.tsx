@@ -152,7 +152,7 @@ export default function Home() {
             <a
               href="https://github.com/transmute-app/transmute"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl border border-gray-700 text-text-muted font-semibold hover:text-white hover:border-gray-500 transition-all hover:-translate-y-0.5"
             >
               <FaGithub className="h-5 w-5" />
@@ -553,7 +553,7 @@ export default function Home() {
             <a
               href="https://github.com/transmute-app/openapi-specifications/blob/main/openapi.json"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-gray-700 text-text-muted font-semibold hover:text-white hover:border-gray-500 transition-all hover:-translate-y-0.5"
             >
               OpenAPI Specs
@@ -584,7 +584,7 @@ export default function Home() {
             <a
               href="https://github.com/transmute-app/transmute"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-primary text-white font-semibold hover:bg-primary-dark transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5"
             >
               <FaGithub className="h-5 w-5" />
@@ -593,7 +593,7 @@ export default function Home() {
             <a
               href="https://github.com/transmute-app/transmute/issues"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl border border-gray-700 text-text-muted font-semibold hover:text-white hover:border-gray-500 transition-all hover:-translate-y-0.5"
             >
               <FaPalette className="h-4 w-4" />
@@ -604,11 +604,11 @@ export default function Home() {
           {/* Contributors shoutout */}
           <p className="text-xs text-text-muted mt-10">
             Built with ❤ by{' '}
-            <a href="https://github.com/chase-roohms" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+            <a href="https://github.com/chase-roohms" target="_blank" rel="noopener" className="text-primary hover:underline">
               chase-roohms
             </a>{' '}
             and{' '}
-            <a href="https://github.com/transmute-app/transmute/graphs/contributors" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+            <a href="https://github.com/transmute-app/transmute/graphs/contributors" target="_blank" rel="noopener" className="text-primary hover:underline">
               contributors
             </a>
           </p>

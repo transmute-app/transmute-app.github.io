@@ -36,7 +36,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="https://github.com/transmute-app/transmute?tab=contributing-ov-file" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-white transition-colors">
+                <a href="https://github.com/transmute-app/transmute?tab=contributing-ov-file" target="_blank" rel="noopener" className="text-text-muted hover:text-white transition-colors">
                   Contributing
                 </a>
               </li>
@@ -48,17 +48,17 @@ export default function Footer() {
             <h4 className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-3">Community</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="https://github.com/transmute-app/transmute" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-white transition-colors">
+                <a href="https://github.com/transmute-app/transmute" target="_blank" rel="noopener" className="text-text-muted hover:text-white transition-colors">
                   GitHub Repository
                 </a>
               </li>
               <li>
-                <a href="https://github.com/transmute-app/transmute/issues" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-white transition-colors">
+                <a href="https://github.com/transmute-app/transmute/issues" target="_blank" rel="noopener" className="text-text-muted hover:text-white transition-colors">
                   Report an Issue
                 </a>
               </li>
               <li>
-                <a href="https://github.com/transmute-app/transmute/graphs/contributors" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-white transition-colors">
+                <a href="https://github.com/transmute-app/transmute/graphs/contributors" target="_blank" rel="noopener" className="text-text-muted hover:text-white transition-colors">
                   Contributors
                 </a>
               </li>
@@ -73,7 +73,7 @@ export default function Footer() {
           <a
             href="https://github.com/transmute-app/transmute"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
             className="inline-flex items-center gap-1.5 hover:text-white transition-colors"
           >
             <FaGithub className="h-4 w-4" />
