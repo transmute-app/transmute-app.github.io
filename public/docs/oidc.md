@@ -20,6 +20,14 @@ OIDC_DISPLAY_NAME="Authentik"
 OIDC_AUTO_CREATE_USERS=true
 ```
 
+If your provider requires you to set a "callback" or "redirect" URI, the value should be `<TRANSMUTE_URL>/api/oidc/callback`.
+
+Examples:
+- `https://transmute.domain.com/api/oidc/callback`
+- `http://192.168.1.1:3313/api/oidc/callback`
+
+Again - if you are using Transmute with OIDC, and your Transmute instance is behind a reverse proxy, please make sure to set your APP_URL evironment variable as well. See [environment variables](https://transmute.sh/docs/environment-variables/).
+
 ## Environment Variables
 
 ### OIDC_ISSUER_URL
