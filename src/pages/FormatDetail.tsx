@@ -115,7 +115,7 @@ export default function FormatDetail() {
     description: description
       ? `Convert ${formatId.toUpperCase()} (${fullName}) files with Transmute. ${description}`
       : `Convert ${formatId.toUpperCase()} files to ${outputFormats.length} formats with Transmute — a free, self-hosted file converter.`,
-    path: `/conversions/${formatId}/`,
+    path: `/conversions/${toSlug(formatId)}/`,
   })
 
   const sampleFileName = mediaType?.sample_file ?? `${formatId}.${formatId}`

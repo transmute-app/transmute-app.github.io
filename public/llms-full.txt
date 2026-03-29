@@ -234,9 +234,7 @@ API keys do not expire on their own — they remain valid until deleted or the o
 
 ---
 
-OIDC support allows users to sign in to Transmute using an external identity provider such as Authentik, Authelia, or another OpenID Connect compatible SSO solution.
-
-> This feature is currently only available in the development image `:main`. It will be included in `:latest` in the next release
+OIDC support allows users to sign in to Transmute using an external identity provider such as Authentik, Authelia, or another OpenID Connect compatible SSO solution. If you are using Transmute with OIDC, and your Transmute instance is behind a reverse proxy, please make sure to set your APP_URL evironment variable as well. See [environment variables](https://transmute.sh/docs/environment-variables/).
 
 # Configuration
 
@@ -251,6 +249,14 @@ OIDC_CLIENT_SECRET="<REPLACE_ME>"
 OIDC_DISPLAY_NAME="Authentik"
 OIDC_AUTO_CREATE_USERS=true
 ```
+
+If your provider requires you to set a "callback" or "redirect" URI, the value should be `<TRANSMUTE_URL>/api/oidc/callback`.
+
+Examples:
+- `https://transmute.domain.com/api/oidc/callback`
+- `http://192.168.1.1:3313/api/oidc/callback`
+
+Again - if you are using Transmute with OIDC, and your Transmute instance is behind a reverse proxy, please make sure to set your APP_URL evironment variable as well. See [environment variables](https://transmute.sh/docs/environment-variables/).
 
 ## Environment Variables
 
@@ -782,6 +788,8 @@ services:
     environment:
       - AUTH_SECRET_KEY=replace-with-a-long-random-string
       - AUTH_ACCESS_TOKEN_EXPIRE_MINUTES=120
+      - APP_URL=https://transmute.domain.com
+      # - APP_URL=http://http://192.168.1.113:3313
       - PORT=3313
 
 volumes:
@@ -799,6 +807,7 @@ volumes:
 | `AUTH_SECRET_KEY` | *(auto-generated)* | Secret key used to sign JWT tokens. If not set, a random 64-byte key is generated on every startup — meaning all existing tokens are invalidated when the container restarts. **Set this to a fixed value** for persistent sessions across restarts. |
 | `AUTH_ALGORITHM` | `HS256` | Algorithm used for JWT signing. Unless you have a specific reason to change this, leave it as the default. |
 | `AUTH_ACCESS_TOKEN_EXPIRE_MINUTES` | `60` | How long a JWT access token remains valid, in minutes. |
+| `ALLOW_UNAUTHENTICATED` | `false` | Allow users to use the app as a temporary guest account. WARNING: DO NOT EXPOSE TRANSMUTE PUBLICALLY IF YOU ENABLE THIS. |
 
 > **Important:** If you don't set `AUTH_SECRET_KEY`, a new random key is generated each time the container starts. This means all logged-in users will be signed out and all existing JWTs will stop working after a restart. For production use, always set a fixed `AUTH_SECRET_KEY`.
 
@@ -818,7 +827,7 @@ openssl rand -base64 64
 |----------|---------|-------------|
 | `HOST` | `0.0.0.0` | Network interface the server binds to. The default binds to all interfaces, which is required inside Docker. |
 | `PORT` | `3313` | Port the server listens on inside the container. If you change this, update the `ports` mapping and health check URL in your Compose file to match. |
-| `API_DISPLAY_HOST` | `YOUR_TRANSMUTE_IP` | The hostname shown in the auto-generated API documentation. Set this to your server's IP or domain so the docs display correct example URLs. |
+| `APP_URL` | `""` | Used for constructing URLs in OIDC API response, and also used for setting the displayed URL in the API docs. |
 
 ### Storage
 

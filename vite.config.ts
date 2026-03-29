@@ -71,15 +71,18 @@ interface MediaTypeEntry {
   description?: string
 }
 
+function toSlug(id: string) { return id.replace(/\//g, '-') }
+
 function formatDetailMetadata(mt: MediaTypeEntry): RouteMetadata {
   const id = mt.id!
+  const slug = toSlug(id)
   const fullName = mt.full_name ?? id.toUpperCase()
   return {
     title: `${id.toUpperCase()} Converter — Convert ${fullName} Files`,
     description: mt.description
       ? `Convert ${id.toUpperCase()} (${fullName}) files with Transmute. ${mt.description}`
       : `Convert ${id.toUpperCase()} files with Transmute — a free, self-hosted file converter.`,
-    path: `/conversions/${id}`,
+    path: `/conversions/${slug}`,
   }
 }
 
