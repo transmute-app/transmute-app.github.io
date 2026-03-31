@@ -15,7 +15,7 @@ body {
   margin: 0;
   background-color: #0f172a;
   color: #f8fafc;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

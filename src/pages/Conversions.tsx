@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { FaArrowRight, FaMagnifyingGlass, FaCircleNotch } from 'react-icons/fa6'
+import { FaArrowRight, FaMagnifyingGlass } from 'react-icons/fa6'
 import { useSEO } from '../hooks/useSEO'
 import { CONVERSIONS_METADATA } from '../seo.ts'
 import { buildCategoryMetadata, getCategory } from '../lib/categories'
@@ -171,10 +171,33 @@ export default function Conversions() {
 
       {/* Loading state */}
       {loading && (
-        <div className="flex flex-col items-center justify-center py-28 gap-4 text-text-muted">
-          <FaCircleNotch className="animate-spin h-8 w-8" />
-          <span>Loading conversions…</span>
-        </div>
+        <>
+          {/* Skeleton controls */}
+          <div className="mb-8 flex flex-col gap-4">
+            <div className="h-11 bg-surface-light/40 rounded-xl animate-pulse" />
+            <div className="flex flex-wrap gap-2">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="h-8 w-20 bg-surface-light/30 rounded-lg animate-pulse" />
+              ))}
+            </div>
+          </div>
+          {/* Skeleton cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div key={i} className="bg-surface-light/40 border border-gray-700/50 rounded-xl p-5 animate-pulse">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="h-5 w-16 bg-surface-light/50 rounded" />
+                  <div className="h-5 w-14 bg-surface-light/30 rounded-full" />
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {Array.from({ length: 4 }).map((_, j) => (
+                    <div key={j} className="h-6 w-12 bg-surface-dark/50 rounded-md" />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
 
       {/* Error state */}

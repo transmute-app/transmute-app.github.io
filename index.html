@@ -3,18 +3,37 @@
   <head>
     <meta charset="UTF-8" />
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-70WVV42NMY"></script>
+    <!-- Google tag (gtag.js) — deferred to avoid blocking first paint -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-70WVV42NMY');
+
+      // Load the gtag script after the page is interactive
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(function() {
+          var s = document.createElement('script');
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-70WVV42NMY';
+          s.async = true;
+          document.head.appendChild(s);
+        });
+      } else {
+        window.addEventListener('load', function() {
+          var s = document.createElement('script');
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-70WVV42NMY';
+          s.async = true;
+          document.head.appendChild(s);
+        });
+      }
     </script>
 
     <link rel="icon" type="image/png" href="/icons/beaker-red-bg.png" />
     <link rel="apple-touch-icon" href="/icons/beaker-red-bg.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Preload hero logo for faster first paint -->
+    <link rel="preload" as="image" href="/icons/beaker-red-bg.png" />
 
     <!-- Primary SEO -->
     <title data-seo="title">Self-Hosted File Converter for Images, Video, Audio & More — Transmute</title>

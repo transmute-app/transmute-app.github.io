@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { FaArrowRight, FaCircleNotch, FaDownload, FaArrowLeft } from 'react-icons/fa6'
+import { FaArrowRight, FaDownload, FaArrowLeft } from 'react-icons/fa6'
 import { useSEO } from '../hooks/useSEO'
 import { buildCategoryMetadata, getCategory } from '../lib/categories'
 
@@ -127,9 +127,27 @@ export default function FormatDetail() {
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="flex flex-col items-center justify-center py-28 gap-4 text-text-muted">
-          <FaCircleNotch className="animate-spin h-8 w-8" />
-          <span>Loading format details…</span>
+        <div className="animate-pulse">
+          {/* Back link skeleton */}
+          <div className="h-4 w-32 bg-surface-light/30 rounded mb-8" />
+          {/* Title skeleton */}
+          <div className="mb-10">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-10 w-28 bg-surface-light/40 rounded-lg" />
+              <div className="h-7 w-16 bg-surface-light/30 rounded-full" />
+            </div>
+            <div className="h-5 w-48 bg-surface-light/30 rounded mb-3" />
+            <div className="h-4 w-full max-w-xl bg-surface-light/20 rounded" />
+          </div>
+          {/* Output formats skeleton */}
+          <div className="mb-10">
+            <div className="h-5 w-44 bg-surface-light/30 rounded mb-4" />
+            <div className="flex flex-wrap gap-2">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="h-8 w-14 bg-surface-light/30 rounded-lg" />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     )
