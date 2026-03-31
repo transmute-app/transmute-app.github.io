@@ -17,6 +17,8 @@ export default function Header() {
             src={`${import.meta.env.BASE_URL}icons/beaker-red.svg`}
             alt="Transmute logo"
             className="h-8 w-8"
+            width={32}
+            height={32}
           />
           <span className="hidden sm:inline text-2xl font-bold text-primary">
             Transmute

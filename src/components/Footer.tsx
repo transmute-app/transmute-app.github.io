@@ -13,6 +13,8 @@ export default function Footer() {
                 src={`${import.meta.env.BASE_URL}icons/beaker-red.svg`}
                 alt="Transmute"
                 className="h-6 w-6"
+                width={24}
+                height={24}
               />
               <span className="text-lg font-bold text-primary">Transmute</span>
             </div>

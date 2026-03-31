@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
-import yaml from 'react-syntax-highlighter/dist/esm/languages/hljs/yaml'
-import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import {
   FaLock,
   FaBolt,
@@ -19,7 +16,26 @@ import {
 import { useSEO } from '../hooks/useSEO'
 import { HOME_METADATA } from '../seo.ts'
 
-SyntaxHighlighter.registerLanguage('yaml', yaml)
+const LazyYamlHighlighter = lazy(() =>
+  Promise.all([
+    import('react-syntax-highlighter/dist/esm/light'),
+    import('react-syntax-highlighter/dist/esm/languages/hljs/yaml'),
+    import('react-syntax-highlighter/dist/esm/styles/hljs/atom-one-dark'),
+  ]).then(([{ default: SyntaxHighlighter }, { default: yaml }, { default: atomOneDark }]) => {
+    SyntaxHighlighter.registerLanguage('yaml', yaml)
+    return {
+      default: ({ children }: { children: string }) => (
+        <SyntaxHighlighter
+          language="yaml"
+          style={atomOneDark}
+          customStyle={{ background: 'transparent', padding: 0, margin: 0, fontSize: '0.8rem' }}
+        >
+          {children}
+        </SyntaxHighlighter>
+      ),
+    }
+  }),
+)
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -115,33 +131,35 @@ export default function Home() {
         <div className="absolute inset-0 bg-spotlight pointer-events-none" />
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-28 sm:pt-20 sm:pb-36 text-center">
-          <div className="flex justify-center mb-8 animate-fade-in">
+          <div className="flex justify-center mb-8">
             <div className="relative">
               <img
                 src={`${import.meta.env.BASE_URL}icons/beaker-red-bg.png`}
                 alt="Transmute: self-hosted file converter logo"
                 className="h-24 w-24 sm:h-28 sm:w-28 drop-shadow-2xl"
+                width={112}
+                height={112}
               />
               <div className="absolute -inset-4 bg-primary/10 rounded-full blur-2xl animate-pulse-slow" />
             </div>
           </div>
 
-          <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight mb-4 animate-fade-in-up">
+          <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight mb-4">
             The <span className="gradient-text">Self-Hosted</span>{' '}
             File Converter
           </h1>
 
-          <p className="text-sm sm:text-base uppercase tracking-[0.25em] text-text-muted/60 font-medium mb-10 animate-fade-in-up">
+          <p className="text-sm sm:text-base uppercase tracking-[0.25em] text-text-muted/60 font-medium mb-10">
             Convert anything, anywhere.
           </p>
 
-          <p className="text-lg sm:text-xl text-text-muted max-w-3xl mx-auto mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
+          <p className="text-lg sm:text-xl text-text-muted max-w-3xl mx-auto mb-10 leading-relaxed">
             Transmute is an open-source, self-hosted file converter that handles images,
             video, audio, data, documents, and more; all on your own hardware.
             <span className="block mt-2 text-text-muted/80">No uploads to third-party servers. No file size limits. No watermarks.</span>
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               to="/docs/getting-started/"
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-primary text-white font-semibold hover:bg-primary-dark transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5"
@@ -161,7 +179,7 @@ export default function Home() {
           </div>
 
           {/* Tech badges */}
-          <div className="flex flex-wrap items-center justify-center gap-3 mt-12 animate-fade-in" style={{ animationDelay: '0.45s' }}>
+          <div className="flex flex-wrap items-center justify-center gap-3 mt-12">
             {['Docker Ready', 'FastAPI', 'FFmpeg', 'Pillow', 'pandas', 'PyMuPDF', 'Pandoc'].map((tech) => (
               <span key={tech} className="px-3 py-1 rounded-full text-xs font-medium bg-surface-light/60 text-text-muted border border-gray-700/50">
                 {tech}
@@ -211,12 +229,16 @@ export default function Home() {
               <div className="w-3 h-3 rounded-full bg-green-500/60" />
               <span className="ml-3 text-xs text-text-muted font-mono">localhost:3313</span>
             </div>
-            <img
-              src={screenshots[activeScreenshot].url}
-              alt={screenshots[activeScreenshot].label}
-              className="w-full"
-              loading="lazy"
-            />
+            <div className="aspect-[16/9]">
+              <img
+                src={screenshots[activeScreenshot].url}
+                alt={screenshots[activeScreenshot].label}
+                className="w-full h-full object-cover"
+                width={1920}
+                height={1080}
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -438,6 +460,8 @@ export default function Home() {
                   src={`https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/${t.name.toLowerCase()}.png`}
                   alt={`${t.name} theme`}
                   className="w-full aspect-video object-cover object-top"
+                  width={1920}
+                  height={1080}
                   loading="lazy"
                 />
                 <div className="px-4 py-3 flex items-center justify-between">
@@ -512,13 +536,9 @@ export default function Home() {
                   Loading…
                 </div>
               ) : dockerCompose !== null ? (
-                <SyntaxHighlighter
-                  language="yaml"
-                  style={atomOneDark}
-                  customStyle={{ background: 'transparent', padding: 0, margin: 0, fontSize: '0.8rem' }}
-                >
-                  {dockerCompose}
-                </SyntaxHighlighter>
+                <Suspense fallback={<pre className="text-xs text-text-muted font-mono whitespace-pre-wrap">{dockerCompose}</pre>}>
+                  <LazyYamlHighlighter>{dockerCompose}</LazyYamlHighlighter>
+                </Suspense>
               ) : (
                 <span className="text-sm text-red-400 font-mono">Failed to load docker-compose.yml</span>
               )}
