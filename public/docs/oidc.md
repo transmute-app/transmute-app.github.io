@@ -18,6 +18,7 @@ OIDC_CLIENT_ID="<REPLACE_ME>"
 OIDC_CLIENT_SECRET="<REPLACE_ME>"
 OIDC_DISPLAY_NAME="Authentik"
 OIDC_AUTO_CREATE_USERS=true
+OIDC_AUTO_LAUNCH=true
 ```
 
 If your provider requires you to set a "callback" or "redirect" URI, the value should be `<TRANSMUTE_URL>/api/oidc/callback`.
@@ -86,6 +87,10 @@ Controls whether users are automatically created in Transmute the first time the
 * `false`: users must already exist in Transmute before they can log in with OIDC
 
 Defaults to `true`.
+
+### OIDC_AUTO_LAUNCH
+
+Controls whether or not `/auth` automatically triggers the OAUTH flow, or if users should have to click "Log in with SSO" first. Setting this to true means you cannot use username and password to log in through the UI.
 
 # URL Example
 
