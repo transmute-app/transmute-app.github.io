@@ -58,6 +58,9 @@ python3 -c "import secrets; print(secrets.token_urlsafe(64))"
 openssl rand -base64 64
 ```
 
+### OIDC
+For OIDC configuration variables, please see [OIDC / SSO Integration](/docs/oidc/).
+
 ### Server
 
 | Variable | Default | Description |
