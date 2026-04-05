@@ -175,6 +175,42 @@
     ]
   },
   {
+    "id": "cb7",
+    "full_name": "7-Zip Comic Book Archive",
+    "classification": "Comic",
+    "description": "CB7, or 7-Zip Comic Book Archive, is a file format used for storing comic book pages in a compressed archive. It is similar to other comic book archive formats but uses 7-Zip compression for better compression ratios.",
+    "extensions": [
+      "cb7"
+    ],
+    "aliases": [
+      "cb7"
+    ]
+  },
+  {
+    "id": "cbr",
+    "full_name": "RAR Comic Book Archive",
+    "classification": "Comic",
+    "description": "CBR, or RAR Comic Book Archive, is a file format used for storing comic book pages in a compressed archive. It is similar to other comic book archive formats but uses RAR compression for better compression ratios.",
+    "extensions": [
+      "cbr"
+    ],
+    "aliases": [
+      "cbr"
+    ]
+  },
+  {
+    "id": "cbz",
+    "full_name": "ZIP Comic Book Archive",
+    "classification": "Comic",
+    "description": "CBZ, or ZIP Comic Book Archive, is a file format used for storing comic book pages in a compressed archive. It is similar to other comic book archive formats but uses ZIP compression for better compression ratios.",
+    "extensions": [
+      "cbz"
+    ],
+    "aliases": [
+      "cbz"
+    ]
+  },
+  {
     "id": "csv",
     "full_name": "Comma-Separated Values",
     "classification": "data",
