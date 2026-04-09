@@ -59,7 +59,7 @@ const docs = manifest
 // ── Load media types ─────────────────────────────────────────────────
 
 const mediaTypes = JSON.parse(readFileSync(MEDIA_TYPES_PATH, 'utf-8'))
-  .filter((mt) => mt.id)
+  .filter((mt) => mt.id && !mt.hide)
 
 // ── Generate sitemap.xml ─────────────────────────────────────────────
 

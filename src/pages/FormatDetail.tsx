@@ -21,6 +21,7 @@ interface Conversion {
 interface MediaType {
   id?: string
   full_name?: string
+  hide?: boolean
   classification?: string
   description?: string
   extensions?: string[]
@@ -85,10 +86,20 @@ export default function FormatDetail() {
     [mediaTypes, formatId],
   )
 
+  const isHidden = mediaType?.hide === true
+
   const categoryMetadata = useMemo(
     () => buildCategoryMetadata(mediaTypes),
     [mediaTypes],
   )
+
+  const hiddenIds = useMemo(() => {
+    const set = new Set<string>()
+    for (const mt of mediaTypes) {
+      if (mt.hide && mt.id) set.add(mt.id.toLowerCase())
+    }
+    return set
+  }, [mediaTypes])
 
   const outputFormats = useMemo(() => {
     const set = new Set<string>()
@@ -118,6 +129,7 @@ export default function FormatDetail() {
     path: `/conversions/${toSlug(formatId)}/`,
   })
 
+  const hasSampleFile = mediaType?.sample_file !== 'None'
   const sampleFileName = mediaType?.sample_file ?? `${formatId}.${formatId}`
   const sampleViewUrl = `${SAMPLES_BASE_URL}/${sampleFileName}`
   const sampleDownloadUrl = `${SAMPLES_RAW_URL}/${sampleFileName}`
@@ -166,7 +178,7 @@ export default function FormatDetail() {
 
   const hasConversions = outputFormats.length > 0 || inputFormats.length > 0
 
-  if (!mediaType && !hasConversions) {
+  if (isHidden || (!mediaType && !hasConversions)) {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center py-28">
@@ -241,6 +253,7 @@ export default function FormatDetail() {
         )}
 
         {/* Sample file download */}
+        {hasSampleFile && (
         <div className="mt-6 flex flex-wrap gap-3">
           <button
             onClick={() => {
@@ -271,6 +284,7 @@ export default function FormatDetail() {
             View on GitHub
           </a>
         </div>
+        )}
       </div>
 
       {/* Convert FROM this format */}
@@ -287,7 +301,15 @@ export default function FormatDetail() {
             {outputFormats.map((fmt) => {
               const fmtCategory = getCategory(categoryMetadata.formatToCategory, fmt)
               const fmtStyle = categoryMetadata.categoryStyles.get(fmtCategory) ?? categoryMetadata.OTHER_CATEGORY_STYLE
-              return (
+              const isHiddenFmt = hiddenIds.has(fmt.toLowerCase())
+              return isHiddenFmt ? (
+                <span
+                  key={fmt}
+                  className={`font-mono text-sm px-3 py-1.5 rounded-lg border ${fmtStyle.badge}`}
+                >
+                  .{fmt}
+                </span>
+              ) : (
                 <Link
                   key={fmt}
                   to={`/conversions/${toSlug(fmt.toLowerCase())}/`}
@@ -315,7 +337,15 @@ export default function FormatDetail() {
             {inputFormats.map((fmt) => {
               const fmtCategory = getCategory(categoryMetadata.formatToCategory, fmt)
               const fmtStyle = categoryMetadata.categoryStyles.get(fmtCategory) ?? categoryMetadata.OTHER_CATEGORY_STYLE
-              return (
+              const isHiddenFmt = hiddenIds.has(fmt.toLowerCase())
+              return isHiddenFmt ? (
+                <span
+                  key={fmt}
+                  className={`font-mono text-sm px-3 py-1.5 rounded-lg border ${fmtStyle.badge}`}
+                >
+                  .{fmt}
+                </span>
+              ) : (
                 <Link
                   key={fmt}
                   to={`/conversions/${toSlug(fmt.toLowerCase())}/`}
