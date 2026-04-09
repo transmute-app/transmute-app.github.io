@@ -21,6 +21,7 @@ interface Conversion {
 interface MediaType {
   id?: string
   full_name?: string
+  hide?: boolean
   classification?: string
   extensions?: string[]
   aliases?: string[]
@@ -90,15 +91,24 @@ export default function Conversions() {
     return map
   }, [mediaTypes])
 
+  const hiddenIds = useMemo(() => {
+    const set = new Set<string>()
+    for (const mt of mediaTypes) {
+      if (mt.hide && mt.id) set.add(mt.id.toLowerCase())
+    }
+    return set
+  }, [mediaTypes])
+
   // Group by input_format → Set of output_formats
   const grouped = useMemo(() => {
     const map = new Map<string, Set<string>>()
     for (const { input_format, output_format } of conversions) {
+      if (hiddenIds.has(input_format.toLowerCase())) continue
       if (!map.has(input_format)) map.set(input_format, new Set())
       map.get(input_format)!.add(output_format)
     }
     return map
-  }, [conversions])
+  }, [conversions, hiddenIds])
 
   // Flat list enriched with category, sorted by category order then alphabetically
   const entries = useMemo(() => {
@@ -299,16 +309,26 @@ export default function Conversions() {
                     <div className="flex items-start gap-2">
                       <FaArrowRight className="text-text-muted mt-0.5 h-3 w-3 shrink-0" />
                       <div className="flex flex-wrap gap-1.5">
-                        {outputs.map((o) => (
-                          <Link
-                            key={o}
-                            to={`/conversions/${toSlug(o.toLowerCase())}/`}
-                            onClick={(e) => e.stopPropagation()}
-                            className="font-mono text-xs bg-surface-dark/70 border border-gray-700/40 text-text-muted px-2 py-0.5 rounded-md hover:text-white hover:border-gray-600 transition-colors"
-                          >
-                            <Highlight text={o} query={q} />
-                          </Link>
-                        ))}
+                        {outputs.map((o) => {
+                          const isHiddenFmt = hiddenIds.has(o.toLowerCase())
+                          return isHiddenFmt ? (
+                            <span
+                              key={o}
+                              className="font-mono text-xs bg-surface-dark/70 border border-gray-700/40 text-text-muted px-2 py-0.5 rounded-md"
+                            >
+                              <Highlight text={o} query={q} />
+                            </span>
+                          ) : (
+                            <Link
+                              key={o}
+                              to={`/conversions/${toSlug(o.toLowerCase())}/`}
+                              onClick={(e) => e.stopPropagation()}
+                              className="font-mono text-xs bg-surface-dark/70 border border-gray-700/40 text-text-muted px-2 py-0.5 rounded-md hover:text-white hover:border-gray-600 transition-colors"
+                            >
+                              <Highlight text={o} query={q} />
+                            </Link>
+                          )
+                        })}
                       </div>
                     </div>
                   </Link>

@@ -48,7 +48,7 @@ async function main() {
   // Load local media types
   const mediaTypes = JSON.parse(readFileSync(MEDIA_TYPES_PATH, 'utf-8'))
   const mediaTypeIds = new Set(
-    mediaTypes.filter((mt) => mt.id).map((mt) => mt.id.toLowerCase()),
+    mediaTypes.filter((mt) => mt.id && !mt.hide).map((mt) => mt.id.toLowerCase()),
   )
 
   // Also build a set of all known aliases/extensions for broader matching

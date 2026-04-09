@@ -979,6 +979,19 @@
     ]
   },
   {
+    "id": "p7m",
+    "full_name": "PKCS #7 Container",
+    "classification": "other",
+    "description": "P7M is a PKCS #7 signed container used to wrap and digitally sign another file, such as a PDF, XML, CSV, invoice, or other document. A .p7m file usually contains the original document together with its digital signature, so the recipient can verify the file's origin and integrity.",
+    "sample_file": "pdf.p7m",
+    "extensions": [
+      "p7m"
+    ],
+    "aliases": [
+      "p7m"
+    ]
+  },
+  {
     "id": "parquet",
     "full_name": "Parquet",
     "classification": "data",
@@ -1613,6 +1626,20 @@
     ],
     "aliases": [
       "txt"
+    ]
+  },
+  {
+    "id": "unsigned",
+    "full_name": "Unsigned",
+    "hide": true,
+    "classification": "other",
+    "description": "Unsigned files are files that do not have a digital signature or any form of authentication. They may be considered less secure than signed files, as they lack verification of their origin and integrity.",
+    "sample_file": "None",
+    "extensions": [
+      "unsigned"
+    ],
+    "aliases": [
+      "unsigned"
     ]
   },
   {
