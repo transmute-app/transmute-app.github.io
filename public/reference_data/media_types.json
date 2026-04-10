@@ -285,7 +285,7 @@
   {
     "id": "drawio",
     "full_name": "draw.io Diagram",
-    "classification": "diagram",
+    "classification": "other",
     "description": "draw.io, also known as diagrams.net, is a web-based diagramming tool used to create flowcharts, network diagrams, UML diagrams, and other types of visual representations. The draw.io file format is used to store these diagrams.",
     "extensions": [
       "drawio"
