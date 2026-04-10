@@ -235,18 +235,6 @@
     ]
   },
   {
-    "id": "dbk",
-    "full_name": "DocBook",
-    "classification": "document",
-    "description": "DocBook is a semantic markup language for technical documentation. It is used to create structured documents such as books, articles, and manuals, and can be transformed into various output formats like HTML, PDF, and EPUB.",
-    "extensions": [
-      "dbk"
-    ],
-    "aliases": [
-      "dbk"
-    ]
-  },
-  {
     "id": "dcx",
     "full_name": "Multipage PCX Image File",
     "classification": "image",
@@ -686,18 +674,6 @@
     ],
     "aliases": [
       "md"
-    ]
-  },
-  {
-    "id": "mediawiki",
-    "full_name": "Mediawiki",
-    "classification": "document",
-    "description": "Mediawiki is a markup language used for creating and formatting content on MediaWiki-based websites, such as Wikipedia. It allows users to create and edit pages using a simple syntax for formatting text, creating links, and adding multimedia content.",
-    "extensions": [
-      "mediawiki"
-    ],
-    "aliases": [
-      "mediawiki"
     ]
   },
   {
@@ -1540,18 +1516,6 @@
     "aliases": [
       "tif",
       "tiff"
-    ]
-  },
-  {
-    "id": "tmp",
-    "full_name": "TMPlayer Subtitle Format",
-    "classification": "subtitle",
-    "description": "TMP, or TMPlayer Subtitle Format, is a file format used for storing subtitle information for video content. It is commonly used for displaying captions and subtitles in media players.",
-    "extensions": [
-      "tmp"
-    ],
-    "aliases": [
-      "tmp"
     ]
   },
   {
