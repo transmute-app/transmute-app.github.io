@@ -241,11 +241,11 @@ export default function FormatDetail() {
                 </span>
               </div>
             )}
-            {mediaType.aliases && mediaType.aliases.length > 0 && (
+            {mediaType.aliases && mediaType.aliases.filter((a) => a.toLowerCase() !== formatId).length > 0 && (
               <div>
                 <span className="text-text-muted">Also known as: </span>
                 <span className="text-white">
-                  {mediaType.aliases.join(', ')}
+                  {mediaType.aliases.filter((a) => a.toLowerCase() !== formatId).join(', ')}
                 </span>
               </div>
             )}
