@@ -1,0 +1,32 @@
+---
+title: UI Translations
+description: Translations of the Transmute UI provided by other users.
+order: 8
+---
+
+# UI Translations
+
+Transmute supports community-contributed UI translations.
+
+Currently supported languages are:
+- English
+- German
+
+If you want to add a new language, open a pull request similar to [this example](https://github.com/transmute-app/transmute/pull/109/changes).
+
+## How to Add a Translation
+
+1. Add a new JSON file in [`frontend/src/i18n`](https://github.com/transmute-app/transmute/tree/main/frontend/src/i18n).
+2. Use [`frontend/src/i18n/en.json`](https://github.com/transmute-app/transmute/blob/main/frontend/src/i18n/en.json) as the source file and match its keys exactly.
+3. Register the new language in [`frontend/src/i18n/index.ts`](https://github.com/transmute-app/transmute/blob/main/frontend/src/i18n/index.ts).
+4. Open a pull request with the new translation file and the index update.
+
+## Important Notes
+
+- The translation file should keep the same structure and keys as `en.json`.
+- If a key is missing or renamed, parts of the UI may fall back to English or fail to display the expected text.
+- It helps to mention the language code and native language name in the pull request description.
+
+## Maintainer Note
+
+English is the only language I can personally review. Any non-English translations included in Transmute were supplied by users and other contributors.
