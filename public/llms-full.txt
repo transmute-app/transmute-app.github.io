@@ -234,7 +234,7 @@ API keys do not expire on their own — they remain valid until deleted or the o
 
 ---
 
-OIDC support allows users to sign in to Transmute using an external identity provider such as Authentik, Authelia, or another OpenID Connect compatible SSO solution. If you are using Transmute with OIDC, and your Transmute instance is behind a reverse proxy, please make sure to set your APP_URL evironment variable as well. See [environment variables](https://transmute.sh/docs/environment-variables/).
+OIDC support allows users to sign in to Transmute using an external identity provider such as Authentik, Authelia, or another OpenID Connect compatible SSO solution. If you are using Transmute with OIDC, and your Transmute instance is behind a reverse proxy, please make sure to set your `APP_URL` evironment variable as well. See [environment variables](/docs/environment-variables/).
 
 # Configuration
 
@@ -248,6 +248,7 @@ OIDC_CLIENT_ID="<REPLACE_ME>"
 OIDC_CLIENT_SECRET="<REPLACE_ME>"
 OIDC_DISPLAY_NAME="Authentik"
 OIDC_AUTO_CREATE_USERS=true
+OIDC_AUTO_LAUNCH=true
 ```
 
 If your provider requires you to set a "callback" or "redirect" URI, the value should be `<TRANSMUTE_URL>/api/oidc/callback`.
@@ -256,11 +257,11 @@ Examples:
 - `https://transmute.domain.com/api/oidc/callback`
 - `http://192.168.1.1:3313/api/oidc/callback`
 
-Again - if you are using Transmute with OIDC, and your Transmute instance is behind a reverse proxy, please make sure to set your APP_URL evironment variable as well. See [environment variables](https://transmute.sh/docs/environment-variables/).
+Again - if you are using Transmute with OIDC, and your Transmute instance is behind a reverse proxy, please make sure to set your `APP_URL` evironment variable as well. See [environment variables](/docs/environment-variables/).
 
 ## Environment Variables
 
-### OIDC_ISSUER_URL
+### OIDC\_ISSUER\_URL
 
 The public issuer URL for your OIDC provider.
 
@@ -272,7 +273,7 @@ Example:
 OIDC_ISSUER_URL="https://auth.domain.com/application/o/transmute/"
 ```
 
-### OIDC_INTERNAL_URL
+### OIDC\_INTERNAL\_URL
 
 The internal URL Transmute uses to communicate with the OIDC provider from inside your Docker network or local environment.
 
@@ -286,15 +287,15 @@ Example:
 OIDC_INTERNAL_URL="http://192.168.1.1:9000/application/o/transmute/"
 ```
 
-### OIDC_CLIENT_ID
+### OIDC\_CLIENT\_ID
 
 The client ID for your OIDC application.
 
-### OIDC_CLIENT_SECRET
+### OIDC\_CLIENT\_SECRET
 
 The client secret for your OIDC application.
 
-### OIDC_DISPLAY_NAME
+### OIDC\_DISPLAY\_NAME
 
 The label shown on the login button in the Transmute UI.
 
@@ -308,7 +309,7 @@ OIDC_DISPLAY_NAME="Authentik"
 
 ![OIDC_DISPLAY_NAME set to "Authentik"](https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/login.png)
 
-### OIDC_AUTO_CREATE_USERS
+### OIDC\_AUTO\_CREATE\_USERS
 
 Controls whether users are automatically created in Transmute the first time they successfully sign in through OIDC.
 
@@ -316,6 +317,10 @@ Controls whether users are automatically created in Transmute the first time the
 * `false`: users must already exist in Transmute before they can log in with OIDC
 
 Defaults to `true`.
+
+### OIDC\_AUTO\_LAUNCH
+
+Controls whether or not `/auth` automatically triggers the OAUTH flow, or if users should have to click "Log in with SSO" first. Setting this to true means you cannot use username and password to log in through the UI.
 
 # URL Example
 
@@ -821,6 +826,9 @@ python3 -c "import secrets; print(secrets.token_urlsafe(64))"
 openssl rand -base64 64
 ```
 
+### OIDC
+For OIDC configuration variables, please see [OIDC / SSO Integration](/docs/oidc/).
+
 ### Server
 
 | Variable | Default | Description |
@@ -848,3 +856,32 @@ These control the SQLite table names. You should not change them unless you have
 | `CONVERSION_RELATIONS_TABLE_NAME` | `CONVERSION_RELATIONS` | Table linking conversions to source files |
 | `APP_SETTINGS_TABLE_NAME` | `APP_SETTINGS` | Table for per-user application settings |
 | `USER_TABLE_NAME` | `USERS` | Table for user accounts |
+
+---
+
+# UI Translations
+
+Transmute supports community-contributed UI translations.
+
+Currently supported languages are:
+- English
+- German
+
+If you want to add a new language, open a pull request similar to [this example](https://github.com/transmute-app/transmute/pull/109/changes).
+
+## How to Add a Translation
+
+1. Add a new JSON file in [`frontend/src/i18n`](https://github.com/transmute-app/transmute/tree/main/frontend/src/i18n).
+2. Use [`frontend/src/i18n/en.json`](https://github.com/transmute-app/transmute/blob/main/frontend/src/i18n/en.json) as the source file and match its keys exactly.
+3. Register the new language in [`frontend/src/i18n/index.ts`](https://github.com/transmute-app/transmute/blob/main/frontend/src/i18n/index.ts).
+4. Open a pull request with the new translation file and the index update.
+
+## Important Notes
+
+- The translation file should keep the same structure and keys as `en.json`.
+- If a key is missing or renamed, parts of the UI may fall back to English or fail to display the expected text.
+- It helps to mention the language code and native language name in the pull request description.
+
+## Maintainer Note
+
+English is the only language I can personally review. Any non-English translations included in Transmute were supplied by users and other contributors.

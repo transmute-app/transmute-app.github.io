@@ -1,0 +1,858 @@
+[
+  {
+    "slug": "getting-started",
+    "title": "Getting Started",
+    "description": "How to install and run Transmute for the first time.",
+    "sectionTitle": "Getting Started",
+    "headingId": "getting-started",
+    "text": "Getting Started How to install and run Transmute for the first time. getting-started"
+  },
+  {
+    "slug": "getting-started",
+    "title": "Getting Started",
+    "description": "How to install and run Transmute for the first time.",
+    "sectionTitle": "Getting Started",
+    "headingId": "getting-started",
+    "text": "Getting Started Transmute is a self-hosted file converter. Follow the steps below to get up and running. How to install and run Transmute for the first time. getting-started"
+  },
+  {
+    "slug": "getting-started",
+    "title": "Getting Started",
+    "description": "How to install and run Transmute for the first time.",
+    "sectionTitle": "Prerequisites",
+    "headingId": "prerequisites",
+    "text": "Prerequisites Docker and Docker Compose installed on your machine. How to install and run Transmute for the first time. getting-started"
+  },
+  {
+    "slug": "getting-started",
+    "title": "Getting Started",
+    "description": "How to install and run Transmute for the first time.",
+    "sectionTitle": "Quick Start",
+    "headingId": "quick-start",
+    "text": "Quick Start Warning: Think carefully before exposing Transmute to the public internet. Transmute includes built-in authentication and per-user data isolation, but is designed for trusted networks. If you expose it beyond your LAN, place it behind a reverse proxy with TLS and rate limiting. The maintainers are not responsible for security issues arising from your deployment configuration. Download the compose file and and start the stack with a single command: wget \"https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/docker-compose.yml\" && docker compose up -d Then open http://localhost:3313 in your browser. How to install and run Transmute for the first time. getting-started"
+  },
+  {
+    "slug": "getting-started",
+    "title": "Getting Started",
+    "description": "How to install and run Transmute for the first time.",
+    "sectionTitle": "Verifying the Installation",
+    "headingId": "verifying-the-installation",
+    "text": "Verifying the Installation Run the following command to check all services are healthy: docker compose ps You should see output similar to: NAME STATUS transmute running (healthy) Tip: If a container shows unhealthy, check its logs with docker compose logs . How to install and run Transmute for the first time. getting-started"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Authentication & Users",
+    "headingId": "authentication-users",
+    "text": "Authentication & Users How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Authentication & Users",
+    "headingId": "authentication-users",
+    "text": "Authentication & Users Transmute requires every user to authenticate before uploading, converting, or downloading files. Each user's data (uploads, conversions, settings, default formats) is fully isolated — you can only see and manage your own files. --- How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "First-Time Setup",
+    "headingId": "first-time-setup",
+    "text": "First-Time Setup When Transmute starts with an empty database, it enters bootstrap mode. The first screen you see is a Create Admin form instead of the usual login page. Choose a username and password (minimum 8 characters). Optionally fill in an email and full name. Click Create Admin. This account becomes the initial administrator. Once created, bootstrap mode is permanently disabled and all future visitors see the standard login page. Tip: If you're deploying with Docker and want to script the initial setup, you can POST to /api/users with a JSON body — the first user created is always promoted to admin regardless of the role field. --- How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Roles",
+    "headingId": "roles",
+    "text": "Roles Transmute has two roles: Role Capabilities ------ ------------- Admin Full access — manage all users, configure cleanup settings, and access everything a member can Member Upload, convert, and download their own files; manage their own account, settings, default formats, and API keys Key differences: Only admins can create, edit, disable, or delete other users. Only admins can change cleanup TTL and cleanup interval settings (under Settings → Data Management). Admins cannot demote themselves or delete their own account — another admin must do it. Members cannot see or access other users' files or conversion history. --- How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Logging In",
+    "headingId": "logging-in",
+    "text": "Logging In Navigate to your Transmute instance in a browser. Enter your username and password, then click Log In. A session token (JWT) is issued and stored in your browser — you stay logged in until the token expires (default: 60 minutes) or you log out. --- How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Managing Your Account",
+    "headingId": "managing-your-account",
+    "text": "Managing Your Account Click your username in the header to open the Account page. From here you can: Update your username, email, or full name Change your password (minimum 8 characters) Manage your API keys (see below) Changes take effect immediately after clicking Save Changes. --- How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Managing Users (Admin)",
+    "headingId": "managing-users-admin",
+    "text": "Managing Users (Admin) Admins can access the Users page from the navigation bar. From this page you can: How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Create a User",
+    "headingId": "create-a-user",
+    "text": "Create a User Click Create User. Fill in the username, password, and optionally email and full name. Choose a role (admin or member). Click Create. How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Edit a User",
+    "headingId": "edit-a-user",
+    "text": "Edit a User Click the edit button on any user card to change their username, email, full name, password, or role. You cannot edit your own role or disabled status from the Users page — use the Account page for self-service changes. How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Disable a User",
+    "headingId": "disable-a-user",
+    "text": "Disable a User Toggle the Disabled switch on a user card. Disabled users cannot log in or use API keys, but their data is preserved. Re-enable them at any time. How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Delete a User",
+    "headingId": "delete-a-user",
+    "text": "Delete a User Click the delete button on a user card. This permanently removes the user and cascade-deletes all of their data — uploads, conversions, conversion history, settings, default formats, and API keys. This action cannot be undone. Warning: You cannot delete your own admin account. If you need to remove yourself, another admin must do it. --- How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "API Keys",
+    "headingId": "api-keys",
+    "text": "API Keys API keys let you authenticate with the Transmute API without using a username and password. They're ideal for scripts, CI pipelines, and other automated workflows. How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Creating an API Key",
+    "headingId": "creating-an-api-key",
+    "text": "Creating an API Key Go to Account → API Keys. Enter a descriptive name (e.g. \"CI pipeline\" or \"Backup script\"). Click Create. Copy the key immediately — it is shown only once and cannot be retrieved later. Each user can have up to 25 API keys. How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Using an API Key",
+    "headingId": "using-an-api-key",
+    "text": "Using an API Key Pass the key as a Bearer token in the Authorization header, exactly as you would with a JWT: curl -H \"Authorization: Bearer YOUR_API_KEY\" \\ http://localhost:3313/api/files API keys have the same permissions as the user who created them. If the user account is disabled, all of its API keys stop working immediately. How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Deleting an API Key",
+    "headingId": "deleting-an-api-key",
+    "text": "Deleting an API Key Click the × button next to any key on the Account page. The key is revoked immediately. --- How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Using Authentication with the API",
+    "headingId": "using-authentication-with-the-api",
+    "text": "Using Authentication with the API All API endpoints (except health checks and bootstrap status) require a valid Bearer token. You can obtain one in two ways: How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Option 1 — Username & Password (JWT)",
+    "headingId": "option-1-username-password-jwt",
+    "text": "Option 1 — Username & Password (JWT) curl -X POST http://localhost:3313/api/users/authenticate \\ -H \"Content-Type: application/json\" \\ -d '{ \"username\": \"alice\", \"password\": \"correct horse battery staple\" }' Response: { \"access_token\": \"eyJhbGciOiJIUzI1NiIs...\", \"token_type\": \"bearer\", \"expires_in\": 3600, \"user\": { \"uuid\": \"...\", \"username\": \"alice\", \"role\": \"member\", \"disabled\": false } } Use the access_token value in subsequent requests: curl -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIs...\" \\ http://localhost:3313/api/files JWTs expire after the configured lifetime (default: 60 minutes). Request a new token when the current one expires. Tip: The OAuth2 token endpoint POST /api/users/token is also available if your HTTP client supports the standard application/x-www-form-urlencoded OAuth2 password flow. How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Option 2 — API Key",
+    "headingId": "option-2-api-key",
+    "text": "Option 2 — API Key Generate an API key from the Account page (or via POST /api/api-keys) and pass it directly as a Bearer token: curl -H \"Authorization: Bearer tm_abc123...\" \\ http://localhost:3313/api/files API keys do not expire on their own — they remain valid until deleted or the owning user is disabled. --- How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication & Users",
+    "description": "How Transmute handles accounts, roles, API keys, and authentication.",
+    "sectionTitle": "Quick Reference",
+    "headingId": "quick-reference",
+    "text": "Quick Reference Method Endpoint Auth Description -------- ---------- ------ ------------- GET /api/users/bootstrap-status None Check if first-time setup is needed POST /api/users None (bootstrap) / Admin Create a user POST /api/users/authenticate None Log in with username & password POST /api/users/token None OAuth2 password-flow token endpoint GET /api/users/me User Get the authenticated user PATCH /api/users/me User Update your own account GET /api/users Admin List all users GET /api/users/{uuid} Admin Get a user by UUID PATCH /api/users/{uuid} Admin Update a user DELETE /api/users/{uuid} Admin Delete a user and all their data GET /api/api-keys User List your API keys POST /api/api-keys User Create an API key DELETE /api/api-keys/{id} User Delete an API key How Transmute handles accounts, roles, API keys, and authentication. authentication"
+  },
+  {
+    "slug": "oidc",
+    "title": "OIDC / SSO Integration",
+    "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
+    "sectionTitle": "OIDC / SSO Integration",
+    "headingId": "oidc-sso-integration",
+    "text": "OIDC / SSO Integration OIDC support allows users to sign in to Transmute using an external identity provider such as Authentik, Authelia, or another OpenID Connect compatible SSO solution. If you are using Transmute with OIDC, and your Transmute instance is behind a reverse proxy, please make sure to set your APP_URL evironment variable as well. See environment variables. Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+  },
+  {
+    "slug": "oidc",
+    "title": "OIDC / SSO Integration",
+    "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
+    "sectionTitle": "Configuration",
+    "headingId": "configuration",
+    "text": "Configuration OIDC is configured through the following environment variables: Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+  },
+  {
+    "slug": "oidc",
+    "title": "OIDC / SSO Integration",
+    "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
+    "sectionTitle": "Examples for Authentik",
+    "headingId": "examples-for-authentik",
+    "text": "Examples for Authentik OIDC_ISSUER_URL=\"http:// /application/o/transmute/\" OIDC_INTERNAL_URL=\"http:// /application/o/transmute/\" OIDC_CLIENT_ID=\" \" OIDC_CLIENT_SECRET=\" \" OIDC_DISPLAY_NAME=\"Authentik\" OIDC_AUTO_CREATE_USERS=true OIDC_AUTO_LAUNCH=true If your provider requires you to set a \"callback\" or \"redirect\" URI, the value should be /api/oidc/callback. Examples: https://transmute.domain.com/api/oidc/callback http://192.168.1.1:3313/api/oidc/callback Again - if you are using Transmute with OIDC, and your Transmute instance is behind a reverse proxy, please make sure to set your APP_URL evironment variable as well. See environment variables. Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+  },
+  {
+    "slug": "oidc",
+    "title": "OIDC / SSO Integration",
+    "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
+    "sectionTitle": "Environment Variables",
+    "headingId": "environment-variables",
+    "text": "Environment Variables Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+  },
+  {
+    "slug": "oidc",
+    "title": "OIDC / SSO Integration",
+    "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
+    "sectionTitle": "OIDC_ISSUER_URL",
+    "headingId": "oidcissuerurl",
+    "text": "OIDC_ISSUER_URL The public issuer URL for your OIDC provider. This should be the URL Transmute uses to redirect users to your identity provider in the browser. In most setups, this is the externally accessible URL. Example: OIDC_ISSUER_URL=\"https://auth.domain.com/application/o/transmute/\" Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+  },
+  {
+    "slug": "oidc",
+    "title": "OIDC / SSO Integration",
+    "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
+    "sectionTitle": "OIDC_INTERNAL_URL",
+    "headingId": "oidcinternalurl",
+    "text": "OIDC_INTERNAL_URL The internal URL Transmute uses to communicate with the OIDC provider from inside your Docker network or local environment. This is useful when the public URL is not reachable from the Transmute container, or when you want to avoid unnecessary external routing. If not set, this defaults to OIDC_ISSUER_URL. Example: OIDC_INTERNAL_URL=\"http://192.168.1.1:9000/application/o/transmute/\" Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+  },
+  {
+    "slug": "oidc",
+    "title": "OIDC / SSO Integration",
+    "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
+    "sectionTitle": "OIDC_CLIENT_ID",
+    "headingId": "oidcclientid",
+    "text": "OIDC_CLIENT_ID The client ID for your OIDC application. Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+  },
+  {
+    "slug": "oidc",
+    "title": "OIDC / SSO Integration",
+    "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
+    "sectionTitle": "OIDC_CLIENT_SECRET",
+    "headingId": "oidcclientsecret",
+    "text": "OIDC_CLIENT_SECRET The client secret for your OIDC application. Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+  },
+  {
+    "slug": "oidc",
+    "title": "OIDC / SSO Integration",
+    "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
+    "sectionTitle": "OIDC_DISPLAY_NAME",
+    "headingId": "oidcdisplayname",
+    "text": "OIDC_DISPLAY_NAME The label shown on the login button in the Transmute UI. Defaults to SSO. Example: OIDC_DISPLAY_NAME=\"Authentik\" Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+  },
+  {
+    "slug": "oidc",
+    "title": "OIDC / SSO Integration",
+    "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
+    "sectionTitle": "OIDC_AUTO_CREATE_USERS",
+    "headingId": "oidcautocreateusers",
+    "text": "OIDC_AUTO_CREATE_USERS Controls whether users are automatically created in Transmute the first time they successfully sign in through OIDC. true: users are created automatically on first login false: users must already exist in Transmute before they can log in with OIDC Defaults to true. Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+  },
+  {
+    "slug": "oidc",
+    "title": "OIDC / SSO Integration",
+    "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
+    "sectionTitle": "OIDC_AUTO_LAUNCH",
+    "headingId": "oidcautolaunch",
+    "text": "OIDC_AUTO_LAUNCH Controls whether or not /auth automatically triggers the OAUTH flow, or if users should have to click \"Log in with SSO\" first. Setting this to true means you cannot use username and password to log in through the UI. Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+  },
+  {
+    "slug": "oidc",
+    "title": "OIDC / SSO Integration",
+    "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
+    "sectionTitle": "URL Example",
+    "headingId": "url-example",
+    "text": "URL Example A common setup uses a public URL for browser redirects and an internal URL for container-to-container communication: OIDC_ISSUER_URL=\"https://auth.domain.com/application/o/transmute/\" OIDC_INTERNAL_URL=\"http://192.168.1.1:9000/application/o/transmute/\" Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+  },
+  {
+    "slug": "oidc",
+    "title": "OIDC / SSO Integration",
+    "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
+    "sectionTitle": "Docker Compose Example",
+    "headingId": "docker-compose-example",
+    "text": "Docker Compose Example Below is a working example for integrating Transmute with Authentik: services: transmute: image: ghcr.io/transmute-app/transmute:latest container_name: transmute restart: unless-stopped ports: - 3313:3313 volumes: - transmute_data:/app/data environment: - OIDC_ISSUER_URL=http:// :9000/application/o/transmute/ - OIDC_CLIENT_ID= - OIDC_CLIENT_SECRET= - OIDC_DISPLAY_NAME=Authentik healthcheck: test: - CMD - wget - -q - -O - /dev/null - --tries=1 - http://localhost:3313/api/health/ready interval: 30s timeout: 10s retries: 3 start_period: 40s volumes: transmute_data: Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+  },
+  {
+    "slug": "oidc",
+    "title": "OIDC / SSO Integration",
+    "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
+    "sectionTitle": "Notes",
+    "headingId": "notes",
+    "text": "Notes Your OIDC provider must be configured with the correct redirect URL for Transmute. OIDC_ISSUER_URL should usually be the user-facing URL that browsers can access. OIDC_INTERNAL_URL is only needed when Transmute cannot reliably reach the provider through the public URL. Providers such as Authentik and Authelia should work as long as they expose a standard OpenID Connect issuer. If a specific provider does not work, please open an issue. Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+  },
+  {
+    "slug": "themes",
+    "title": "Themes",
+    "description": "Browse all available Transmute themes with side-by-side screenshots.",
+    "sectionTitle": "Themes",
+    "headingId": "themes",
+    "text": "Themes Browse all available Transmute themes with side-by-side screenshots. themes"
+  },
+  {
+    "slug": "themes",
+    "title": "Themes",
+    "description": "Browse all available Transmute themes with side-by-side screenshots.",
+    "sectionTitle": "Themes",
+    "headingId": "themes",
+    "text": "Themes Transmute ships with several built-in themes. Choose between dark and light variants to suit your preference. --- Browse all available Transmute themes with side-by-side screenshots. themes"
+  },
+  {
+    "slug": "themes",
+    "title": "Themes",
+    "description": "Browse all available Transmute themes with side-by-side screenshots.",
+    "sectionTitle": "Dark Themes",
+    "headingId": "dark-themes",
+    "text": "Dark Themes Browse all available Transmute themes with side-by-side screenshots. themes"
+  },
+  {
+    "slug": "themes",
+    "title": "Themes",
+    "description": "Browse all available Transmute themes with side-by-side screenshots.",
+    "sectionTitle": "Rubedo (Default)",
+    "headingId": "rubedo-default",
+    "text": "Rubedo (Default) Browse all available Transmute themes with side-by-side screenshots. themes"
+  },
+  {
+    "slug": "themes",
+    "title": "Themes",
+    "description": "Browse all available Transmute themes with side-by-side screenshots.",
+    "sectionTitle": "Citrinitas",
+    "headingId": "citrinitas",
+    "text": "Citrinitas Browse all available Transmute themes with side-by-side screenshots. themes"
+  },
+  {
+    "slug": "themes",
+    "title": "Themes",
+    "description": "Browse all available Transmute themes with side-by-side screenshots.",
+    "sectionTitle": "Viriditas",
+    "headingId": "viriditas",
+    "text": "Viriditas Browse all available Transmute themes with side-by-side screenshots. themes"
+  },
+  {
+    "slug": "themes",
+    "title": "Themes",
+    "description": "Browse all available Transmute themes with side-by-side screenshots.",
+    "sectionTitle": "Nigredo",
+    "headingId": "nigredo",
+    "text": "Nigredo --- Browse all available Transmute themes with side-by-side screenshots. themes"
+  },
+  {
+    "slug": "themes",
+    "title": "Themes",
+    "description": "Browse all available Transmute themes with side-by-side screenshots.",
+    "sectionTitle": "Light Themes",
+    "headingId": "light-themes",
+    "text": "Light Themes Browse all available Transmute themes with side-by-side screenshots. themes"
+  },
+  {
+    "slug": "themes",
+    "title": "Themes",
+    "description": "Browse all available Transmute themes with side-by-side screenshots.",
+    "sectionTitle": "Albedo",
+    "headingId": "albedo",
+    "text": "Albedo Browse all available Transmute themes with side-by-side screenshots. themes"
+  },
+  {
+    "slug": "themes",
+    "title": "Themes",
+    "description": "Browse all available Transmute themes with side-by-side screenshots.",
+    "sectionTitle": "Aurora",
+    "headingId": "aurora",
+    "text": "Aurora Browse all available Transmute themes with side-by-side screenshots. themes"
+  },
+  {
+    "slug": "themes",
+    "title": "Themes",
+    "description": "Browse all available Transmute themes with side-by-side screenshots.",
+    "sectionTitle": "Caelum",
+    "headingId": "caelum",
+    "text": "Caelum Browse all available Transmute themes with side-by-side screenshots. themes"
+  },
+  {
+    "slug": "themes",
+    "title": "Themes",
+    "description": "Browse all available Transmute themes with side-by-side screenshots.",
+    "sectionTitle": "Argentum",
+    "headingId": "argentum",
+    "text": "Argentum Browse all available Transmute themes with side-by-side screenshots. themes"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Settings Reference",
+    "headingId": "settings-reference",
+    "text": "Settings Reference A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Settings Reference",
+    "headingId": "settings-reference",
+    "text": "Settings Reference The Settings page lets you configure Transmute's appearance, conversion behaviour, default output formats, and data management. Changes to appearance and conversion options take effect after clicking Save Changes. --- A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Appearance",
+    "headingId": "appearance",
+    "text": "Appearance A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Theme",
+    "headingId": "theme",
+    "text": "Theme Choose the colour theme applied across the entire application. Transmute ships with seven built-in themes: Theme Style ------- ------- Rubedo (default) Dark — red accent on dark blue Citrinitas Dark — gold accent on deep violet Viriditas Dark — green accent on black Nigredo Dark — purple accent on black Albedo Light — silver tones Aurora Light — orange accent on warm cream Caelum Light — sky blue accent on cool white See the Themes page for screenshots of each theme. --- A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Conversion",
+    "headingId": "conversion",
+    "text": "Conversion A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Auto-download on Completion",
+    "headingId": "auto-download-on-completion",
+    "text": "Auto-download on Completion Default: off When enabled, the browser will automatically trigger a file download as soon as a conversion finishes. When disabled, converted files remain available in the History view for manual download at any time. A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Keep Original Files",
+    "headingId": "keep-original-files",
+    "text": "Keep Original Files Default: on When enabled, the original uploaded file is retained on disk after a conversion completes, and will continue to appear in the Files view. When disabled, the source file is deleted once the conversion job finishes and only the converted output is kept. A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Cleanup TTL",
+    "headingId": "cleanup-ttl",
+    "text": "Cleanup TTL Default: on Enables automatic background cleanup of uploads and conversions after they age out. When toggled off, files and conversion records are kept indefinitely (or until removed manually). A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Cleanup Interval",
+    "headingId": "cleanup-interval",
+    "text": "Cleanup Interval Default: 60 minutes · Visible only when Cleanup TTL is enabled · Range: 1–10080 minutes (1 minute to 1 week) The number of minutes Transmute waits before automatically deleting an uploaded file or conversion record. For example, a value of 60 means any file or conversion older than one hour will be removed by the background cleanup task. Use the − / + buttons or type a value directly into the field. Tip: 1440 minutes = 1 day, 10080 minutes = 1 week. --- A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Save Changes",
+    "headingId": "save-changes",
+    "text": "Save Changes The Save Changes button persists all Appearance and Conversion settings to the server. Settings are sent as a PATCH /api/settings request and take effect immediately after saving. --- A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Data Management",
+    "headingId": "data-management",
+    "text": "Data Management These actions are immediate and irreversible. A confirmation dialog is shown before any deletion takes place. A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Clear Conversions",
+    "headingId": "clear-conversions",
+    "text": "Clear Conversions Deletes all completed conversion records and their associated output files from the server. Uploaded source files are not affected. Equivalent to DELETE /api/conversions/all. A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Clear Uploads",
+    "headingId": "clear-uploads",
+    "text": "Clear Uploads Deletes all uploaded source files from the server. Conversion records and output files are not affected. Equivalent to DELETE /api/files/all. --- A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Default Formats",
+    "headingId": "default-formats",
+    "text": "Default Formats Default formats let you pin a preferred output format for a given input type. When a file of that type is uploaded on the Converter page, the output format dropdown will be pre-selected to your configured default, saving you from choosing it manually each time. You can still override the selection per file before starting a conversion. A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Adding a default",
+    "headingId": "adding-a-default",
+    "text": "Adding a default Select an input format from the left dropdown — only formats that don't already have a default configured are shown. Select the desired output format from the right dropdown. Click Add. A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Changing a default",
+    "headingId": "changing-a-default",
+    "text": "Changing a default Use the output format dropdown in the existing mappings table to choose a different output format. The change is saved immediately. A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Removing a default",
+    "headingId": "removing-a-default",
+    "text": "Removing a default Click the × button on the right side of any row to remove that mapping. The change takes effect immediately and the input format becomes available to configure again. A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "API Reference",
+    "headingId": "api-reference",
+    "text": "API Reference Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "API Reference",
+    "headingId": "api-reference",
+    "text": "API Reference Transmute exposes a REST API so you can automate file conversions without the web UI. All endpoints (except health checks and bootstrap status) require a valid Bearer token — see Authentication & Users for details on obtaining one. Interactive docs — Every Transmute instance serves auto-generated ReDoc documentation at /api/docs. The full OpenAPI specification is also available on GitHub. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Examples & Samples",
+    "headingId": "examples-samples",
+    "text": "Examples & Samples Sample files for testing and real examples using our API can be found in transmute-app/samples-examples. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Core Workflow",
+    "headingId": "core-workflow",
+    "text": "Core Workflow The typical automation flow is: upload → convert → download. Each step is a single API call. Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "1. Upload a File",
+    "headingId": "1-upload-a-file",
+    "text": "1. Upload a File curl -X POST http://localhost:3313/api/files \\ -F \"file=@photo.jpg\" Response (200 OK): { \"message\": \"File uploaded successfully\", \"metadata\": { \"id\": \"123e4567-e89b-12d3-a456-426614174000\", \"original_filename\": \"photo.jpg\", \"media_type\": \"jpg\", \"extension\": \".jpg\", \"size_bytes\": 204800, \"sha256_checksum\": \"abc123def456...\", \"compatible_formats\": [\"png\", \"gif\", \"webp\", \"bmp\", \"tiff\", \"ico\"] } } The compatible_formats array tells you exactly which output formats are supported for this file. Use one of these values in the next step. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "2. Start a Conversion",
+    "headingId": "2-start-a-conversion",
+    "text": "2. Start a Conversion curl -X POST http://localhost:3313/api/conversions \\ -H \"Content-Type: application/json\" \\ -d '{ \"id\": \"123e4567-e89b-12d3-a456-426614174000\", \"output_format\": \"png\" }' Response (200 OK): { \"id\": \"987fcdeb-51a2-43f1-b789-123456789abc\", \"original_filename\": \"photo.png\", \"media_type\": \"png\", \"extension\": \".png\", \"size_bytes\": 153600, \"sha256_checksum\": \"def789abc123...\" } The returned id is the converted file's identifier — use it to download the result. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "3. Download the Result",
+    "headingId": "3-download-the-result",
+    "text": "3. Download the Result curl -OJ http://localhost:3313/api/files/987fcdeb-51a2-43f1-b789-123456789abc The response is the raw file binary (application/octet-stream). --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "4. Batch Download as ZIP",
+    "headingId": "4-batch-download-as-zip",
+    "text": "4. Batch Download as ZIP If you have multiple converted files, you can download them all at once as a ZIP archive: curl -X POST http://localhost:3313/api/files/batch \\ -H \"Content-Type: application/json\" \\ -d '{ \"file_ids\": [ \"987fcdeb-51a2-43f1-b789-123456789abc\", \"aabbccdd-1122-3344-5566-778899aabbcc\" ] }' \\ --output converted_files.zip The response is an application/zip archive containing all requested files. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Other Endpoints",
+    "headingId": "other-endpoints",
+    "text": "Other Endpoints Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "List Uploaded Files",
+    "headingId": "list-uploaded-files",
+    "text": "List Uploaded Files curl http://localhost:3313/api/files Returns a files array with metadata for every uploaded file. Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "List Completed Conversions",
+    "headingId": "list-completed-conversions",
+    "text": "List Completed Conversions curl http://localhost:3313/api/conversions/complete Returns a conversions array with metadata for every completed conversion, including reference to the original file. Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Delete a File",
+    "headingId": "delete-a-file",
+    "text": "Delete a File curl -X DELETE http://localhost:3313/api/files/{file_id} Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Delete a Conversion",
+    "headingId": "delete-a-conversion",
+    "text": "Delete a Conversion curl -X DELETE http://localhost:3313/api/conversions/{conversion_id} Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Delete All Files / Conversions",
+    "headingId": "delete-all-files-conversions",
+    "text": "Delete All Files / Conversions Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Delete all uploaded files",
+    "headingId": "delete-all-uploaded-files",
+    "text": "Delete all uploaded files curl -X DELETE http://localhost:3313/api/files/all Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Delete all conversions",
+    "headingId": "delete-all-conversions",
+    "text": "Delete all conversions curl -X DELETE http://localhost:3313/api/conversions/all --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Health Check Endpoints",
+    "headingId": "health-check-endpoints",
+    "text": "Health Check Endpoints Use these for monitoring and container orchestration (Docker health checks, Kubernetes probes, etc.). Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Liveness — GET /api/health/live",
+    "headingId": "liveness-get-apihealthlive",
+    "text": "Liveness — GET /api/health/live Confirms the server process is running. curl http://localhost:3313/api/health/live { \"status\": \"alive\" } Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Readiness — GET /api/health/ready",
+    "headingId": "readiness-get-apihealthready",
+    "text": "Readiness — GET /api/health/ready Confirms the server is ready to handle requests (database and storage are accessible). curl http://localhost:3313/api/health/ready { \"status\": \"ready\", \"checks\": { \"database\": \"ok\", \"storage\": \"ok\" } } Returns 503 if any check fails. Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "App Info — GET /api/health/info",
+    "headingId": "app-info-get-apihealthinfo",
+    "text": "App Info — GET /api/health/info Returns the application name and version. curl http://localhost:3313/api/health/info { \"name\": \"Transmute\", \"version\": \"v1.0.0\" } --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Settings",
+    "headingId": "settings",
+    "text": "Settings You can read and update application settings (theme, auto-download, cleanup TTL, etc.) via the API. Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Get Current Settings",
+    "headingId": "get-current-settings",
+    "text": "Get Current Settings curl http://localhost:3313/api/settings { \"theme\": \"rubedo\", \"auto_download\": false, \"keep_originals\": true, \"cleanup_ttl_minutes\": 60 } Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Update Settings",
+    "headingId": "update-settings",
+    "text": "Update Settings curl -X PATCH http://localhost:3313/api/settings \\ -H \"Content-Type: application/json\" \\ -d '{ \"theme\": \"nigredo\", \"auto_download\": true }' Only the fields you include are updated. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Quick Reference",
+    "headingId": "quick-reference",
+    "text": "Quick Reference Method Endpoint Description -------- ---------- ------------- POST /api/files Upload a file GET /api/files List uploaded files GET /api/files/{id} Download a file DELETE /api/files/{id} Delete a file DELETE /api/files/all Delete all files POST /api/files/batch Batch download as ZIP POST /api/conversions Start a conversion GET /api/conversions/complete List completed conversions DELETE /api/conversions/{id} Delete a conversion DELETE /api/conversions/all Delete all conversions GET /api/health/live Liveness check GET /api/health/ready Readiness check GET /api/health/info App metadata GET /api/settings Get settings PATCH /api/settings Update settings Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "environment-variables",
+    "title": "Environment Variables",
+    "description": "Configure Transmute's default behaviour using environment variables in your Docker Compose file.",
+    "sectionTitle": "Environment Variables",
+    "headingId": "environment-variables",
+    "text": "Environment Variables Configure Transmute's default behaviour using environment variables in your Docker Compose file. environment-variables"
+  },
+  {
+    "slug": "environment-variables",
+    "title": "Environment Variables",
+    "description": "Configure Transmute's default behaviour using environment variables in your Docker Compose file.",
+    "sectionTitle": "Environment Variables",
+    "headingId": "environment-variables",
+    "text": "Environment Variables Transmute is configured through environment variables. Set them in the environment section of your docker-compose.yml, in a .env file mounted into the container, or as standard OS environment variables. Variable names are case-insensitive. --- Configure Transmute's default behaviour using environment variables in your Docker Compose file. environment-variables"
+  },
+  {
+    "slug": "environment-variables",
+    "title": "Environment Variables",
+    "description": "Configure Transmute's default behaviour using environment variables in your Docker Compose file.",
+    "sectionTitle": "Example Docker Compose",
+    "headingId": "example-docker-compose",
+    "text": "Example Docker Compose services: transmute: image: ghcr.io/transmute-app/transmute:main container_name: transmute restart: unless-stopped ports: - 3313:3313 volumes: - transmute_data:/app/data environment: - AUTH_SECRET_KEY=replace-with-a-long-random-string - AUTH_ACCESS_TOKEN_EXPIRE_MINUTES=120 - APP_URL=https://transmute.domain.com # - APP_URL=http://http://192.168.1.113:3313 - PORT=3313 volumes: transmute_data: --- Configure Transmute's default behaviour using environment variables in your Docker Compose file. environment-variables"
+  },
+  {
+    "slug": "environment-variables",
+    "title": "Environment Variables",
+    "description": "Configure Transmute's default behaviour using environment variables in your Docker Compose file.",
+    "sectionTitle": "Reference",
+    "headingId": "reference",
+    "text": "Reference Configure Transmute's default behaviour using environment variables in your Docker Compose file. environment-variables"
+  },
+  {
+    "slug": "environment-variables",
+    "title": "Environment Variables",
+    "description": "Configure Transmute's default behaviour using environment variables in your Docker Compose file.",
+    "sectionTitle": "Authentication",
+    "headingId": "authentication",
+    "text": "Authentication Variable Default Description ---------- --------- ------------- AUTH_SECRET_KEY (auto-generated) Secret key used to sign JWT tokens. If not set, a random 64-byte key is generated on every startup — meaning all existing tokens are invalidated when the container restarts. Set this to a fixed value for persistent sessions across restarts. AUTH_ALGORITHM HS256 Algorithm used for JWT signing. Unless you have a specific reason to change this, leave it as the default. AUTH_ACCESS_TOKEN_EXPIRE_MINUTES 60 How long a JWT access token remains valid, in minutes. ALLOW_UNAUTHENTICATED false Allow users to use the app as a temporary guest account. WARNING: DO NOT EXPOSE TRANSMUTE PUBLICALLY IF YOU ENABLE THIS. Important: If you don't set AUTH_SECRET_KEY, a new random key is generated each time the container starts. This means all logged-in users will be signed out and all existing JWTs will stop working after a restart. For production use, always set a fixed AUTH_SECRET_KEY. Generating a strong secret key: Configure Transmute's default behaviour using environment variables in your Docker Compose file. environment-variables"
+  },
+  {
+    "slug": "environment-variables",
+    "title": "Environment Variables",
+    "description": "Configure Transmute's default behaviour using environment variables in your Docker Compose file.",
+    "sectionTitle": "Using Python",
+    "headingId": "using-python",
+    "text": "Using Python python3 -c \"import secrets; print(secrets.token_urlsafe(64))\" Configure Transmute's default behaviour using environment variables in your Docker Compose file. environment-variables"
+  },
+  {
+    "slug": "environment-variables",
+    "title": "Environment Variables",
+    "description": "Configure Transmute's default behaviour using environment variables in your Docker Compose file.",
+    "sectionTitle": "Using OpenSSL",
+    "headingId": "using-openssl",
+    "text": "Using OpenSSL openssl rand -base64 64 Configure Transmute's default behaviour using environment variables in your Docker Compose file. environment-variables"
+  },
+  {
+    "slug": "environment-variables",
+    "title": "Environment Variables",
+    "description": "Configure Transmute's default behaviour using environment variables in your Docker Compose file.",
+    "sectionTitle": "OIDC",
+    "headingId": "oidc",
+    "text": "OIDC For OIDC configuration variables, please see OIDC / SSO Integration. Configure Transmute's default behaviour using environment variables in your Docker Compose file. environment-variables"
+  },
+  {
+    "slug": "environment-variables",
+    "title": "Environment Variables",
+    "description": "Configure Transmute's default behaviour using environment variables in your Docker Compose file.",
+    "sectionTitle": "Server",
+    "headingId": "server",
+    "text": "Server Variable Default Description ---------- --------- ------------- HOST 0.0.0.0 Network interface the server binds to. The default binds to all interfaces, which is required inside Docker. PORT 3313 Port the server listens on inside the container. If you change this, update the ports mapping and health check URL in your Compose file to match. APP_URL \"\" Used for constructing URLs in OIDC API response, and also used for setting the displayed URL in the API docs. Configure Transmute's default behaviour using environment variables in your Docker Compose file. environment-variables"
+  },
+  {
+    "slug": "environment-variables",
+    "title": "Environment Variables",
+    "description": "Configure Transmute's default behaviour using environment variables in your Docker Compose file.",
+    "sectionTitle": "Storage",
+    "headingId": "storage",
+    "text": "Storage Variable Default Description ---------- --------- ------------- DATA_DIR data Base directory for all persistent data (database, uploads, outputs, temp files). Inside Docker this is typically /app/data and should be backed by a volume. Tip: You generally don't need to change DATA_DIR when using Docker — just mount a volume to /app/data as shown in the example Compose file above. Configure Transmute's default behaviour using environment variables in your Docker Compose file. environment-variables"
+  },
+  {
+    "slug": "environment-variables",
+    "title": "Environment Variables",
+    "description": "Configure Transmute's default behaviour using environment variables in your Docker Compose file.",
+    "sectionTitle": "Database Table Names",
+    "headingId": "database-table-names",
+    "text": "Database Table Names These control the SQLite table names. You should not change them unless you have a very specific reason. Variable Default Description ---------- --------- ------------- FILE_TABLE_NAME FILES_METADATA Table for uploaded file metadata CONVERSION_TABLE_NAME CONVERSIONS_METADATA Table for conversion output metadata CONVERSION_RELATIONS_TABLE_NAME CONVERSION_RELATIONS Table linking conversions to source files APP_SETTINGS_TABLE_NAME APP_SETTINGS Table for per-user application settings USER_TABLE_NAME USERS Table for user accounts Configure Transmute's default behaviour using environment variables in your Docker Compose file. environment-variables"
+  },
+  {
+    "slug": "translations",
+    "title": "UI Translations",
+    "description": "Translations of the Transmute UI provided by other users.",
+    "sectionTitle": "UI Translations",
+    "headingId": "ui-translations",
+    "text": "UI Translations Translations of the Transmute UI provided by other users. translations"
+  },
+  {
+    "slug": "translations",
+    "title": "UI Translations",
+    "description": "Translations of the Transmute UI provided by other users.",
+    "sectionTitle": "UI Translations",
+    "headingId": "ui-translations",
+    "text": "UI Translations Transmute supports community-contributed UI translations. Currently supported languages are: English German If you want to add a new language, open a pull request similar to this example. Translations of the Transmute UI provided by other users. translations"
+  },
+  {
+    "slug": "translations",
+    "title": "UI Translations",
+    "description": "Translations of the Transmute UI provided by other users.",
+    "sectionTitle": "How to Add a Translation",
+    "headingId": "how-to-add-a-translation",
+    "text": "How to Add a Translation Add a new JSON file in frontend/src/i18n. Use frontend/src/i18n/en.json as the source file and match its keys exactly. Register the new language in frontend/src/i18n/index.ts. Open a pull request with the new translation file and the index update. Translations of the Transmute UI provided by other users. translations"
+  },
+  {
+    "slug": "translations",
+    "title": "UI Translations",
+    "description": "Translations of the Transmute UI provided by other users.",
+    "sectionTitle": "Important Notes",
+    "headingId": "important-notes",
+    "text": "Important Notes The translation file should keep the same structure and keys as en.json. If a key is missing or renamed, parts of the UI may fall back to English or fail to display the expected text. It helps to mention the language code and native language name in the pull request description. Translations of the Transmute UI provided by other users. translations"
+  },
+  {
+    "slug": "translations",
+    "title": "UI Translations",
+    "description": "Translations of the Transmute UI provided by other users.",
+    "sectionTitle": "Maintainer Note",
+    "headingId": "maintainer-note",
+    "text": "Maintainer Note English is the only language I can personally review. Any non-English translations included in Transmute were supplied by users and other contributors. Translations of the Transmute UI provided by other users. translations"
+  }
+]

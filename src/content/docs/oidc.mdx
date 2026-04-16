@@ -31,7 +31,7 @@ Again - if you are using Transmute with OIDC, and your Transmute instance is beh
 
 ## Environment Variables
 
-### OIDC_ISSUER_URL
+### OIDC\_ISSUER\_URL
 
 The public issuer URL for your OIDC provider.
 
@@ -43,7 +43,7 @@ Example:
 OIDC_ISSUER_URL="https://auth.domain.com/application/o/transmute/"
 ```
 
-### OIDC_INTERNAL_URL
+### OIDC\_INTERNAL\_URL
 
 The internal URL Transmute uses to communicate with the OIDC provider from inside your Docker network or local environment.
 
@@ -57,15 +57,15 @@ Example:
 OIDC_INTERNAL_URL="http://192.168.1.1:9000/application/o/transmute/"
 ```
 
-### OIDC_CLIENT_ID
+### OIDC\_CLIENT\_ID
 
 The client ID for your OIDC application.
 
-### OIDC_CLIENT_SECRET
+### OIDC\_CLIENT\_SECRET
 
 The client secret for your OIDC application.
 
-### OIDC_DISPLAY_NAME
+### OIDC\_DISPLAY\_NAME
 
 The label shown on the login button in the Transmute UI.
 
@@ -79,7 +79,7 @@ OIDC_DISPLAY_NAME="Authentik"
 
 ![OIDC_DISPLAY_NAME set to "Authentik"](https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/login.png)
 
-### OIDC_AUTO_CREATE_USERS
+### OIDC\_AUTO\_CREATE\_USERS
 
 Controls whether users are automatically created in Transmute the first time they successfully sign in through OIDC.
 
@@ -88,7 +88,7 @@ Controls whether users are automatically created in Transmute the first time the
 
 Defaults to `true`.
 
-### OIDC_AUTO_LAUNCH
+### OIDC\_AUTO\_LAUNCH
 
 Controls whether or not `/auth` automatically triggers the OAUTH flow, or if users should have to click "Log in with SSO" first. Setting this to true means you cannot use username and password to log in through the UI.
 

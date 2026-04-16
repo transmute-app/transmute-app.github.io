@@ -3,7 +3,7 @@
 /**
  * generate-seo.js
  *
- * Reads public/docs/manifest.json + the markdown files and outputs:
+ * Reads src/content/docs/*.mdx files and outputs:
  *   - public/sitemap.xml
  *   - public/llms.txt
  *   - public/llms-full.txt
@@ -11,17 +11,107 @@
  * Usage:  node scripts/generate-seo.js
  */
 
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync, readdirSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import fm from 'front-matter'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const PUBLIC = resolve(__dirname, '..', 'public')
-const DOCS = resolve(PUBLIC, 'docs')
+const DOCS = resolve(__dirname, '..', 'src', 'content', 'docs')
 const MEDIA_TYPES_PATH = resolve(PUBLIC, 'reference_data', 'media_types.json')
 
 const SITE_URL = 'https://transmute.sh'
+
+function normalizeWhitespace(value) {
+  return String(value ?? '').replace(/\s+/g, ' ').trim()
+}
+
+function stripMarkdownInline(value) {
+  return normalizeWhitespace(
+    String(value ?? '')
+      .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+      .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+      .replace(/`([^`]+)`/g, '$1')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/[*~]+/g, '')
+      .replace(/(?<=\s|^)_+|_+(?=\s|$)/g, '')
+      .replace(/\|/g, ' ')
+      .replace(/\\([`*_{}[\]()#+.!-])/g, '$1')
+  )
+}
+
+function slugifyHeading(value) {
+  return stripMarkdownInline(value)
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
+function parseDocSections(doc) {
+  const lines = String(doc.body ?? '').split(/\r?\n/)
+  const sections = []
+  let currentSection = {
+    title: doc.title,
+    headingId: slugifyHeading(doc.title) || doc.slug,
+    chunks: [],
+  }
+
+  for (const line of lines) {
+    if (/^```/.test(line.trim())) {
+      continue
+    }
+
+    const headingMatch = line.match(/^(#{1,6})\s+(.+)$/)
+    if (headingMatch) {
+      sections.push({
+        title: currentSection.title,
+        headingId: currentSection.headingId,
+        text: normalizeWhitespace(currentSection.chunks.join(' ')),
+      })
+
+      const headingText = stripMarkdownInline(headingMatch[2]) || doc.title
+      currentSection = {
+        title: headingText,
+        headingId: slugifyHeading(headingText) || doc.slug,
+        chunks: [],
+      }
+      continue
+    }
+
+    const textLine = stripMarkdownInline(
+      line
+        .replace(/^>\s?/, '')
+        .replace(/^[-*+]\s+/, '')
+        .replace(/^\d+\.\s+/, '')
+    )
+
+    if (textLine) {
+      currentSection.chunks.push(textLine)
+    }
+  }
+
+  sections.push({
+    title: currentSection.title,
+    headingId: currentSection.headingId,
+    text: normalizeWhitespace(currentSection.chunks.join(' ')),
+  })
+
+  return sections
+    .filter((section, index) => section.text || section.title || index === 0)
+    .map((section) => ({
+      slug: doc.slug,
+      title: doc.title,
+      description: doc.description ?? '',
+      sectionTitle: section.title,
+      headingId: section.headingId,
+      text: normalizeWhitespace(`${section.title} ${section.text} ${doc.description ?? ''} ${doc.slug}`),
+    }))
+}
 
 // ── Shared intro block (used by llms.txt and llms-full.txt) ──────────
 
@@ -45,13 +135,13 @@ const STATIC_PAGES = [
 
 // ── Load docs ────────────────────────────────────────────────────────
 
-const manifest = JSON.parse(readFileSync(resolve(DOCS, 'manifest.json'), 'utf-8'))
+const mdxFiles = readdirSync(DOCS).filter((f) => f.endsWith('.mdx'))
 
-const docs = manifest
+const docs = mdxFiles
   .map((file) => {
     const raw = readFileSync(resolve(DOCS, file), 'utf-8')
     const { attributes, body } = fm(raw)
-    const slug = file.replace(/\.md$/, '')
+    const slug = file.replace(/\.mdx$/, '')
     return { slug, title: attributes.title, description: attributes.description, order: attributes.order ?? 99, body }
   })
   .sort((a, b) => a.order - b.order)
@@ -116,12 +206,22 @@ function generateLlmsFullTxt() {
   return `${INTRO}\n\n---\n\n${sections}\n`
 }
 
+function generateDocsSearchIndex() {
+  return JSON.stringify(
+    docs.flatMap((doc) => parseDocSections(doc)),
+    null,
+    2,
+  )
+}
+
 // ── Write files ──────────────────────────────────────────────────────
 
 writeFileSync(resolve(PUBLIC, 'sitemap.xml'), generateSitemap())
 writeFileSync(resolve(PUBLIC, 'llms.txt'), generateLlmsTxt())
 writeFileSync(resolve(PUBLIC, 'llms-full.txt'), generateLlmsFullTxt())
+writeFileSync(resolve(PUBLIC, 'docs-search.json'), generateDocsSearchIndex())
 
 console.log('✓ sitemap.xml')
 console.log('✓ llms.txt')
 console.log('✓ llms-full.txt')
+console.log('✓ docs-search.json')

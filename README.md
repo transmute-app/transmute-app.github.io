@@ -16,7 +16,7 @@ Transmute lets you convert images, video, audio, data, documents, and diagrams o
 | Build | Vite 7 |
 | Styling | Tailwind CSS 3 · `@tailwindcss/typography` |
 | Routing | React Router v7 |
-| Markdown | react-markdown · remark-gfm · rehype-highlight |
+| Docs | @mdx-js/rollup · remark-gfm · rehype-highlight · Pagefind |
 | Linting | ESLint 9 · TypeScript-ESLint |
 
 ## Getting Started
@@ -75,11 +75,11 @@ The site will be available at `http://localhost:5173`.
 
 ## Documentation
 
-Documentation lives as Markdown files in [`public/docs/`](public/docs/) and is rendered client-side via `react-markdown`. To add or edit a docs page:
+Documentation lives as MDX files in [`src/content/docs/`](src/content/docs/) and is compiled at build time via `@mdx-js/rollup`. To add or edit a docs page:
 
-1. Create or modify a `.md` file in `public/docs/`.
-2. Update [`public/docs/manifest.json`](public/docs/manifest.json) to include the new page in the sidebar navigation.
-3. The page will be accessible at `https://transmute.sh/docs/<filename>`.
+1. Create or modify an `.mdx` file in `src/content/docs/` with YAML frontmatter (`title`, `description`, `order`).
+2. The docs registry (`src/content/docs/index.ts`) auto-discovers all `.mdx` files via `import.meta.glob`.
+3. The page will be accessible at `https://transmute.sh/docs/<filename>/`.
 
 ## Deployment
 

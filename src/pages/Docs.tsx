@@ -1,131 +1,208 @@
-import React, { useEffect, useState, useCallback, useRef, type ReactNode } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
-import fm from 'front-matter'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import rehypeHighlight from 'rehype-highlight'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom'
 import { useSEO } from '../hooks/useSEO'
 import { DOCS_METADATA } from '../seo.ts'
+import { docs, getDocBySlug } from '../content/docs/index.ts'
+import { DocsProvider } from '../components/DocsProvider.tsx'
+import DocSearch from '../components/DocSearch.tsx'
 
-function CopyButton({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false)
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined)
-
-  const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopied(true)
-      clearTimeout(timeoutRef.current)
-      timeoutRef.current = setTimeout(() => setCopied(false), 2000)
-    })
-  }, [text])
-
-  return (
-    <button
-      onClick={handleCopy}
-      className="absolute top-2 right-2 p-1.5 rounded-md bg-gray-700/60 hover:bg-gray-600 text-gray-300 hover:text-white transition-colors"
-      aria-label="Copy code"
-    >
-      {copied ? (
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-        </svg>
-      ) : (
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-        </svg>
-      )}
-    </button>
-  )
+function forceScrollTop() {
+  window.scrollTo(0, 0)
 }
 
-function extractText(node: ReactNode): string {
-  if (typeof node === 'string') return node
-  if (typeof node === 'number') return String(node)
-  if (!node) return ''
-  if (Array.isArray(node)) return node.map(extractText).join('')
-  if (typeof node === 'object' && 'props' in node) {
-    return extractText((node as React.ReactElement<{ children?: ReactNode }>).props.children)
+function clearSearchHighlights(root: HTMLElement) {
+  root.querySelectorAll('mark[data-doc-search-highlight="true"]').forEach((mark) => {
+    const parent = mark.parentNode
+    if (!parent) {
+      return
+    }
+
+    parent.replaceChild(document.createTextNode(mark.textContent ?? ''), mark)
+    parent.normalize()
+  })
+}
+
+function getSectionNodes(root: HTMLElement, sectionId: string) {
+  const heading = root.querySelector<HTMLElement>(`#${CSS.escape(sectionId)}`)
+  if (!heading || !/^H[1-6]$/.test(heading.tagName)) {
+    return [root]
   }
-  return ''
+
+  const headingLevel = Number(heading.tagName.slice(1))
+  const nodes: Node[] = []
+  let current: ChildNode | null = heading
+
+  while (current) {
+    if (current !== heading && current instanceof HTMLElement && /^H[1-6]$/.test(current.tagName)) {
+      const currentLevel = Number(current.tagName.slice(1))
+      if (currentLevel <= headingLevel) {
+        break
+      }
+    }
+
+    nodes.push(current)
+    current = current.nextSibling
+  }
+
+  return nodes.length > 0 ? nodes : [root]
 }
 
-interface DocMeta {
-  title: string
-  description?: string
-  order?: number
+function findAndHighlight(nodes: Node[], lowerMatch: string, matchLength: number, filter: 'prose' | 'code' | 'heading') {
+  for (const node of nodes) {
+    const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, {
+      acceptNode(textNode) {
+        const parent = textNode.parentElement
+        if (!parent || !textNode.textContent?.trim()) {
+          return NodeFilter.FILTER_REJECT
+        }
+
+        if (parent.closest('script, style, mark[data-doc-search-highlight="true"]')) {
+          return NodeFilter.FILTER_REJECT
+        }
+
+        const inCode = parent.closest('pre, code, kbd, samp')
+        const inHeading = parent.closest('h1, h2, h3, h4, h5, h6')
+
+        if (filter === 'prose' && (inCode || inHeading)) {
+          return NodeFilter.FILTER_REJECT
+        }
+
+        if (filter === 'code' && !inCode) {
+          return NodeFilter.FILTER_REJECT
+        }
+
+        if (filter === 'heading' && !inHeading) {
+          return NodeFilter.FILTER_REJECT
+        }
+
+        return NodeFilter.FILTER_ACCEPT
+      },
+    })
+
+    let currentNode = walker.nextNode()
+    while (currentNode) {
+      const textNode = currentNode as Text
+      const textValue = textNode.textContent ?? ''
+      const matchIndex = textValue.toLowerCase().indexOf(lowerMatch)
+      if (matchIndex >= 0) {
+        const matchedNode = textNode.splitText(matchIndex)
+        matchedNode.splitText(matchLength)
+
+        const mark = document.createElement('mark')
+        mark.dataset.docSearchHighlight = 'true'
+        mark.className = 'doc-search-highlight'
+        mark.textContent = matchedNode.textContent
+        matchedNode.parentNode?.replaceChild(mark, matchedNode)
+        return mark
+      }
+
+      currentNode = walker.nextNode()
+    }
+  }
+
+  return null
 }
 
-interface DocEntry {
-  slug: string
-  meta: DocMeta
+function highlightFirstMatch(nodes: Node[], matchText: string) {
+  const lowerMatch = matchText.toLowerCase()
+  return findAndHighlight(nodes, lowerMatch, matchText.length, 'prose')
+    ?? findAndHighlight(nodes, lowerMatch, matchText.length, 'code')
+    ?? findAndHighlight(nodes, lowerMatch, matchText.length, 'heading')
 }
 
 export default function Docs() {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
-
-  const [entries, setEntries] = useState<DocEntry[]>([])
-  const [content, setContent] = useState<string>('')
-  const [activeMeta, setActiveMeta] = useState<DocMeta | null>(null)
-  const [loadedSlug, setLoadedSlug] = useState<string | null>(null)
-  const loading = slug !== loadedSlug
+  const location = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  const activeDoc = slug ? getDocBySlug(slug) : undefined
+  const DocContent = activeDoc?.Component
+
+  function handleSidebarNavigation() {
+    setSidebarOpen(false)
+    forceScrollTop()
+  }
 
   useSEO({
-    title: activeMeta?.title ? `${activeMeta.title} — Docs` : 'Documentation',
-    description: activeMeta?.description ?? DOCS_METADATA.description,
+    title: activeDoc?.meta.title ? `${activeDoc.meta.title} — Docs` : 'Documentation',
+    description: activeDoc?.meta.description ?? DOCS_METADATA.description,
     path: slug ? `/docs/${slug}/` : '/docs/',
   })
 
-  // Load manifest + all frontmatter once
+  // If no slug selected, redirect to first doc
   useEffect(() => {
-    const base = import.meta.env.BASE_URL
-    fetch(`${base}docs/manifest.json`)
-      .then((r) => r.json())
-      .then(async (files: string[]) => {
-        const parsed: DocEntry[] = await Promise.all(
-          files.map(async (file) => {
-            const res = await fetch(`${base}docs/${file}`)
-            const text = await res.text()
-            const { attributes } = fm<DocMeta>(text)
-            return {
-              slug: file.replace(/\.md$/, ''),
-              meta: attributes,
-            }
-          }),
-        )
-        parsed.sort((a, b) => (a.meta.order ?? 99) - (b.meta.order ?? 99))
-        setEntries(parsed)
-
-        // If no slug selected, redirect to first doc
-        if (!slug && parsed.length > 0) {
-          navigate(`/docs/${parsed[0].slug}/`, { replace: true })
-        }
-      })
-      .catch(() => setEntries([]))
+    if (!slug && docs.length > 0) {
+      navigate(`/docs/${docs[0].slug}/`, { replace: true })
+    }
   }, [navigate, slug])
 
-  // Load selected doc content
+  useLayoutEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const matchText = params.get('match')?.trim()
+    const hasHash = Boolean(location.hash.replace(/^#/, ''))
+
+    if (!matchText && !hasHash) {
+      forceScrollTop()
+    }
+  }, [location.hash, location.search, slug])
+
   useEffect(() => {
-    if (!slug) return
-    const base = import.meta.env.BASE_URL
-    fetch(`${base}docs/${slug}.md`)
-      .then((r) => {
-        if (!r.ok) throw new Error('Not found')
-        return r.text()
-      })
-      .then((text) => {
-        const { attributes, body } = fm<DocMeta>(text)
-        setActiveMeta(attributes)
-        setContent(body)
-        setLoadedSlug(slug)
-      })
-      .catch(() => {
-        setContent('')
-        setActiveMeta(null)
-        setLoadedSlug(slug)
-      })
-  }, [slug])
+    const contentRoot = contentRef.current
+    if (!contentRoot) {
+      return
+    }
+
+    clearSearchHighlights(contentRoot)
+
+    const params = new URLSearchParams(location.search)
+    const matchText = params.get('match')?.trim()
+    const sectionId = params.get('section')?.trim() || location.hash.replace(/^#/, '')
+    if (!matchText) {
+      if (sectionId) {
+        let firstFrame = 0
+        let secondFrame = 0
+        firstFrame = requestAnimationFrame(() => {
+          secondFrame = requestAnimationFrame(() => {
+            contentRoot.querySelector<HTMLElement>(`#${CSS.escape(sectionId)}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          })
+        })
+        return () => {
+          cancelAnimationFrame(firstFrame)
+          cancelAnimationFrame(secondFrame)
+        }
+      }
+      return
+    }
+
+    let firstFrame = 0
+    let secondFrame = 0
+
+    const runHighlight = () => {
+      const sectionNodes = sectionId ? getSectionNodes(contentRoot, sectionId) : [contentRoot]
+      const mark = highlightFirstMatch(sectionNodes, matchText)
+
+      if (mark) {
+        mark.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        return
+      }
+
+      if (sectionId) {
+        contentRoot.querySelector<HTMLElement>(`#${CSS.escape(sectionId)}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }
+
+    firstFrame = requestAnimationFrame(() => {
+      secondFrame = requestAnimationFrame(runHighlight)
+    })
+
+    return () => {
+      cancelAnimationFrame(firstFrame)
+      cancelAnimationFrame(secondFrame)
+      clearSearchHighlights(contentRoot)
+    }
+  }, [DocContent, location.hash, location.search])
 
   return (
     <div className="max-w-7xl mx-auto flex min-h-[calc(100vh-8rem)]">
@@ -150,14 +227,15 @@ export default function Docs() {
         `}
       >
         <nav className="p-6 space-y-1">
+          <DocSearch />
           <h2 className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-4">
             Documentation
           </h2>
-          {entries.map((entry) => (
+          {docs.map((entry) => (
             <Link
               key={entry.slug}
               to={`/docs/${entry.slug}/`}
-              onClick={() => setSidebarOpen(false)}
+              onClick={handleSidebarNavigation}
               className={`
                 block px-3 py-2 rounded-lg text-sm font-medium transition-colors
                 ${
@@ -183,62 +261,27 @@ export default function Docs() {
 
       {/* Content */}
       <article className="flex-1 min-w-0 px-6 py-10 lg:px-12">
-        {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <div className="h-8 w-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-          </div>
-        ) : content ? (
+        {DocContent ? (
           <>
-            {activeMeta?.description && (
+            {activeDoc.meta.description && (
               <p className="text-text-muted text-lg mb-8 border-l-4 border-primary pl-4 bg-primary/5 py-3 pr-4 rounded-r-lg">
-                {activeMeta.description}
+                {activeDoc.meta.description}
               </p>
             )}
-            <div className="prose prose-invert prose-headings:text-white prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-code:text-primary-light prose-pre:bg-[#1e293b] prose-pre:border prose-pre:border-gray-700/50 prose-pre:rounded-xl prose-blockquote:border-primary prose-th:text-left prose-img:rounded-xl max-w-none">
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[[rehypeHighlight, { detect: false, ignoreMissing: true }]]}
-                components={{
-                  pre({ children }) {
-                    const text = extractText(children)
-                    return (
-                      <pre className="relative group">
-                        <CopyButton text={text.trimEnd()} />
-                        {children}
-                      </pre>
-                    )
-                  },
-                  a({ href, children, ...props }) {
-                    if (href && /^\//.test(href)) {
-                      return <Link to={href}>{children}</Link>
-                    }
-                    return <a href={href} target="_blank" rel="noopener" {...props}>{children}</a>
-                  },
-                  code({ className, children, ...props }) {
-                    const isInline = !className
-                    if (isInline) {
-                      return (
-                        <code className="bg-surface-light text-primary-light px-1.5 py-0.5 rounded text-sm" {...props}>
-                          {children}
-                        </code>
-                      )
-                    }
-                    return <code className={className} {...props}>{children}</code>
-                  },
-                }}
-              >
-                {content}
-              </ReactMarkdown>
+            <div ref={contentRef} className="prose prose-invert prose-headings:text-white prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-code:text-primary-light prose-pre:bg-[#1e293b] prose-pre:border prose-pre:border-gray-700/50 prose-pre:rounded-xl prose-blockquote:border-primary prose-th:text-left prose-img:rounded-xl max-w-none">
+              <DocsProvider>
+                <DocContent />
+              </DocsProvider>
             </div>
           </>
-        ) : (
+        ) : slug ? (
           <div className="text-center py-20">
             <p className="text-text-muted text-lg">Document not found.</p>
             <Link to="/docs/" className="text-primary hover:underline mt-4 inline-block">
               ← Back to docs
             </Link>
           </div>
-        )}
+        ) : null}
       </article>
     </div>
   )

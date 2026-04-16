@@ -3,6 +3,11 @@ import path from 'node:path'
 import fm from 'front-matter'
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
+import mdx from '@mdx-js/rollup'
+import remarkGfm from 'remark-gfm'
+import remarkFrontmatter from 'remark-frontmatter'
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
+import rehypeHighlight from 'rehype-highlight'
 import {
   CONVERSIONS_METADATA,
   DOCS_METADATA,
@@ -87,28 +92,28 @@ function formatDetailMetadata(mt: MediaTypeEntry): RouteMetadata {
 }
 
 async function getPublicRouteMetadata(publicDir: string) {
-  const docsManifestPath = path.join(publicDir, 'docs', 'manifest.json')
+  const docsDir = path.resolve(process.cwd(), 'src', 'content', 'docs')
   const mediaTypesPath = path.join(publicDir, 'reference_data', 'media_types.json')
 
-  const [manifestRaw, mediaTypesRaw] = await Promise.all([
-    readFile(docsManifestPath, 'utf8'),
+  const [mediaTypesRaw, docFileNames] = await Promise.all([
     readFile(mediaTypesPath, 'utf8'),
+    import('node:fs/promises').then((fs) => fs.readdir(docsDir)),
   ])
 
-  const docFiles = JSON.parse(manifestRaw) as string[]
+  const mdxFiles = docFileNames.filter((f) => f.endsWith('.mdx'))
   const mediaTypes = JSON.parse(mediaTypesRaw) as MediaTypeEntry[]
 
-  const docRouteMetadata = await Promise.all(
-    docFiles.map(async (file) => {
-      const markdown = await readFile(path.join(publicDir, 'docs', file), 'utf8')
-      const { attributes } = fm<DocFrontMatter>(markdown)
-      const slug = file.replace(/\.md$/, '')
+  const docRouteMetadata: RouteMetadata[] = await Promise.all(
+    mdxFiles.map(async (file) => {
+      const content = await readFile(path.join(docsDir, file), 'utf8')
+      const { attributes } = fm<DocFrontMatter>(content)
+      const slug = file.replace(/\.mdx$/, '')
 
       return {
         title: `${attributes.title} — Docs`,
         description: attributes.description ?? DOCS_METADATA.description,
         path: `/docs/${slug}`,
-      } satisfies RouteMetadata
+      }
     }),
   )
 
@@ -153,13 +158,20 @@ function staticRouteHtmlPlugin(): Plugin {
 // https://vite.dev/config/
 export default defineConfig({
   base: '/',
-  plugins: [react(), staticRouteHtmlPlugin()],
+  plugins: [
+    mdx({
+      remarkPlugins: [remarkGfm, remarkFrontmatter, [remarkMdxFrontmatter, { name: 'frontmatter' }]],
+      rehypePlugins: [[rehypeHighlight, { detect: false, ignoreMissing: true }]],
+      providerImportSource: '@mdx-js/react',
+    }),
+    react(),
+    staticRouteHtmlPlugin(),
+  ],
   build: {
     rollupOptions: {
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'markdown': ['react-markdown', 'remark-gfm', 'rehype-highlight', 'rehype-raw'],
           'highlight': ['highlight.js', 'react-syntax-highlighter'],
         },
       },

@@ -35,11 +35,11 @@ Thanks for your interest in improving the [Transmute](https://transmute.sh/) web
 
 ## Documentation
 
-Docs live as Markdown files in `public/docs/`. To add or update a page:
+Docs live as MDX files in `src/content/docs/`. To add or update a page:
 
-1. Create or edit a `.md` file in `public/docs/`.
-2. Update `public/docs/manifest.json` so it appears in the sidebar.
-3. The page will be served at `https://transmute.sh/docs/<filename>`.
+1. Create or edit an `.mdx` file in `src/content/docs/` with YAML frontmatter (`title`, `description`, `order`).
+2. The docs registry auto-discovers all `.mdx` files — no manifest needed.
+3. The page will be served at `https://transmute.sh/docs/<filename>/`.
 
 ## Reporting Issues
 

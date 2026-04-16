@@ -9,8 +9,12 @@ const FormatDetail = lazy(() => import('./pages/FormatDetail'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 function ScrollToTop() {
-  const { key } = useLocation()
-  useEffect(() => { window.scrollTo(0, 0) }, [key])
+  const { key, hash } = useLocation()
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0)
+    }
+  }, [hash, key])
   return null
 }
 

@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  scroll-behavior: smooth;
-}
 
 .prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::before,
 .prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::after {
@@ -88,4 +85,12 @@ body {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+.doc-search-highlight {
+  background: rgba(239, 68, 68, 0.18);
+  color: #fecaca;
+  padding: 0 0.15rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.16);
 }

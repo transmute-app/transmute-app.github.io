@@ -17,6 +17,7 @@ Transmute is a self-hosted alternative to cloud-based file converters like Cloud
 - [Settings Reference](https://transmute.sh/docs/settings-reference/): A complete reference for every option on the Transmute Settings page.
 - [API Reference](https://transmute.sh/docs/api-reference/): Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.
 - [Environment Variables](https://transmute.sh/docs/environment-variables/): Configure Transmute's default behaviour using environment variables in your Docker Compose file.
+- [UI Translations](https://transmute.sh/docs/translations/): Translations of the Transmute UI provided by other users.
 
 ## Pages
 

@@ -51,6 +51,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://transmute.sh/docs/translations/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://transmute.sh/conversions/3gp/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -121,17 +126,27 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://transmute.sh/conversions/cb7/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://transmute.sh/conversions/cbr/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://transmute.sh/conversions/cbz/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://transmute.sh/conversions/csv/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://transmute.sh/conversions/cur/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://transmute.sh/conversions/dbk/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -316,11 +331,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://transmute.sh/conversions/mediawiki/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://transmute.sh/conversions/mka/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -432,6 +442,11 @@
   </url>
   <url>
     <loc>https://transmute.sh/conversions/otf/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://transmute.sh/conversions/p7m/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -652,11 +667,6 @@
   </url>
   <url>
     <loc>https://transmute.sh/conversions/tiff/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://transmute.sh/conversions/tmp/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
