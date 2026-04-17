@@ -865,7 +865,8 @@ Transmute supports community-contributed UI translations.
 
 Currently supported languages are:
 - English
-- German
+- Spanish (Shoutout to [@Fuan200](https://github.com/Fuan200) for initial translation)
+- German (Shoutout to [@AnguTom](https://github.com/AnguTom) for initial translation)
 
 If you want to add a new language, open a pull request similar to [this example](https://github.com/transmute-app/transmute/pull/109/changes).
 

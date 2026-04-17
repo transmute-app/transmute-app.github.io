@@ -829,7 +829,7 @@
     "description": "Translations of the Transmute UI provided by other users.",
     "sectionTitle": "UI Translations",
     "headingId": "ui-translations",
-    "text": "UI Translations Transmute supports community-contributed UI translations. Currently supported languages are: English German If you want to add a new language, open a pull request similar to this example. Translations of the Transmute UI provided by other users. translations"
+    "text": "UI Translations Transmute supports community-contributed UI translations. Currently supported languages are: English Spanish (Shoutout to @Fuan200 for initial translation) German (Shoutout to @AnguTom for initial translation) If you want to add a new language, open a pull request similar to this example. Translations of the Transmute UI provided by other users. translations"
   },
   {
     "slug": "translations",
