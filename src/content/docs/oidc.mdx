@@ -12,11 +12,11 @@ OIDC is configured through the following environment variables:
 
 ```bash
 # Examples for Authentik
-OIDC_ISSUER_URL="http://<USER_FACING_URL>/application/o/transmute/"
-OIDC_INTERNAL_URL="http://<INTERNAL_URL>/application/o/transmute/"
-OIDC_CLIENT_ID="<REPLACE_ME>"
-OIDC_CLIENT_SECRET="<REPLACE_ME>"
-OIDC_DISPLAY_NAME="Authentik"
+OIDC_ISSUER_URL=http://<USER_FACING_URL>/application/o/transmute/
+OIDC_INTERNAL_URL=http://<INTERNAL_URL>/application/o/transmute/
+OIDC_CLIENT_ID=<REPLACE_ME>
+OIDC_CLIENT_SECRET=<REPLACE_ME>
+OIDC_DISPLAY_NAME=Authentik
 OIDC_AUTO_CREATE_USERS=true
 OIDC_AUTO_LAUNCH=true
 ```
@@ -40,7 +40,7 @@ This should be the URL Transmute uses to redirect users to your identity provide
 Example:
 
 ```bash
-OIDC_ISSUER_URL="https://auth.domain.com/application/o/transmute/"
+OIDC_ISSUER_URL=https://auth.domain.com/application/o/transmute/
 ```
 
 ### OIDC\_INTERNAL\_URL
@@ -54,7 +54,7 @@ If not set, this defaults to `OIDC_ISSUER_URL`.
 Example:
 
 ```bash
-OIDC_INTERNAL_URL="http://192.168.1.1:9000/application/o/transmute/"
+OIDC_INTERNAL_URL=http://192.168.1.1:9000/application/o/transmute/
 ```
 
 ### OIDC\_CLIENT\_ID
@@ -74,7 +74,7 @@ Defaults to `SSO`.
 Example:
 
 ```bash
-OIDC_DISPLAY_NAME="Authentik"
+OIDC_DISPLAY_NAME=Authentik
 ```
 
 ![OIDC_DISPLAY_NAME set to "Authentik"](https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/login.png)
@@ -97,8 +97,8 @@ Controls whether or not `/auth` automatically triggers the OAUTH flow, or if use
 A common setup uses a public URL for browser redirects and an internal URL for container-to-container communication:
 
 ```bash
-OIDC_ISSUER_URL="https://auth.domain.com/application/o/transmute/"
-OIDC_INTERNAL_URL="http://192.168.1.1:9000/application/o/transmute/"
+OIDC_ISSUER_URL=https://auth.domain.com/application/o/transmute/
+OIDC_INTERNAL_URL=http://192.168.1.1:9000/application/o/transmute/
 ```
 
 # Docker Compose Example
