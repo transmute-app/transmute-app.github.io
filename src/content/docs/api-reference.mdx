@@ -8,6 +8,15 @@ order: 6
 
 Transmute exposes a REST API so you can automate file conversions without the web UI. All endpoints (except health checks and bootstrap status) require a valid Bearer token — see [Authentication & Users](/docs/authentication) for details on obtaining one.
 
+For `curl`, use this header format:
+
+```bash
+API_KEY="your-api-key-here"
+AUTH="Authorization: Bearer ${API_KEY}"
+```
+
+Then pass `-H "${AUTH}"` on every authenticated request.
+
 > **Interactive docs** — Every Transmute instance serves auto-generated ReDoc documentation at [`/api/docs`](http://localhost:3313/api/docs). The full OpenAPI specification is also available on [GitHub](https://github.com/transmute-app/openapi-specifications/blob/main/openapi.json).
 
 ---
@@ -25,6 +34,7 @@ The typical automation flow is: **upload → convert → download**. Each step i
 
 ```bash
 curl -X POST http://localhost:3313/api/files \
+  -H "${AUTH}" \
   -F "file=@photo.jpg"
 ```
 
@@ -53,6 +63,7 @@ The `compatible_formats` array tells you exactly which output formats are suppor
 
 ```bash
 curl -X POST http://localhost:3313/api/conversions \
+  -H "${AUTH}" \
   -H "Content-Type: application/json" \
   -d '{
     "id": "123e4567-e89b-12d3-a456-426614174000",
@@ -80,7 +91,8 @@ The returned `id` is the converted file's identifier — use it to download the 
 ### 3. Download the Result
 
 ```bash
-curl -OJ http://localhost:3313/api/files/987fcdeb-51a2-43f1-b789-123456789abc
+curl -OJ http://localhost:3313/api/files/987fcdeb-51a2-43f1-b789-123456789abc \
+  -H "${AUTH}"
 ```
 
 The response is the raw file binary (`application/octet-stream`).
@@ -93,6 +105,7 @@ If you have multiple converted files, you can download them all at once as a ZIP
 
 ```bash
 curl -X POST http://localhost:3313/api/files/batch \
+  -H "${AUTH}" \
   -H "Content-Type: application/json" \
   -d '{
     "file_ids": [
@@ -112,7 +125,8 @@ The response is an `application/zip` archive containing all requested files.
 ### List Uploaded Files
 
 ```bash
-curl http://localhost:3313/api/files
+curl http://localhost:3313/api/files \
+  -H "${AUTH}"
 ```
 
 Returns a `files` array with metadata for every uploaded file.
@@ -120,7 +134,8 @@ Returns a `files` array with metadata for every uploaded file.
 ### List Completed Conversions
 
 ```bash
-curl http://localhost:3313/api/conversions/complete
+curl http://localhost:3313/api/conversions/complete \
+  -H "${AUTH}"
 ```
 
 Returns a `conversions` array with metadata for every completed conversion, including reference to the original file.
@@ -128,23 +143,27 @@ Returns a `conversions` array with metadata for every completed conversion, incl
 ### Delete a File
 
 ```bash
-curl -X DELETE http://localhost:3313/api/files/{file_id}
+curl -X DELETE http://localhost:3313/api/files/{file_id} \
+  -H "${AUTH}"
 ```
 
 ### Delete a Conversion
 
 ```bash
-curl -X DELETE http://localhost:3313/api/conversions/{conversion_id}
+curl -X DELETE http://localhost:3313/api/conversions/{conversion_id} \
+  -H "${AUTH}"
 ```
 
 ### Delete All Files / Conversions
 
 ```bash
 # Delete all uploaded files
-curl -X DELETE http://localhost:3313/api/files/all
+curl -X DELETE http://localhost:3313/api/files/all \
+  -H "${AUTH}"
 
 # Delete all conversions
-curl -X DELETE http://localhost:3313/api/conversions/all
+curl -X DELETE http://localhost:3313/api/conversions/all \
+  -H "${AUTH}"
 ```
 
 ---
@@ -209,7 +228,8 @@ You can read and update application settings (theme, auto-download, cleanup TTL,
 ### Get Current Settings
 
 ```bash
-curl http://localhost:3313/api/settings
+curl http://localhost:3313/api/settings \
+  -H "${AUTH}"
 ```
 
 ```json
@@ -225,6 +245,7 @@ curl http://localhost:3313/api/settings
 
 ```bash
 curl -X PATCH http://localhost:3313/api/settings \
+  -H "${AUTH}" \
   -H "Content-Type: application/json" \
   -d '{ "theme": "nigredo", "auto_download": true }'
 ```
