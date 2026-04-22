@@ -1,0 +1,62 @@
+---
+title: From URL
+description: Download a file from a URL and convert it without uploading from your local device first.
+order: 7
+---
+
+# From URL
+
+Transmute can download a file directly from a URL, add it to your account, and then convert it like any other upload. This is useful when the source file already lives online and you do not want to download it manually first.
+
+---
+
+## What It Does
+
+The **From URL** feature accepts a URL, fetches the remote media on the server, and imports the result into Transmute so you can convert it normally.
+
+In practice, this covers two common cases:
+
+- **Direct file URLs** such as hosted audio, video, image, or document files
+- **Page URLs** from supported media sites, using the bundled `yt-dlp` downloader
+
+Once the download finishes, the file is treated like a normal Transmute upload.
+
+---
+
+## yt-dlp Integration
+
+Transmute includes `yt-dlp` in the container image so it can download media from sites that `yt-dlp` supports, including services such as YouTube, Vimeo, and SoundCloud.
+
+That support depends on `yt-dlp` itself. If `yt-dlp` can extract a downloadable media stream from the URL you provide, Transmute can import that result and continue with conversion.
+
+> **Note:** Transmute is not affiliated with `yt-dlp` in any way. It is simply an additional downloader bundled into the image for convenience.
+
+---
+
+## Using It
+
+1. Open the **From URL** option in the Transmute interface.
+2. Paste the source URL.
+3. Submit the download.
+4. Wait for Transmute to fetch and import the media.
+5. Convert the imported file as you normally would.
+
+If the URL points to a regular file, Transmute downloads that file directly. If the URL is a supported media page, Transmute uses `yt-dlp` to resolve and download the media first.
+
+---
+
+## Important Legal Note
+
+Use this feature responsibly.
+
+Transmute does **not** encourage piracy, copyright infringement, or downloading media you do not have the right to access, copy, or convert. You are responsible for ensuring that your use of the **From URL** feature complies with the law, the source site's terms, and the rights of the content owner.
+
+---
+
+## Limits and Expectations
+
+- Support for site downloads is only as broad as current `yt-dlp` support.
+- Some URLs may fail because the source site changed, blocks automated access, requires authentication, or is otherwise unsupported.
+- A successful download still needs to be in a format that Transmute can process and convert.
+
+If a URL fails, try a direct file URL when available, or verify whether the source is currently supported by `yt-dlp`.
