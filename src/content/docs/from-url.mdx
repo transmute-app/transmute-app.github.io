@@ -27,7 +27,7 @@ Once the download finishes, the file is treated like a normal Transmute upload.
 
 Transmute includes `yt-dlp` in the container image so it can download media from sites that `yt-dlp` supports, including services such as YouTube, Vimeo, and SoundCloud.
 
-That support depends on `yt-dlp` itself. If `yt-dlp` can extract a downloadable media stream from the URL you provide, Transmute can import that result and continue with conversion.
+That support depends on `yt-dlp` itself. If `yt-dlp` can extract a downloadable media stream from the URL you provide, Transmute can import that result and continue with conversion. This also includes playlist URLs, such as YouTube playlists and playlists from other supported sites, anywhere `yt-dlp` can handle them.
 
 > **Note:** Transmute is not affiliated with `yt-dlp` in any way. It is simply an additional downloader bundled into the image for convenience.
 
@@ -41,7 +41,7 @@ That support depends on `yt-dlp` itself. If `yt-dlp` can extract a downloadable 
 4. Wait for Transmute to fetch and import the media.
 5. Convert the imported file as you normally would.
 
-If the URL points to a regular file, Transmute downloads that file directly. If the URL is a supported media page, Transmute uses `yt-dlp` to resolve and download the media first.
+If the URL points to a regular file, Transmute downloads that file directly. If the URL is a supported media page or playlist, Transmute uses `yt-dlp` to resolve and download the media first.
 
 ---
 
@@ -55,7 +55,7 @@ Transmute does **not** encourage piracy, copyright infringement, or downloading 
 
 ## Limits and Expectations
 
-- Support for site downloads is only as broad as current `yt-dlp` support.
+- Support for site downloads and playlists is only as broad as current `yt-dlp` support.
 - Some URLs may fail because the source site changed, blocks automated access, requires authentication, or is otherwise unsupported.
 - A successful download still needs to be in a format that Transmute can process and convert.
 
