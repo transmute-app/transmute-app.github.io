@@ -1,0 +1,334 @@
+---
+title: Quality Reference
+description: Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.
+order: 6
+---
+
+# Quality Reference
+
+Transmute exposes three quality levels: `low`, `medium`, and `high`. Those labels are intentionally simple in the UI and API, but they do **not** mean the same encoder settings for every format.
+
+This page is the canonical reference for what each quality level does in the current implementation.
+
+---
+
+## How Quality Works
+
+- Quality is always **output-format specific**.
+- The same `high` value can mean **CRF 18** for one video output, **320 kbps** for one audio output, **JPEG quality 95** for an image output, or **no effect at all** for another converter.
+- Only formats explicitly marked as supporting quality expose the option in the UI and API metadata.
+- If you omit `quality`, Transmute either uses your saved default quality for that output format or falls back to the converter's built-in medium-style defaults.
+
+The shared quality labels are:
+
+| Quality | General intent |
+|--------|----------------|
+| `low` | Smaller output, faster encoding, more compression |
+| `medium` | Balanced default |
+| `high` | Larger output, slower encoding, less compression |
+
+> **Important:** Final file size and perceived quality still depend heavily on the source file, encoder defaults, frame complexity, color depth, transparency, resolution, and container/codec limitations.
+
+---
+
+## API and Settings Usage
+
+You can pass quality directly when starting a conversion:
+
+```bash
+curl -X POST http://localhost:3313/api/conversions \
+  -H "${AUTH}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "output_format": "mp4",
+    "quality": "high"
+  }'
+```
+
+Supported values are:
+
+- `low`
+- `medium`
+- `high`
+
+You can also save default quality mappings per output format. If a conversion request does not include `quality`, Transmute checks whether you have a stored default for that output format and applies it automatically.
+
+---
+
+## FFmpeg Outputs
+
+The FFmpeg converter handles most audio and video outputs. It uses different quality controls depending on the target format family.
+
+### Video Outputs Using CRF + Preset
+
+Applies to these output formats:
+
+- `mp4`
+- `avi`
+- `mov`
+- `mkv`
+- `webm`
+- `ts`
+- `3gp`
+- `ogv`
+- `f4v`
+- `m4v`
+
+Mapping:
+
+| Quality | FFmpeg flags | What it means |
+|--------|---------------|---------------|
+| `high` | `-crf 18 -preset slow` | Lower compression, better visual retention, slower encode |
+| `medium` | `-crf 23 -preset medium` | Default balance |
+| `low` | `-crf 28 -preset fast` | Higher compression, lower fidelity, faster encode |
+
+Technical notes:
+
+- `CRF` is a constant-quality mode. Lower numbers mean higher quality and usually larger files.
+- The `preset` mainly changes encoder speed versus compression efficiency. Slower presets usually produce smaller files at the same CRF.
+- Because CRF is content-adaptive, these settings do **not** correspond to fixed bitrates.
+- The same CRF can produce very different file sizes depending on motion, noise, grain, animation, and resolution.
+
+Practical interpretation:
+
+- `high` is suitable when preserving detail matters more than output size.
+- `medium` is the normal default for general-purpose delivery.
+- `low` is useful for smaller previews, quick exports, or constrained storage/bandwidth.
+
+### Video Outputs Using Quantizer Scale
+
+Applies to these output formats:
+
+- `flv`
+- `mpeg`
+- `wmv`
+- `asf`
+
+Mapping:
+
+| Quality | FFmpeg flags | What it means |
+|--------|---------------|---------------|
+| `high` | `-q:v 2` | Higher visual quality |
+| `medium` | `-q:v 5` | Middle setting |
+| `low` | `-q:v 9` | More aggressive compression |
+
+Technical notes:
+
+- `-q:v` is a codec quantizer control. Lower numbers generally mean better quality and larger files.
+- This is not a universal scale across all codecs. It is only meaningful within the specific encoder chosen for the output container.
+- File sizes remain variable because these are still quality-oriented settings rather than hard bitrate caps.
+
+### Lossy Audio Outputs Using Bitrate
+
+Applies to these output formats:
+
+- `mp3`
+- `aac`
+- `wma`
+- `m4a`
+- `opus`
+- `mp2`
+- `ac3`
+- `oga`
+
+Most of these use the same target bitrate mapping:
+
+| Quality | Audio bitrate |
+|--------|---------------|
+| `high` | `320k` |
+| `medium` | `192k` |
+| `low` | `96k` |
+
+`ac3` uses a separate mapping:
+
+| Quality | AC-3 bitrate |
+|--------|---------------|
+| `high` | `448k` |
+| `medium` | `256k` |
+| `low` | `128k` |
+
+Technical notes:
+
+- FFmpeg sets these with `-b:a`.
+- For stereo content, `320k` is close to transparent for many listeners in MP3/AAC-style workflows, while `96k` is noticeably more compressed.
+- `Opus` is generally more efficient than MP3 at the same nominal bitrate, but Transmute still uses the same label mapping for consistency.
+- Actual perceptual quality varies by codec even when the numeric bitrate is the same.
+- Lossless formats such as `wav`, `flac`, `aiff`, and `mka` do not expose quality options here.
+
+### FFmpeg Side Effects That Matter
+
+These are not direct quality tiers, but they affect the output you get:
+
+- Video outputs that do not safely support alpha are forced to `-pix_fmt yuv420p`, which strips transparency and improves compatibility.
+- Video or animated-image outputs may cap frame rate and resolution for practical reasons. For example, video-to-animated-image conversions use `fps=10` and `scale=320:-1:flags=lanczos`.
+- `3gp` outputs force `libx264` video plus `aac` audio rather than older default codecs.
+
+Those behaviors can affect sharpness, color handling, transparency, and output size independently of the selected quality tier.
+
+---
+
+## Pillow Image Outputs
+
+The Pillow converter handles most raster image outputs. It only exposes quality for selected lossy or quality-tunable formats.
+
+### JPEG, WebP, AVIF, JPEG XL, HEIF, HEIC
+
+Applies to these output formats:
+
+- `jpeg`
+- `webp`
+- `avif`
+- `jxl`
+- `heif`
+- `heic`
+
+Mapping:
+
+| Quality | Pillow save parameter |
+|--------|------------------------|
+| `high` | `quality=95` |
+| `medium` | `quality=85` |
+| `low` | `quality=60` |
+
+Technical notes:
+
+- Transmute passes Pillow's numeric `quality` option directly.
+- The meaning of `quality=95` or `quality=60` depends on the encoder plugin behind that format. The scale is similar, but not identical, across JPEG, WebP, AVIF, HEIF/HEIC, and JPEG XL.
+- Higher values generally preserve more detail and create larger files.
+- `quality=95` is intentionally below the absolute maximum and avoids some oversized-output edge cases common with `100`.
+
+Format-specific caveats:
+
+- JPEG does not support alpha; transparent inputs are flattened onto a white background before saving.
+- AVIF, HEIF, HEIC, and JXL are more modern codecs and usually compress better than JPEG at similar perceived quality, but encode/decode behavior depends on the installed plugin implementations.
+- WebP quality can still produce either much smaller or much larger files than JPEG depending on content and transparency.
+
+### JPEG 2000 (`jp2`)
+
+JPEG 2000 uses a different parameter entirely.
+
+Mapping:
+
+| Quality | Pillow save parameter |
+|--------|------------------------|
+| `high` | `quality_layers=[100]` |
+| `medium` | `quality_layers=[80]` |
+| `low` | `quality_layers=[30]` |
+
+Technical notes:
+
+- Pillow uses `quality_layers` instead of `quality` for JP2.
+- A single-layer configuration means Transmute writes one target layer rather than a multi-layer progressive quality ladder.
+- Higher values allocate more quality to that layer, generally increasing output size.
+- JPEG 2000 behavior depends on the available encoder backend and may differ from baseline JPEG expectations.
+
+### Formats Without Exposed Quality
+
+These formats are still converted by Pillow but do not currently expose `low` / `medium` / `high`:
+
+- `png`
+- `bmp`
+- `tiff`
+- `gif`
+- `ico`
+- `pdf`
+- `qoi`
+- `dds`
+- `pbm`, `pgm`, `ppm`, `pnm`, `pfm`
+- `tga`, `sgi`, `icns`, `msp`, `xbm`, `blp`, `dib`, `eps`, `apng`, `mpo`, `pcx`
+
+Some of those still have internal normalization rules, optimization flags, palette conversion, or size caps, but they do not use the shared quality selector.
+
+---
+
+## Draw.io Exports
+
+The Draw.io converter only supports quality tiers for `jpeg` output.
+
+Mapping:
+
+| Quality | Draw.io CLI flag |
+|--------|-------------------|
+| `high` | `--quality 90` |
+| `medium` | `--quality 80` |
+| `low` | `--quality 60` |
+
+Technical notes:
+
+- These values are passed to the Draw.io CLI during export.
+- `png`, `pdf`, and `svg` exports ignore the quality setting.
+- `png` exports always add `--transparent`, which affects the resulting background but is unrelated to quality.
+- The Draw.io converter always exports page `0`, meaning the first page of the diagram.
+
+---
+
+## LibreOffice Presentation Exports
+
+The LibreOffice converter only uses quality tiers when exporting presentations to a single stitched `jpeg` image.
+
+### JPEG Output From Presentations
+
+Applies to:
+
+- `pptx`, `pptm`, `ppt`, `pps`, `ppsx`, `pot`, `potx`, `odp`, `key` input
+- `jpeg` output
+
+Mapping:
+
+| Quality | Pillow JPEG quality |
+|--------|----------------------|
+| `high` | `95` |
+| `medium` | `80` |
+| `low` | `50` |
+
+Technical notes:
+
+- LibreOffice first renders the presentation to PDF.
+- PyMuPDF then rasterizes each page at **200 DPI**.
+- All rendered pages are stitched into one tall RGB image.
+- The final combined image is then saved as JPEG with the quality value above.
+
+This means the final output quality is influenced by several stages:
+
+- LibreOffice's PDF rendering quality
+- the fixed 200 DPI rasterization step
+- optional downscaling if the stitched image exceeds JPEG dimension limits
+- the final JPEG save quality value
+
+Dimension limit behavior:
+
+- If the combined image would exceed approximately `65500` pixels in width or height, Transmute scales it down before writing JPEG.
+- That downscaling can reduce sharpness regardless of whether you chose `high`.
+
+### PNG and EPS Output From Presentations
+
+- `png` and `eps` outputs use the same PDF-to-image pipeline but ignore the quality selector.
+- `txt`, `html`, `pdf`, `ppt`, `pptx`, and `odp` outputs also ignore quality.
+
+---
+
+## When Quality Has No Effect
+
+Even though the API field is always named `quality`, many converters ignore it entirely.
+
+For the four converters covered here, quality has **no effect** for:
+
+- FFmpeg lossless-style outputs such as `wav`, `flac`, `aiff`, and `mka`
+- Draw.io outputs `png`, `pdf`, and `svg`
+- LibreOffice outputs other than stitched `jpeg`
+- Pillow outputs that are not listed in the quality-enabled set above
+
+If a format does not advertise quality support, the UI should not offer the selector and the converter will simply use its normal defaults.
+
+---
+
+## Choosing a Quality Level
+
+Use `low` when you want smaller files, faster processing, or preview-grade output.
+
+Use `medium` when you want the default balance and do not have strict archival or bandwidth requirements.
+
+Use `high` when preserving visible or audible fidelity matters more than encode time and output size.
+
+For users who want reproducible automation, point them to this page and have them treat `quality` as a stable Transmute abstraction rather than as a promise of identical encoder math across all formats.

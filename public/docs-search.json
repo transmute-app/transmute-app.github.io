@@ -213,7 +213,7 @@
     "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
     "sectionTitle": "Examples for Authentik",
     "headingId": "examples-for-authentik",
-    "text": "Examples for Authentik OIDC_ISSUER_URL=\"http:// /application/o/transmute/\" OIDC_INTERNAL_URL=\"http:// /application/o/transmute/\" OIDC_CLIENT_ID=\" \" OIDC_CLIENT_SECRET=\" \" OIDC_DISPLAY_NAME=\"Authentik\" OIDC_AUTO_CREATE_USERS=true OIDC_AUTO_LAUNCH=true If your provider requires you to set a \"callback\" or \"redirect\" URI, the value should be /api/oidc/callback. Examples: https://transmute.domain.com/api/oidc/callback http://192.168.1.1:3313/api/oidc/callback Again - if you are using Transmute with OIDC, and your Transmute instance is behind a reverse proxy, please make sure to set your APP_URL evironment variable as well. See environment variables. Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+    "text": "Examples for Authentik OIDC_ISSUER_URL=http:// /application/o/transmute/ OIDC_INTERNAL_URL=http:// /application/o/transmute/ OIDC_CLIENT_ID= OIDC_CLIENT_SECRET= OIDC_DISPLAY_NAME=Authentik OIDC_AUTO_CREATE_USERS=true OIDC_AUTO_LAUNCH=true If your provider requires you to set a \"callback\" or \"redirect\" URI, the value should be /api/oidc/callback. Examples: https://transmute.domain.com/api/oidc/callback http://192.168.1.1:3313/api/oidc/callback Again - if you are using Transmute with OIDC, and your Transmute instance is behind a reverse proxy, please make sure to set your APP_URL evironment variable as well. See environment variables. Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
   },
   {
     "slug": "oidc",
@@ -229,7 +229,7 @@
     "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
     "sectionTitle": "OIDC_ISSUER_URL",
     "headingId": "oidcissuerurl",
-    "text": "OIDC_ISSUER_URL The public issuer URL for your OIDC provider. This should be the URL Transmute uses to redirect users to your identity provider in the browser. In most setups, this is the externally accessible URL. Example: OIDC_ISSUER_URL=\"https://auth.domain.com/application/o/transmute/\" Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+    "text": "OIDC_ISSUER_URL The public issuer URL for your OIDC provider. This should be the URL Transmute uses to redirect users to your identity provider in the browser. In most setups, this is the externally accessible URL. Example: OIDC_ISSUER_URL=https://auth.domain.com/application/o/transmute/ Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
   },
   {
     "slug": "oidc",
@@ -237,7 +237,7 @@
     "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
     "sectionTitle": "OIDC_INTERNAL_URL",
     "headingId": "oidcinternalurl",
-    "text": "OIDC_INTERNAL_URL The internal URL Transmute uses to communicate with the OIDC provider from inside your Docker network or local environment. This is useful when the public URL is not reachable from the Transmute container, or when you want to avoid unnecessary external routing. If not set, this defaults to OIDC_ISSUER_URL. Example: OIDC_INTERNAL_URL=\"http://192.168.1.1:9000/application/o/transmute/\" Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+    "text": "OIDC_INTERNAL_URL The internal URL Transmute uses to communicate with the OIDC provider from inside your Docker network or local environment. This is useful when the public URL is not reachable from the Transmute container, or when you want to avoid unnecessary external routing. If not set, this defaults to OIDC_ISSUER_URL. Example: OIDC_INTERNAL_URL=http://192.168.1.1:9000/application/o/transmute/ Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
   },
   {
     "slug": "oidc",
@@ -261,7 +261,7 @@
     "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
     "sectionTitle": "OIDC_DISPLAY_NAME",
     "headingId": "oidcdisplayname",
-    "text": "OIDC_DISPLAY_NAME The label shown on the login button in the Transmute UI. Defaults to SSO. Example: OIDC_DISPLAY_NAME=\"Authentik\" Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+    "text": "OIDC_DISPLAY_NAME The label shown on the login button in the Transmute UI. Defaults to SSO. Example: OIDC_DISPLAY_NAME=Authentik Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
   },
   {
     "slug": "oidc",
@@ -285,7 +285,7 @@
     "description": "Allow login and user account creation via OIDC providers such as Authentik and Authelia",
     "sectionTitle": "URL Example",
     "headingId": "url-example",
-    "text": "URL Example A common setup uses a public URL for browser redirects and an internal URL for container-to-container communication: OIDC_ISSUER_URL=\"https://auth.domain.com/application/o/transmute/\" OIDC_INTERNAL_URL=\"http://192.168.1.1:9000/application/o/transmute/\" Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
+    "text": "URL Example A common setup uses a public URL for browser redirects and an internal URL for container-to-container communication: OIDC_ISSUER_URL=https://auth.domain.com/application/o/transmute/ OIDC_INTERNAL_URL=http://192.168.1.1:9000/application/o/transmute/ Allow login and user account creation via OIDC providers such as Authentik and Authelia oidc"
   },
   {
     "slug": "oidc",
@@ -459,6 +459,14 @@
     "slug": "settings-reference",
     "title": "Settings Reference",
     "description": "A complete reference for every option on the Transmute Settings page.",
+    "sectionTitle": "Default Quality Mappings",
+    "headingId": "default-quality-mappings",
+    "text": "Default Quality Mappings You can save a default low, medium, or high quality level for any output format that exposes quality options. When you later convert to that format, Transmute applies your saved default automatically unless you explicitly choose a different quality for that conversion. See Quality Reference for the exact encoder settings behind each quality tier. A complete reference for every option on the Transmute Settings page. settings-reference"
+  },
+  {
+    "slug": "settings-reference",
+    "title": "Settings Reference",
+    "description": "A complete reference for every option on the Transmute Settings page.",
     "sectionTitle": "Cleanup TTL",
     "headingId": "cleanup-ttl",
     "text": "Cleanup TTL Default: on Enables automatic background cleanup of uploads and conversions after they age out. When toggled off, files and conversion records are kept indefinitely (or until removed manually). A complete reference for every option on the Transmute Settings page. settings-reference"
@@ -536,6 +544,158 @@
     "text": "Removing a default Click the × button on the right side of any row to remove that mapping. The change takes effect immediately and the input format becomes available to configure again. A complete reference for every option on the Transmute Settings page. settings-reference"
   },
   {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "Quality Reference",
+    "headingId": "quality-reference",
+    "text": "Quality Reference Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "Quality Reference",
+    "headingId": "quality-reference",
+    "text": "Quality Reference Transmute exposes three quality levels: low, medium, and high. Those labels are intentionally simple in the UI and API, but they do not mean the same encoder settings for every format. This page is the canonical reference for what each quality level does in the current implementation. --- Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "How Quality Works",
+    "headingId": "how-quality-works",
+    "text": "How Quality Works Quality is always output-format specific. The same high value can mean CRF 18 for one video output, 320 kbps for one audio output, JPEG quality 95 for an image output, or no effect at all for another converter. Only formats explicitly marked as supporting quality expose the option in the UI and API metadata. If you omit quality, Transmute either uses your saved default quality for that output format or falls back to the converter's built-in medium-style defaults. The shared quality labels are: Quality General intent -------- ---------------- low Smaller output, faster encoding, more compression medium Balanced default high Larger output, slower encoding, less compression Important: Final file size and perceived quality still depend heavily on the source file, encoder defaults, frame complexity, color depth, transparency, resolution, and container/codec limitations. --- Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "API and Settings Usage",
+    "headingId": "api-and-settings-usage",
+    "text": "API and Settings Usage You can pass quality directly when starting a conversion: curl -X POST http://localhost:3313/api/conversions \\ -H \"${AUTH}\" \\ -H \"Content-Type: application/json\" \\ -d '{ \"id\": \"123e4567-e89b-12d3-a456-426614174000\", \"output_format\": \"mp4\", \"quality\": \"high\" }' Supported values are: low medium high You can also save default quality mappings per output format. If a conversion request does not include quality, Transmute checks whether you have a stored default for that output format and applies it automatically. --- Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "FFmpeg Outputs",
+    "headingId": "ffmpeg-outputs",
+    "text": "FFmpeg Outputs The FFmpeg converter handles most audio and video outputs. It uses different quality controls depending on the target format family. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "Video Outputs Using CRF + Preset",
+    "headingId": "video-outputs-using-crf-preset",
+    "text": "Video Outputs Using CRF + Preset Applies to these output formats: mp4 avi mov mkv webm ts 3gp ogv f4v m4v Mapping: Quality FFmpeg flags What it means -------- --------------- --------------- high -crf 18 -preset slow Lower compression, better visual retention, slower encode medium -crf 23 -preset medium Default balance low -crf 28 -preset fast Higher compression, lower fidelity, faster encode Technical notes: CRF is a constant-quality mode. Lower numbers mean higher quality and usually larger files. The preset mainly changes encoder speed versus compression efficiency. Slower presets usually produce smaller files at the same CRF. Because CRF is content-adaptive, these settings do not correspond to fixed bitrates. The same CRF can produce very different file sizes depending on motion, noise, grain, animation, and resolution. Practical interpretation: high is suitable when preserving detail matters more than output size. medium is the normal default for general-purpose delivery. low is useful for smaller previews, quick exports, or constrained storage/bandwidth. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "Video Outputs Using Quantizer Scale",
+    "headingId": "video-outputs-using-quantizer-scale",
+    "text": "Video Outputs Using Quantizer Scale Applies to these output formats: flv mpeg wmv asf Mapping: Quality FFmpeg flags What it means -------- --------------- --------------- high -q:v 2 Higher visual quality medium -q:v 5 Middle setting low -q:v 9 More aggressive compression Technical notes: -q:v is a codec quantizer control. Lower numbers generally mean better quality and larger files. This is not a universal scale across all codecs. It is only meaningful within the specific encoder chosen for the output container. File sizes remain variable because these are still quality-oriented settings rather than hard bitrate caps. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "Lossy Audio Outputs Using Bitrate",
+    "headingId": "lossy-audio-outputs-using-bitrate",
+    "text": "Lossy Audio Outputs Using Bitrate Applies to these output formats: mp3 aac wma m4a opus mp2 ac3 oga Most of these use the same target bitrate mapping: Quality Audio bitrate -------- --------------- high 320k medium 192k low 96k ac3 uses a separate mapping: Quality AC-3 bitrate -------- --------------- high 448k medium 256k low 128k Technical notes: FFmpeg sets these with -b:a. For stereo content, 320k is close to transparent for many listeners in MP3/AAC-style workflows, while 96k is noticeably more compressed. Opus is generally more efficient than MP3 at the same nominal bitrate, but Transmute still uses the same label mapping for consistency. Actual perceptual quality varies by codec even when the numeric bitrate is the same. Lossless formats such as wav, flac, aiff, and mka do not expose quality options here. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "FFmpeg Side Effects That Matter",
+    "headingId": "ffmpeg-side-effects-that-matter",
+    "text": "FFmpeg Side Effects That Matter These are not direct quality tiers, but they affect the output you get: Video outputs that do not safely support alpha are forced to -pix_fmt yuv420p, which strips transparency and improves compatibility. Video or animated-image outputs may cap frame rate and resolution for practical reasons. For example, video-to-animated-image conversions use fps=10 and scale=320:-1:flags=lanczos. 3gp outputs force libx264 video plus aac audio rather than older default codecs. Those behaviors can affect sharpness, color handling, transparency, and output size independently of the selected quality tier. --- Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "Pillow Image Outputs",
+    "headingId": "pillow-image-outputs",
+    "text": "Pillow Image Outputs The Pillow converter handles most raster image outputs. It only exposes quality for selected lossy or quality-tunable formats. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "JPEG, WebP, AVIF, JPEG XL, HEIF, HEIC",
+    "headingId": "jpeg-webp-avif-jpeg-xl-heif-heic",
+    "text": "JPEG, WebP, AVIF, JPEG XL, HEIF, HEIC Applies to these output formats: jpeg webp avif jxl heif heic Mapping: Quality Pillow save parameter -------- ------------------------ high quality=95 medium quality=85 low quality=60 Technical notes: Transmute passes Pillow's numeric quality option directly. The meaning of quality=95 or quality=60 depends on the encoder plugin behind that format. The scale is similar, but not identical, across JPEG, WebP, AVIF, HEIF/HEIC, and JPEG XL. Higher values generally preserve more detail and create larger files. quality=95 is intentionally below the absolute maximum and avoids some oversized-output edge cases common with 100. Format-specific caveats: JPEG does not support alpha; transparent inputs are flattened onto a white background before saving. AVIF, HEIF, HEIC, and JXL are more modern codecs and usually compress better than JPEG at similar perceived quality, but encode/decode behavior depends on the installed plugin implementations. WebP quality can still produce either much smaller or much larger files than JPEG depending on content and transparency. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "JPEG 2000 (jp2)",
+    "headingId": "jpeg-2000-jp2",
+    "text": "JPEG 2000 (jp2) JPEG 2000 uses a different parameter entirely. Mapping: Quality Pillow save parameter -------- ------------------------ high quality_layers=[100] medium quality_layers=[80] low quality_layers=[30] Technical notes: Pillow uses quality_layers instead of quality for JP2. A single-layer configuration means Transmute writes one target layer rather than a multi-layer progressive quality ladder. Higher values allocate more quality to that layer, generally increasing output size. JPEG 2000 behavior depends on the available encoder backend and may differ from baseline JPEG expectations. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "Formats Without Exposed Quality",
+    "headingId": "formats-without-exposed-quality",
+    "text": "Formats Without Exposed Quality These formats are still converted by Pillow but do not currently expose low / medium / high: png bmp tiff gif ico pdf qoi dds pbm, pgm, ppm, pnm, pfm tga, sgi, icns, msp, xbm, blp, dib, eps, apng, mpo, pcx Some of those still have internal normalization rules, optimization flags, palette conversion, or size caps, but they do not use the shared quality selector. --- Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "Draw.io Exports",
+    "headingId": "drawio-exports",
+    "text": "Draw.io Exports The Draw.io converter only supports quality tiers for jpeg output. Mapping: Quality Draw.io CLI flag -------- ------------------- high --quality 90 medium --quality 80 low --quality 60 Technical notes: These values are passed to the Draw.io CLI during export. png, pdf, and svg exports ignore the quality setting. png exports always add --transparent, which affects the resulting background but is unrelated to quality. The Draw.io converter always exports page 0, meaning the first page of the diagram. --- Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "LibreOffice Presentation Exports",
+    "headingId": "libreoffice-presentation-exports",
+    "text": "LibreOffice Presentation Exports The LibreOffice converter only uses quality tiers when exporting presentations to a single stitched jpeg image. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "JPEG Output From Presentations",
+    "headingId": "jpeg-output-from-presentations",
+    "text": "JPEG Output From Presentations Applies to: pptx, pptm, ppt, pps, ppsx, pot, potx, odp, key input jpeg output Mapping: Quality Pillow JPEG quality -------- ---------------------- high 95 medium 80 low 50 Technical notes: LibreOffice first renders the presentation to PDF. PyMuPDF then rasterizes each page at 200 DPI. All rendered pages are stitched into one tall RGB image. The final combined image is then saved as JPEG with the quality value above. This means the final output quality is influenced by several stages: LibreOffice's PDF rendering quality the fixed 200 DPI rasterization step optional downscaling if the stitched image exceeds JPEG dimension limits the final JPEG save quality value Dimension limit behavior: If the combined image would exceed approximately 65500 pixels in width or height, Transmute scales it down before writing JPEG. That downscaling can reduce sharpness regardless of whether you chose high. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "PNG and EPS Output From Presentations",
+    "headingId": "png-and-eps-output-from-presentations",
+    "text": "PNG and EPS Output From Presentations png and eps outputs use the same PDF-to-image pipeline but ignore the quality selector. txt, html, pdf, ppt, pptx, and odp outputs also ignore quality. --- Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "When Quality Has No Effect",
+    "headingId": "when-quality-has-no-effect",
+    "text": "When Quality Has No Effect Even though the API field is always named quality, many converters ignore it entirely. For the four converters covered here, quality has no effect for: FFmpeg lossless-style outputs such as wav, flac, aiff, and mka Draw.io outputs png, pdf, and svg LibreOffice outputs other than stitched jpeg Pillow outputs that are not listed in the quality-enabled set above If a format does not advertise quality support, the UI should not offer the selector and the converter will simply use its normal defaults. --- Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "Choosing a Quality Level",
+    "headingId": "choosing-a-quality-level",
+    "text": "Choosing a Quality Level Use low when you want smaller files, faster processing, or preview-grade output. Use medium when you want the default balance and do not have strict archival or bandwidth requirements. Use high when preserving visible or audible fidelity matters more than encode time and output size. For users who want reproducible automation, point them to this page and have them treat quality as a stable Transmute abstraction rather than as a promise of identical encoder math across all formats. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
     "slug": "api-reference",
     "title": "API Reference",
     "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
@@ -549,7 +709,7 @@
     "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
     "sectionTitle": "API Reference",
     "headingId": "api-reference",
-    "text": "API Reference Transmute exposes a REST API so you can automate file conversions without the web UI. All endpoints (except health checks and bootstrap status) require a valid Bearer token — see Authentication & Users for details on obtaining one. Interactive docs — Every Transmute instance serves auto-generated ReDoc documentation at /api/docs. The full OpenAPI specification is also available on GitHub. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+    "text": "API Reference Transmute exposes a REST API so you can automate file conversions without the web UI. All endpoints (except health checks and bootstrap status) require a valid Bearer token — see Authentication & Users for details on obtaining one. For curl, use this header format: API_KEY=\"your-api-key-here\" AUTH=\"Authorization: Bearer ${API_KEY}\" Then pass -H \"${AUTH}\" on every authenticated request. Interactive docs — Every Transmute instance serves auto-generated ReDoc documentation at /api/docs. The full OpenAPI specification is also available on GitHub. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
   },
   {
     "slug": "api-reference",
@@ -573,7 +733,7 @@
     "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
     "sectionTitle": "1. Upload a File",
     "headingId": "1-upload-a-file",
-    "text": "1. Upload a File curl -X POST http://localhost:3313/api/files \\ -F \"file=@photo.jpg\" Response (200 OK): { \"message\": \"File uploaded successfully\", \"metadata\": { \"id\": \"123e4567-e89b-12d3-a456-426614174000\", \"original_filename\": \"photo.jpg\", \"media_type\": \"jpg\", \"extension\": \".jpg\", \"size_bytes\": 204800, \"sha256_checksum\": \"abc123def456...\", \"compatible_formats\": [\"png\", \"gif\", \"webp\", \"bmp\", \"tiff\", \"ico\"] } } The compatible_formats array tells you exactly which output formats are supported for this file. Use one of these values in the next step. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+    "text": "1. Upload a File curl -X POST http://localhost:3313/api/files \\ -H \"${AUTH}\" \\ -F \"file=@photo.jpg\" Response (200 OK): { \"message\": \"File uploaded successfully\", \"metadata\": { \"id\": \"123e4567-e89b-12d3-a456-426614174000\", \"original_filename\": \"photo.jpg\", \"media_type\": \"jpg\", \"extension\": \".jpg\", \"size_bytes\": 204800, \"sha256_checksum\": \"abc123def456...\", \"compatible_formats\": [\"png\", \"gif\", \"webp\", \"bmp\", \"tiff\", \"ico\"] } } The compatible_formats array tells you exactly which output formats are supported for this file. Use one of these values in the next step. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
   },
   {
     "slug": "api-reference",
@@ -581,7 +741,7 @@
     "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
     "sectionTitle": "2. Start a Conversion",
     "headingId": "2-start-a-conversion",
-    "text": "2. Start a Conversion curl -X POST http://localhost:3313/api/conversions \\ -H \"Content-Type: application/json\" \\ -d '{ \"id\": \"123e4567-e89b-12d3-a456-426614174000\", \"output_format\": \"png\" }' Response (200 OK): { \"id\": \"987fcdeb-51a2-43f1-b789-123456789abc\", \"original_filename\": \"photo.png\", \"media_type\": \"png\", \"extension\": \".png\", \"size_bytes\": 153600, \"sha256_checksum\": \"def789abc123...\" } The returned id is the converted file's identifier — use it to download the result. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+    "text": "2. Start a Conversion curl -X POST http://localhost:3313/api/conversions \\ -H \"${AUTH}\" \\ -H \"Content-Type: application/json\" \\ -d '{ \"id\": \"123e4567-e89b-12d3-a456-426614174000\", \"output_format\": \"png\", \"quality\": \"high\" }' Response (200 OK): { \"id\": \"987fcdeb-51a2-43f1-b789-123456789abc\", \"original_filename\": \"photo.png\", \"media_type\": \"png\", \"extension\": \".png\", \"size_bytes\": 153600, \"sha256_checksum\": \"def789abc123...\" } The returned id is the converted file's identifier — use it to download the result. The quality field is optional and only applies to output formats that support quality tiers. Supported values are low, medium, and high. See Quality Reference for the exact format-specific encoder settings. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
   },
   {
     "slug": "api-reference",
@@ -589,7 +749,7 @@
     "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
     "sectionTitle": "3. Download the Result",
     "headingId": "3-download-the-result",
-    "text": "3. Download the Result curl -OJ http://localhost:3313/api/files/987fcdeb-51a2-43f1-b789-123456789abc The response is the raw file binary (application/octet-stream). --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+    "text": "3. Download the Result curl -OJ http://localhost:3313/api/files/987fcdeb-51a2-43f1-b789-123456789abc \\ -H \"${AUTH}\" The response is the raw file binary (application/octet-stream). --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
   },
   {
     "slug": "api-reference",
@@ -597,7 +757,7 @@
     "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
     "sectionTitle": "4. Batch Download as ZIP",
     "headingId": "4-batch-download-as-zip",
-    "text": "4. Batch Download as ZIP If you have multiple converted files, you can download them all at once as a ZIP archive: curl -X POST http://localhost:3313/api/files/batch \\ -H \"Content-Type: application/json\" \\ -d '{ \"file_ids\": [ \"987fcdeb-51a2-43f1-b789-123456789abc\", \"aabbccdd-1122-3344-5566-778899aabbcc\" ] }' \\ --output converted_files.zip The response is an application/zip archive containing all requested files. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+    "text": "4. Batch Download as ZIP If you have multiple converted files, you can download them all at once as a ZIP archive: curl -X POST http://localhost:3313/api/files/batch \\ -H \"${AUTH}\" \\ -H \"Content-Type: application/json\" \\ -d '{ \"file_ids\": [ \"987fcdeb-51a2-43f1-b789-123456789abc\", \"aabbccdd-1122-3344-5566-778899aabbcc\" ] }' \\ --output converted_files.zip The response is an application/zip archive containing all requested files. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
   },
   {
     "slug": "api-reference",
@@ -613,7 +773,7 @@
     "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
     "sectionTitle": "List Uploaded Files",
     "headingId": "list-uploaded-files",
-    "text": "List Uploaded Files curl http://localhost:3313/api/files Returns a files array with metadata for every uploaded file. Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+    "text": "List Uploaded Files curl http://localhost:3313/api/files \\ -H \"${AUTH}\" Returns a files array with metadata for every uploaded file. Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
   },
   {
     "slug": "api-reference",
@@ -621,7 +781,7 @@
     "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
     "sectionTitle": "List Completed Conversions",
     "headingId": "list-completed-conversions",
-    "text": "List Completed Conversions curl http://localhost:3313/api/conversions/complete Returns a conversions array with metadata for every completed conversion, including reference to the original file. Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+    "text": "List Completed Conversions curl http://localhost:3313/api/conversions/complete \\ -H \"${AUTH}\" Returns a conversions array with metadata for every completed conversion, including reference to the original file. Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
   },
   {
     "slug": "api-reference",
@@ -629,7 +789,7 @@
     "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
     "sectionTitle": "Delete a File",
     "headingId": "delete-a-file",
-    "text": "Delete a File curl -X DELETE http://localhost:3313/api/files/{file_id} Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+    "text": "Delete a File curl -X DELETE http://localhost:3313/api/files/{file_id} \\ -H \"${AUTH}\" Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
   },
   {
     "slug": "api-reference",
@@ -637,7 +797,7 @@
     "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
     "sectionTitle": "Delete a Conversion",
     "headingId": "delete-a-conversion",
-    "text": "Delete a Conversion curl -X DELETE http://localhost:3313/api/conversions/{conversion_id} Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+    "text": "Delete a Conversion curl -X DELETE http://localhost:3313/api/conversions/{conversion_id} \\ -H \"${AUTH}\" Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
   },
   {
     "slug": "api-reference",
@@ -653,7 +813,7 @@
     "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
     "sectionTitle": "Delete all uploaded files",
     "headingId": "delete-all-uploaded-files",
-    "text": "Delete all uploaded files curl -X DELETE http://localhost:3313/api/files/all Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+    "text": "Delete all uploaded files curl -X DELETE http://localhost:3313/api/files/all \\ -H \"${AUTH}\" Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
   },
   {
     "slug": "api-reference",
@@ -661,7 +821,7 @@
     "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
     "sectionTitle": "Delete all conversions",
     "headingId": "delete-all-conversions",
-    "text": "Delete all conversions curl -X DELETE http://localhost:3313/api/conversions/all --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+    "text": "Delete all conversions curl -X DELETE http://localhost:3313/api/conversions/all \\ -H \"${AUTH}\" --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
   },
   {
     "slug": "api-reference",
@@ -709,7 +869,7 @@
     "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
     "sectionTitle": "Get Current Settings",
     "headingId": "get-current-settings",
-    "text": "Get Current Settings curl http://localhost:3313/api/settings { \"theme\": \"rubedo\", \"auto_download\": false, \"keep_originals\": true, \"cleanup_ttl_minutes\": 60 } Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+    "text": "Get Current Settings curl http://localhost:3313/api/settings \\ -H \"${AUTH}\" { \"theme\": \"rubedo\", \"auto_download\": false, \"keep_originals\": true, \"cleanup_ttl_minutes\": 60 } Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
   },
   {
     "slug": "api-reference",
@@ -717,7 +877,15 @@
     "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
     "sectionTitle": "Update Settings",
     "headingId": "update-settings",
-    "text": "Update Settings curl -X PATCH http://localhost:3313/api/settings \\ -H \"Content-Type: application/json\" \\ -d '{ \"theme\": \"nigredo\", \"auto_download\": true }' Only the fields you include are updated. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+    "text": "Update Settings curl -X PATCH http://localhost:3313/api/settings \\ -H \"${AUTH}\" \\ -H \"Content-Type: application/json\" \\ -d '{ \"theme\": \"nigredo\", \"auto_download\": true }' Only the fields you include are updated. Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "api-reference",
+    "title": "API Reference",
+    "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
+    "sectionTitle": "Default Quality Endpoints",
+    "headingId": "default-quality-endpoints",
+    "text": "Default Quality Endpoints Transmute also exposes per-format default quality mappings: Method Endpoint Description -------- ---------- ------------- GET /api/default-qualities List your saved default quality mappings POST /api/default-qualities Create or update a default quality mapping DELETE /api/default-qualities/{output_format} Delete a default quality mapping Example request: curl -X POST http://localhost:3313/api/default-qualities \\ -H \"${AUTH}\" \\ -H \"Content-Type: application/json\" \\ -d '{ \"output_format\": \"mp4\", \"quality\": \"medium\" }' See Quality Reference for what each level means per format. --- Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
   },
   {
     "slug": "api-reference",
@@ -725,7 +893,63 @@
     "description": "Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.",
     "sectionTitle": "Quick Reference",
     "headingId": "quick-reference",
-    "text": "Quick Reference Method Endpoint Description -------- ---------- ------------- POST /api/files Upload a file GET /api/files List uploaded files GET /api/files/{id} Download a file DELETE /api/files/{id} Delete a file DELETE /api/files/all Delete all files POST /api/files/batch Batch download as ZIP POST /api/conversions Start a conversion GET /api/conversions/complete List completed conversions DELETE /api/conversions/{id} Delete a conversion DELETE /api/conversions/all Delete all conversions GET /api/health/live Liveness check GET /api/health/ready Readiness check GET /api/health/info App metadata GET /api/settings Get settings PATCH /api/settings Update settings Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+    "text": "Quick Reference Method Endpoint Description -------- ---------- ------------- POST /api/files Upload a file GET /api/files List uploaded files GET /api/files/{id} Download a file DELETE /api/files/{id} Delete a file DELETE /api/files/all Delete all files POST /api/files/batch Batch download as ZIP POST /api/conversions Start a conversion GET /api/conversions/complete List completed conversions DELETE /api/conversions/{id} Delete a conversion DELETE /api/conversions/all Delete all conversions GET /api/health/live Liveness check GET /api/health/ready Readiness check GET /api/health/info App metadata GET /api/settings Get settings PATCH /api/settings Update settings GET /api/default-qualities List default quality mappings POST /api/default-qualities Create or update a default quality mapping DELETE /api/default-qualities/{output_format} Delete a default quality mapping Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API. api-reference"
+  },
+  {
+    "slug": "from-url",
+    "title": "From URL",
+    "description": "Download a file from a URL and convert it without uploading from your local device first.",
+    "sectionTitle": "From URL",
+    "headingId": "from-url",
+    "text": "From URL Download a file from a URL and convert it without uploading from your local device first. from-url"
+  },
+  {
+    "slug": "from-url",
+    "title": "From URL",
+    "description": "Download a file from a URL and convert it without uploading from your local device first.",
+    "sectionTitle": "From URL",
+    "headingId": "from-url",
+    "text": "From URL Transmute can download a file directly from a URL, add it to your account, and then convert it like any other upload. This is useful when the source file already lives online and you do not want to download it manually first. --- Download a file from a URL and convert it without uploading from your local device first. from-url"
+  },
+  {
+    "slug": "from-url",
+    "title": "From URL",
+    "description": "Download a file from a URL and convert it without uploading from your local device first.",
+    "sectionTitle": "What It Does",
+    "headingId": "what-it-does",
+    "text": "What It Does The From URL feature accepts a URL, fetches the remote media on the server, and imports the result into Transmute so you can convert it normally. In practice, this covers two common cases: Direct file URLs such as hosted audio, video, image, or document files Page URLs from supported media sites, using the bundled yt-dlp downloader Once the download finishes, the file is treated like a normal Transmute upload. --- Download a file from a URL and convert it without uploading from your local device first. from-url"
+  },
+  {
+    "slug": "from-url",
+    "title": "From URL",
+    "description": "Download a file from a URL and convert it without uploading from your local device first.",
+    "sectionTitle": "yt-dlp Integration",
+    "headingId": "yt-dlp-integration",
+    "text": "yt-dlp Integration Transmute includes yt-dlp in the container image so it can download media from sites that yt-dlp supports, including services such as YouTube, Vimeo, and SoundCloud. That support depends on yt-dlp itself. If yt-dlp can extract a downloadable media stream from the URL you provide, Transmute can import that result and continue with conversion. This also includes playlist URLs, such as YouTube playlists and playlists from other supported sites, anywhere yt-dlp can handle them. Note: Transmute is not affiliated with yt-dlp in any way. It is simply an additional downloader bundled into the image for convenience. --- Download a file from a URL and convert it without uploading from your local device first. from-url"
+  },
+  {
+    "slug": "from-url",
+    "title": "From URL",
+    "description": "Download a file from a URL and convert it without uploading from your local device first.",
+    "sectionTitle": "Using It",
+    "headingId": "using-it",
+    "text": "Using It Open the From URL option in the Transmute interface. Paste the source URL. Submit the download. Wait for Transmute to fetch and import the media. Convert the imported file as you normally would. If the URL points to a regular file, Transmute downloads that file directly. If the URL is a supported media page or playlist, Transmute uses yt-dlp to resolve and download the media first. --- Download a file from a URL and convert it without uploading from your local device first. from-url"
+  },
+  {
+    "slug": "from-url",
+    "title": "From URL",
+    "description": "Download a file from a URL and convert it without uploading from your local device first.",
+    "sectionTitle": "Important Legal Note",
+    "headingId": "important-legal-note",
+    "text": "Important Legal Note Use this feature responsibly. Transmute does not encourage piracy, copyright infringement, or downloading media you do not have the right to access, copy, or convert. You are responsible for ensuring that your use of the From URL feature complies with the law, the source site's terms, and the rights of the content owner. --- Download a file from a URL and convert it without uploading from your local device first. from-url"
+  },
+  {
+    "slug": "from-url",
+    "title": "From URL",
+    "description": "Download a file from a URL and convert it without uploading from your local device first.",
+    "sectionTitle": "Limits and Expectations",
+    "headingId": "limits-and-expectations",
+    "text": "Limits and Expectations Support for site downloads and playlists is only as broad as current yt-dlp support. Some URLs may fail because the source site changed, blocks automated access, requires authentication, or is otherwise unsupported. A successful download still needs to be in a format that Transmute can process and convert. If a URL fails, try a direct file URL when available, or verify whether the source is currently supported by yt-dlp. Download a file from a URL and convert it without uploading from your local device first. from-url"
   },
   {
     "slug": "environment-variables",
@@ -829,7 +1053,7 @@
     "description": "Translations of the Transmute UI provided by other users.",
     "sectionTitle": "UI Translations",
     "headingId": "ui-translations",
-    "text": "UI Translations Transmute supports community-contributed UI translations. Currently supported languages are: English Spanish (Shoutout to @Fuan200 for initial translation) German (Shoutout to @AnguTom for initial translation) If you want to add a new language, open a pull request similar to this example. Translations of the Transmute UI provided by other users. translations"
+    "text": "UI Translations Transmute supports community-contributed UI translations. Currently supported languages are: English Spanish (Shoutout to @Fuan200 for initial translation) German (Shoutout to @AnguTom for initial translation) Polish (Shoutout to @Icikowski for initial translation) Italian (Shoutout to @StefanoPernat for initial translation) If you want to add a new language, open a pull request similar to this example. Translations of the Transmute UI provided by other users. translations"
   },
   {
     "slug": "translations",

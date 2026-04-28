@@ -15,7 +15,9 @@ Transmute is a self-hosted alternative to cloud-based file converters like Cloud
 - [OIDC / SSO Integration](https://transmute.sh/docs/oidc/): Allow login and user account creation via OIDC providers such as Authentik and Authelia
 - [Themes](https://transmute.sh/docs/themes/): Browse all available Transmute themes with side-by-side screenshots.
 - [Settings Reference](https://transmute.sh/docs/settings-reference/): A complete reference for every option on the Transmute Settings page.
+- [Quality Reference](https://transmute.sh/docs/quality-reference/): Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.
 - [API Reference](https://transmute.sh/docs/api-reference/): Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.
+- [From URL](https://transmute.sh/docs/from-url/): Download a file from a URL and convert it without uploading from your local device first.
 - [Environment Variables](https://transmute.sh/docs/environment-variables/): Configure Transmute's default behaviour using environment variables in your Docker Compose file.
 - [UI Translations](https://transmute.sh/docs/translations/): Translations of the Transmute UI provided by other users.
 

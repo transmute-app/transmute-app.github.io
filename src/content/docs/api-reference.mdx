@@ -1,7 +1,7 @@
 ---
 title: API Reference
 description: Interact with Transmute programmatically — upload files, convert formats, and download results via a simple REST API.
-order: 6
+order: 7
 ---
 
 # API Reference
@@ -67,7 +67,8 @@ curl -X POST http://localhost:3313/api/conversions \
   -H "Content-Type: application/json" \
   -d '{
     "id": "123e4567-e89b-12d3-a456-426614174000",
-    "output_format": "png"
+    "output_format": "png",
+    "quality": "high"
   }'
 ```
 
@@ -85,6 +86,8 @@ curl -X POST http://localhost:3313/api/conversions \
 ```
 
 The returned `id` is the converted file's identifier — use it to download the result.
+
+The `quality` field is optional and only applies to output formats that support quality tiers. Supported values are `low`, `medium`, and `high`. See [Quality Reference](/docs/quality-reference) for the exact format-specific encoder settings.
 
 ---
 
@@ -252,6 +255,27 @@ curl -X PATCH http://localhost:3313/api/settings \
 
 Only the fields you include are updated.
 
+### Default Quality Endpoints
+
+Transmute also exposes per-format default quality mappings:
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/default-qualities` | List your saved default quality mappings |
+| `POST` | `/api/default-qualities` | Create or update a default quality mapping |
+| `DELETE` | `/api/default-qualities/{output_format}` | Delete a default quality mapping |
+
+Example request:
+
+```bash
+curl -X POST http://localhost:3313/api/default-qualities \
+  -H "${AUTH}" \
+  -H "Content-Type: application/json" \
+  -d '{ "output_format": "mp4", "quality": "medium" }'
+```
+
+See [Quality Reference](/docs/quality-reference) for what each level means per format.
+
 ---
 
 ## Quick Reference
@@ -273,3 +297,6 @@ Only the fields you include are updated.
 | `GET` | `/api/health/info` | App metadata |
 | `GET` | `/api/settings` | Get settings |
 | `PATCH` | `/api/settings` | Update settings |
+| `GET` | `/api/default-qualities` | List default quality mappings |
+| `POST` | `/api/default-qualities` | Create or update a default quality mapping |
+| `DELETE` | `/api/default-qualities/{output_format}` | Delete a default quality mapping |

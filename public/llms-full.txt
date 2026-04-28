@@ -242,11 +242,11 @@ OIDC is configured through the following environment variables:
 
 ```bash
 # Examples for Authentik
-OIDC_ISSUER_URL="http://<USER_FACING_URL>/application/o/transmute/"
-OIDC_INTERNAL_URL="http://<INTERNAL_URL>/application/o/transmute/"
-OIDC_CLIENT_ID="<REPLACE_ME>"
-OIDC_CLIENT_SECRET="<REPLACE_ME>"
-OIDC_DISPLAY_NAME="Authentik"
+OIDC_ISSUER_URL=http://<USER_FACING_URL>/application/o/transmute/
+OIDC_INTERNAL_URL=http://<INTERNAL_URL>/application/o/transmute/
+OIDC_CLIENT_ID=<REPLACE_ME>
+OIDC_CLIENT_SECRET=<REPLACE_ME>
+OIDC_DISPLAY_NAME=Authentik
 OIDC_AUTO_CREATE_USERS=true
 OIDC_AUTO_LAUNCH=true
 ```
@@ -270,7 +270,7 @@ This should be the URL Transmute uses to redirect users to your identity provide
 Example:
 
 ```bash
-OIDC_ISSUER_URL="https://auth.domain.com/application/o/transmute/"
+OIDC_ISSUER_URL=https://auth.domain.com/application/o/transmute/
 ```
 
 ### OIDC\_INTERNAL\_URL
@@ -284,7 +284,7 @@ If not set, this defaults to `OIDC_ISSUER_URL`.
 Example:
 
 ```bash
-OIDC_INTERNAL_URL="http://192.168.1.1:9000/application/o/transmute/"
+OIDC_INTERNAL_URL=http://192.168.1.1:9000/application/o/transmute/
 ```
 
 ### OIDC\_CLIENT\_ID
@@ -304,7 +304,7 @@ Defaults to `SSO`.
 Example:
 
 ```bash
-OIDC_DISPLAY_NAME="Authentik"
+OIDC_DISPLAY_NAME=Authentik
 ```
 
 ![OIDC_DISPLAY_NAME set to "Authentik"](https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/login.png)
@@ -327,8 +327,8 @@ Controls whether or not `/auth` automatically triggers the OAUTH flow, or if use
 A common setup uses a public URL for browser redirects and an internal URL for container-to-container communication:
 
 ```bash
-OIDC_ISSUER_URL="https://auth.domain.com/application/o/transmute/"
-OIDC_INTERNAL_URL="http://192.168.1.1:9000/application/o/transmute/"
+OIDC_ISSUER_URL=https://auth.domain.com/application/o/transmute/
+OIDC_INTERNAL_URL=http://192.168.1.1:9000/application/o/transmute/
 ```
 
 # Docker Compose Example
@@ -463,6 +463,12 @@ When enabled, the browser will automatically trigger a file download as soon as 
 
 When enabled, the original uploaded file is retained on disk after a conversion completes, and will continue to appear in the Files view. When disabled, the source file is deleted once the conversion job finishes and only the converted output is kept.
 
+### Default Quality Mappings
+
+You can save a default `low`, `medium`, or `high` quality level for any output format that exposes quality options. When you later convert to that format, Transmute applies your saved default automatically unless you explicitly choose a different quality for that conversion.
+
+See [Quality Reference](/docs/quality-reference) for the exact encoder settings behind each quality tier.
+
 ### Cleanup TTL
 
 **Default: on**
@@ -521,9 +527,349 @@ Click the **×** button on the right side of any row to remove that mapping. The
 
 ---
 
+# Quality Reference
+
+Transmute exposes three quality levels: `low`, `medium`, and `high`. Those labels are intentionally simple in the UI and API, but they do **not** mean the same encoder settings for every format.
+
+This page is the canonical reference for what each quality level does in the current implementation.
+
+---
+
+## How Quality Works
+
+- Quality is always **output-format specific**.
+- The same `high` value can mean **CRF 18** for one video output, **320 kbps** for one audio output, **JPEG quality 95** for an image output, or **no effect at all** for another converter.
+- Only formats explicitly marked as supporting quality expose the option in the UI and API metadata.
+- If you omit `quality`, Transmute either uses your saved default quality for that output format or falls back to the converter's built-in medium-style defaults.
+
+The shared quality labels are:
+
+| Quality | General intent |
+|--------|----------------|
+| `low` | Smaller output, faster encoding, more compression |
+| `medium` | Balanced default |
+| `high` | Larger output, slower encoding, less compression |
+
+> **Important:** Final file size and perceived quality still depend heavily on the source file, encoder defaults, frame complexity, color depth, transparency, resolution, and container/codec limitations.
+
+---
+
+## API and Settings Usage
+
+You can pass quality directly when starting a conversion:
+
+```bash
+curl -X POST http://localhost:3313/api/conversions \
+  -H "${AUTH}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "output_format": "mp4",
+    "quality": "high"
+  }'
+```
+
+Supported values are:
+
+- `low`
+- `medium`
+- `high`
+
+You can also save default quality mappings per output format. If a conversion request does not include `quality`, Transmute checks whether you have a stored default for that output format and applies it automatically.
+
+---
+
+## FFmpeg Outputs
+
+The FFmpeg converter handles most audio and video outputs. It uses different quality controls depending on the target format family.
+
+### Video Outputs Using CRF + Preset
+
+Applies to these output formats:
+
+- `mp4`
+- `avi`
+- `mov`
+- `mkv`
+- `webm`
+- `ts`
+- `3gp`
+- `ogv`
+- `f4v`
+- `m4v`
+
+Mapping:
+
+| Quality | FFmpeg flags | What it means |
+|--------|---------------|---------------|
+| `high` | `-crf 18 -preset slow` | Lower compression, better visual retention, slower encode |
+| `medium` | `-crf 23 -preset medium` | Default balance |
+| `low` | `-crf 28 -preset fast` | Higher compression, lower fidelity, faster encode |
+
+Technical notes:
+
+- `CRF` is a constant-quality mode. Lower numbers mean higher quality and usually larger files.
+- The `preset` mainly changes encoder speed versus compression efficiency. Slower presets usually produce smaller files at the same CRF.
+- Because CRF is content-adaptive, these settings do **not** correspond to fixed bitrates.
+- The same CRF can produce very different file sizes depending on motion, noise, grain, animation, and resolution.
+
+Practical interpretation:
+
+- `high` is suitable when preserving detail matters more than output size.
+- `medium` is the normal default for general-purpose delivery.
+- `low` is useful for smaller previews, quick exports, or constrained storage/bandwidth.
+
+### Video Outputs Using Quantizer Scale
+
+Applies to these output formats:
+
+- `flv`
+- `mpeg`
+- `wmv`
+- `asf`
+
+Mapping:
+
+| Quality | FFmpeg flags | What it means |
+|--------|---------------|---------------|
+| `high` | `-q:v 2` | Higher visual quality |
+| `medium` | `-q:v 5` | Middle setting |
+| `low` | `-q:v 9` | More aggressive compression |
+
+Technical notes:
+
+- `-q:v` is a codec quantizer control. Lower numbers generally mean better quality and larger files.
+- This is not a universal scale across all codecs. It is only meaningful within the specific encoder chosen for the output container.
+- File sizes remain variable because these are still quality-oriented settings rather than hard bitrate caps.
+
+### Lossy Audio Outputs Using Bitrate
+
+Applies to these output formats:
+
+- `mp3`
+- `aac`
+- `wma`
+- `m4a`
+- `opus`
+- `mp2`
+- `ac3`
+- `oga`
+
+Most of these use the same target bitrate mapping:
+
+| Quality | Audio bitrate |
+|--------|---------------|
+| `high` | `320k` |
+| `medium` | `192k` |
+| `low` | `96k` |
+
+`ac3` uses a separate mapping:
+
+| Quality | AC-3 bitrate |
+|--------|---------------|
+| `high` | `448k` |
+| `medium` | `256k` |
+| `low` | `128k` |
+
+Technical notes:
+
+- FFmpeg sets these with `-b:a`.
+- For stereo content, `320k` is close to transparent for many listeners in MP3/AAC-style workflows, while `96k` is noticeably more compressed.
+- `Opus` is generally more efficient than MP3 at the same nominal bitrate, but Transmute still uses the same label mapping for consistency.
+- Actual perceptual quality varies by codec even when the numeric bitrate is the same.
+- Lossless formats such as `wav`, `flac`, `aiff`, and `mka` do not expose quality options here.
+
+### FFmpeg Side Effects That Matter
+
+These are not direct quality tiers, but they affect the output you get:
+
+- Video outputs that do not safely support alpha are forced to `-pix_fmt yuv420p`, which strips transparency and improves compatibility.
+- Video or animated-image outputs may cap frame rate and resolution for practical reasons. For example, video-to-animated-image conversions use `fps=10` and `scale=320:-1:flags=lanczos`.
+- `3gp` outputs force `libx264` video plus `aac` audio rather than older default codecs.
+
+Those behaviors can affect sharpness, color handling, transparency, and output size independently of the selected quality tier.
+
+---
+
+## Pillow Image Outputs
+
+The Pillow converter handles most raster image outputs. It only exposes quality for selected lossy or quality-tunable formats.
+
+### JPEG, WebP, AVIF, JPEG XL, HEIF, HEIC
+
+Applies to these output formats:
+
+- `jpeg`
+- `webp`
+- `avif`
+- `jxl`
+- `heif`
+- `heic`
+
+Mapping:
+
+| Quality | Pillow save parameter |
+|--------|------------------------|
+| `high` | `quality=95` |
+| `medium` | `quality=85` |
+| `low` | `quality=60` |
+
+Technical notes:
+
+- Transmute passes Pillow's numeric `quality` option directly.
+- The meaning of `quality=95` or `quality=60` depends on the encoder plugin behind that format. The scale is similar, but not identical, across JPEG, WebP, AVIF, HEIF/HEIC, and JPEG XL.
+- Higher values generally preserve more detail and create larger files.
+- `quality=95` is intentionally below the absolute maximum and avoids some oversized-output edge cases common with `100`.
+
+Format-specific caveats:
+
+- JPEG does not support alpha; transparent inputs are flattened onto a white background before saving.
+- AVIF, HEIF, HEIC, and JXL are more modern codecs and usually compress better than JPEG at similar perceived quality, but encode/decode behavior depends on the installed plugin implementations.
+- WebP quality can still produce either much smaller or much larger files than JPEG depending on content and transparency.
+
+### JPEG 2000 (`jp2`)
+
+JPEG 2000 uses a different parameter entirely.
+
+Mapping:
+
+| Quality | Pillow save parameter |
+|--------|------------------------|
+| `high` | `quality_layers=[100]` |
+| `medium` | `quality_layers=[80]` |
+| `low` | `quality_layers=[30]` |
+
+Technical notes:
+
+- Pillow uses `quality_layers` instead of `quality` for JP2.
+- A single-layer configuration means Transmute writes one target layer rather than a multi-layer progressive quality ladder.
+- Higher values allocate more quality to that layer, generally increasing output size.
+- JPEG 2000 behavior depends on the available encoder backend and may differ from baseline JPEG expectations.
+
+### Formats Without Exposed Quality
+
+These formats are still converted by Pillow but do not currently expose `low` / `medium` / `high`:
+
+- `png`
+- `bmp`
+- `tiff`
+- `gif`
+- `ico`
+- `pdf`
+- `qoi`
+- `dds`
+- `pbm`, `pgm`, `ppm`, `pnm`, `pfm`
+- `tga`, `sgi`, `icns`, `msp`, `xbm`, `blp`, `dib`, `eps`, `apng`, `mpo`, `pcx`
+
+Some of those still have internal normalization rules, optimization flags, palette conversion, or size caps, but they do not use the shared quality selector.
+
+---
+
+## Draw.io Exports
+
+The Draw.io converter only supports quality tiers for `jpeg` output.
+
+Mapping:
+
+| Quality | Draw.io CLI flag |
+|--------|-------------------|
+| `high` | `--quality 90` |
+| `medium` | `--quality 80` |
+| `low` | `--quality 60` |
+
+Technical notes:
+
+- These values are passed to the Draw.io CLI during export.
+- `png`, `pdf`, and `svg` exports ignore the quality setting.
+- `png` exports always add `--transparent`, which affects the resulting background but is unrelated to quality.
+- The Draw.io converter always exports page `0`, meaning the first page of the diagram.
+
+---
+
+## LibreOffice Presentation Exports
+
+The LibreOffice converter only uses quality tiers when exporting presentations to a single stitched `jpeg` image.
+
+### JPEG Output From Presentations
+
+Applies to:
+
+- `pptx`, `pptm`, `ppt`, `pps`, `ppsx`, `pot`, `potx`, `odp`, `key` input
+- `jpeg` output
+
+Mapping:
+
+| Quality | Pillow JPEG quality |
+|--------|----------------------|
+| `high` | `95` |
+| `medium` | `80` |
+| `low` | `50` |
+
+Technical notes:
+
+- LibreOffice first renders the presentation to PDF.
+- PyMuPDF then rasterizes each page at **200 DPI**.
+- All rendered pages are stitched into one tall RGB image.
+- The final combined image is then saved as JPEG with the quality value above.
+
+This means the final output quality is influenced by several stages:
+
+- LibreOffice's PDF rendering quality
+- the fixed 200 DPI rasterization step
+- optional downscaling if the stitched image exceeds JPEG dimension limits
+- the final JPEG save quality value
+
+Dimension limit behavior:
+
+- If the combined image would exceed approximately `65500` pixels in width or height, Transmute scales it down before writing JPEG.
+- That downscaling can reduce sharpness regardless of whether you chose `high`.
+
+### PNG and EPS Output From Presentations
+
+- `png` and `eps` outputs use the same PDF-to-image pipeline but ignore the quality selector.
+- `txt`, `html`, `pdf`, `ppt`, `pptx`, and `odp` outputs also ignore quality.
+
+---
+
+## When Quality Has No Effect
+
+Even though the API field is always named `quality`, many converters ignore it entirely.
+
+For the four converters covered here, quality has **no effect** for:
+
+- FFmpeg lossless-style outputs such as `wav`, `flac`, `aiff`, and `mka`
+- Draw.io outputs `png`, `pdf`, and `svg`
+- LibreOffice outputs other than stitched `jpeg`
+- Pillow outputs that are not listed in the quality-enabled set above
+
+If a format does not advertise quality support, the UI should not offer the selector and the converter will simply use its normal defaults.
+
+---
+
+## Choosing a Quality Level
+
+Use `low` when you want smaller files, faster processing, or preview-grade output.
+
+Use `medium` when you want the default balance and do not have strict archival or bandwidth requirements.
+
+Use `high` when preserving visible or audible fidelity matters more than encode time and output size.
+
+For users who want reproducible automation, point them to this page and have them treat `quality` as a stable Transmute abstraction rather than as a promise of identical encoder math across all formats.
+
+---
+
 # API Reference
 
 Transmute exposes a REST API so you can automate file conversions without the web UI. All endpoints (except health checks and bootstrap status) require a valid Bearer token — see [Authentication & Users](/docs/authentication) for details on obtaining one.
+
+For `curl`, use this header format:
+
+```bash
+API_KEY="your-api-key-here"
+AUTH="Authorization: Bearer ${API_KEY}"
+```
+
+Then pass `-H "${AUTH}"` on every authenticated request.
 
 > **Interactive docs** — Every Transmute instance serves auto-generated ReDoc documentation at [`/api/docs`](http://localhost:3313/api/docs). The full OpenAPI specification is also available on [GitHub](https://github.com/transmute-app/openapi-specifications/blob/main/openapi.json).
 
@@ -542,6 +888,7 @@ The typical automation flow is: **upload → convert → download**. Each step i
 
 ```bash
 curl -X POST http://localhost:3313/api/files \
+  -H "${AUTH}" \
   -F "file=@photo.jpg"
 ```
 
@@ -570,10 +917,12 @@ The `compatible_formats` array tells you exactly which output formats are suppor
 
 ```bash
 curl -X POST http://localhost:3313/api/conversions \
+  -H "${AUTH}" \
   -H "Content-Type: application/json" \
   -d '{
     "id": "123e4567-e89b-12d3-a456-426614174000",
-    "output_format": "png"
+    "output_format": "png",
+    "quality": "high"
   }'
 ```
 
@@ -592,12 +941,15 @@ curl -X POST http://localhost:3313/api/conversions \
 
 The returned `id` is the converted file's identifier — use it to download the result.
 
+The `quality` field is optional and only applies to output formats that support quality tiers. Supported values are `low`, `medium`, and `high`. See [Quality Reference](/docs/quality-reference) for the exact format-specific encoder settings.
+
 ---
 
 ### 3. Download the Result
 
 ```bash
-curl -OJ http://localhost:3313/api/files/987fcdeb-51a2-43f1-b789-123456789abc
+curl -OJ http://localhost:3313/api/files/987fcdeb-51a2-43f1-b789-123456789abc \
+  -H "${AUTH}"
 ```
 
 The response is the raw file binary (`application/octet-stream`).
@@ -610,6 +962,7 @@ If you have multiple converted files, you can download them all at once as a ZIP
 
 ```bash
 curl -X POST http://localhost:3313/api/files/batch \
+  -H "${AUTH}" \
   -H "Content-Type: application/json" \
   -d '{
     "file_ids": [
@@ -629,7 +982,8 @@ The response is an `application/zip` archive containing all requested files.
 ### List Uploaded Files
 
 ```bash
-curl http://localhost:3313/api/files
+curl http://localhost:3313/api/files \
+  -H "${AUTH}"
 ```
 
 Returns a `files` array with metadata for every uploaded file.
@@ -637,7 +991,8 @@ Returns a `files` array with metadata for every uploaded file.
 ### List Completed Conversions
 
 ```bash
-curl http://localhost:3313/api/conversions/complete
+curl http://localhost:3313/api/conversions/complete \
+  -H "${AUTH}"
 ```
 
 Returns a `conversions` array with metadata for every completed conversion, including reference to the original file.
@@ -645,23 +1000,27 @@ Returns a `conversions` array with metadata for every completed conversion, incl
 ### Delete a File
 
 ```bash
-curl -X DELETE http://localhost:3313/api/files/{file_id}
+curl -X DELETE http://localhost:3313/api/files/{file_id} \
+  -H "${AUTH}"
 ```
 
 ### Delete a Conversion
 
 ```bash
-curl -X DELETE http://localhost:3313/api/conversions/{conversion_id}
+curl -X DELETE http://localhost:3313/api/conversions/{conversion_id} \
+  -H "${AUTH}"
 ```
 
 ### Delete All Files / Conversions
 
 ```bash
 # Delete all uploaded files
-curl -X DELETE http://localhost:3313/api/files/all
+curl -X DELETE http://localhost:3313/api/files/all \
+  -H "${AUTH}"
 
 # Delete all conversions
-curl -X DELETE http://localhost:3313/api/conversions/all
+curl -X DELETE http://localhost:3313/api/conversions/all \
+  -H "${AUTH}"
 ```
 
 ---
@@ -726,7 +1085,8 @@ You can read and update application settings (theme, auto-download, cleanup TTL,
 ### Get Current Settings
 
 ```bash
-curl http://localhost:3313/api/settings
+curl http://localhost:3313/api/settings \
+  -H "${AUTH}"
 ```
 
 ```json
@@ -742,11 +1102,33 @@ curl http://localhost:3313/api/settings
 
 ```bash
 curl -X PATCH http://localhost:3313/api/settings \
+  -H "${AUTH}" \
   -H "Content-Type: application/json" \
   -d '{ "theme": "nigredo", "auto_download": true }'
 ```
 
 Only the fields you include are updated.
+
+### Default Quality Endpoints
+
+Transmute also exposes per-format default quality mappings:
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/default-qualities` | List your saved default quality mappings |
+| `POST` | `/api/default-qualities` | Create or update a default quality mapping |
+| `DELETE` | `/api/default-qualities/{output_format}` | Delete a default quality mapping |
+
+Example request:
+
+```bash
+curl -X POST http://localhost:3313/api/default-qualities \
+  -H "${AUTH}" \
+  -H "Content-Type: application/json" \
+  -d '{ "output_format": "mp4", "quality": "medium" }'
+```
+
+See [Quality Reference](/docs/quality-reference) for what each level means per format.
 
 ---
 
@@ -769,6 +1151,68 @@ Only the fields you include are updated.
 | `GET` | `/api/health/info` | App metadata |
 | `GET` | `/api/settings` | Get settings |
 | `PATCH` | `/api/settings` | Update settings |
+| `GET` | `/api/default-qualities` | List default quality mappings |
+| `POST` | `/api/default-qualities` | Create or update a default quality mapping |
+| `DELETE` | `/api/default-qualities/{output_format}` | Delete a default quality mapping |
+
+---
+
+# From URL
+
+Transmute can download a file directly from a URL, add it to your account, and then convert it like any other upload. This is useful when the source file already lives online and you do not want to download it manually first.
+
+---
+
+## What It Does
+
+The **From URL** feature accepts a URL, fetches the remote media on the server, and imports the result into Transmute so you can convert it normally.
+
+In practice, this covers two common cases:
+
+- **Direct file URLs** such as hosted audio, video, image, or document files
+- **Page URLs** from supported media sites, using the bundled `yt-dlp` downloader
+
+Once the download finishes, the file is treated like a normal Transmute upload.
+
+---
+
+## yt-dlp Integration
+
+Transmute includes `yt-dlp` in the container image so it can download media from sites that `yt-dlp` supports, including services such as YouTube, Vimeo, and SoundCloud.
+
+That support depends on `yt-dlp` itself. If `yt-dlp` can extract a downloadable media stream from the URL you provide, Transmute can import that result and continue with conversion. This also includes playlist URLs, such as YouTube playlists and playlists from other supported sites, anywhere `yt-dlp` can handle them.
+
+> **Note:** Transmute is not affiliated with `yt-dlp` in any way. It is simply an additional downloader bundled into the image for convenience.
+
+---
+
+## Using It
+
+1. Open the **From URL** option in the Transmute interface.
+2. Paste the source URL.
+3. Submit the download.
+4. Wait for Transmute to fetch and import the media.
+5. Convert the imported file as you normally would.
+
+If the URL points to a regular file, Transmute downloads that file directly. If the URL is a supported media page or playlist, Transmute uses `yt-dlp` to resolve and download the media first.
+
+---
+
+## Important Legal Note
+
+Use this feature responsibly.
+
+Transmute does **not** encourage piracy, copyright infringement, or downloading media you do not have the right to access, copy, or convert. You are responsible for ensuring that your use of the **From URL** feature complies with the law, the source site's terms, and the rights of the content owner.
+
+---
+
+## Limits and Expectations
+
+- Support for site downloads and playlists is only as broad as current `yt-dlp` support.
+- Some URLs may fail because the source site changed, blocks automated access, requires authentication, or is otherwise unsupported.
+- A successful download still needs to be in a format that Transmute can process and convert.
+
+If a URL fails, try a direct file URL when available, or verify whether the source is currently supported by `yt-dlp`.
 
 ---
 
@@ -867,6 +1311,8 @@ Currently supported languages are:
 - English
 - Spanish (Shoutout to [@Fuan200](https://github.com/Fuan200) for initial translation)
 - German (Shoutout to [@AnguTom](https://github.com/AnguTom) for initial translation)
+- Polish (Shoutout to [@Icikowski](https://github.com/Icikowski) for initial translation)
+- Italian (Shoutout to [@StefanoPernat](https://github.com/StefanoPernat) for initial translation)
 
 If you want to add a new language, open a pull request similar to [this example](https://github.com/transmute-app/transmute/pull/109/changes).
 
