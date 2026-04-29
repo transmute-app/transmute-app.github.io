@@ -60,3 +60,119 @@ Transmute does **not** encourage piracy, copyright infringement, or downloading 
 - A successful download still needs to be in a format that Transmute can process and convert.
 
 If a URL fails, try a direct file URL when available, or verify whether the source is currently supported by `yt-dlp`.
+
+---
+
+## Authenticated Downloads
+
+Some sources require authentication to fetch a file (private file servers, internal artifact stores, protected APIs, etc.). Transmute supports per-domain authentication for direct HTTP/HTTPS downloads via a JSON config file at `domain_auth/config.json` inside the app's working directory.
+
+When the HTTP downloader is about to fetch a URL, it looks up the URL's host (and port, if present) in this config. If a matching entry is found, the configured credentials are attached to the request automatically.
+
+> **Note:** Domain auth currently applies to direct HTTP/HTTPS downloads only. It is not used by the `yt-dlp` downloader.
+
+### Config Format
+
+`domain_auth/config.json` is a JSON array of objects. Each object describes one domain and the credentials to use for it:
+
+```json
+[
+  {
+    "domain": "files.example.com",
+    "auth_type": "basic",
+    "secret": "alice:s3cret"
+  },
+  {
+    "domain": "api.example.com",
+    "auth_type": "bearer",
+    "secret": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.payload.signature"
+  },
+  {
+    "domain": "downloads.example.com:8443",
+    "auth_type": "bearer token",
+    "secret": "ghp_exampleTokenValue1234567890"
+  },
+  {
+    "domain": "internal.example.com",
+    "auth_type": "header",
+    "secret": "X-Api-Key: abc123-def456-ghi789"
+  },
+  {
+    "domain": "cdn.example.com",
+    "auth_type": "custom header",
+    "secret": "X-Auth-Token: my-secret-token-value"
+  }
+]
+```
+
+Each entry has three fields:
+
+- **`domain`** — The host to match. May include a port (`example.com:8443`). Matching is case-insensitive. An exact `host:port` entry is preferred over a host-only entry when both are present.
+- **`auth_type`** — How to authenticate. See [Supported Auth Types](#supported-auth-types).
+- **`secret`** — The credential material. The exact format depends on `auth_type`.
+
+Invalid or unrecognized entries are skipped with a warning and do not prevent other entries from being used.
+
+### Supported Auth Types
+
+| `auth_type` value | Behavior | `secret` format |
+| --- | --- | --- |
+| `basic`, `username and password`, `username_password` | HTTP Basic auth | `"username:password"` |
+| `bearer`, `bearer auth`, `bearer token`, `token` | Sends `Authorization: Bearer <secret>` | The raw token |
+| `header`, `custom header` | Sends a literal header on the request | `"Header-Name: value"` |
+
+`auth_type` matching is case-insensitive.
+
+### Docker Compose Example
+
+The `domain_auth` config lives outside the data volume. Mount the **folder** (not the file itself) so you can create or edit the config from the host without recreating the container:
+
+```yaml
+services:
+  transmute:
+    image: ghcr.io/transmute-app/transmute:latest
+    container_name: transmute
+    restart: unless-stopped
+    ports:
+      - 3313:3313
+    volumes:
+      - transmute_data:/app/data
+      - ./domain_auth:/app/domain_auth
+    healthcheck:
+      test:
+        - "CMD"
+        - "wget"
+        - "-q"
+        - "-O"
+        - "/dev/null"
+        - "--tries=1"
+        - "http://localhost:3313/api/health/ready"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  transmute_data:
+```
+
+Then, on the host, create the folder and the config file **after** the bind mount is in place:
+
+```sh
+mkdir -p ./domain_auth
+cat > ./domain_auth/config.json <<'EOF'
+[
+  {
+    "domain": "files.example.com",
+    "auth_type": "basic",
+    "secret": "alice:s3cret"
+  }
+]
+EOF
+
+docker compose up -d
+```
+
+> **Why mount the folder, not the file?** If you bind-mount `./domain_auth/config.json` directly and the file does not yet exist on the host, Docker will create a *directory* with that name on the host, which breaks the config. Mounting the folder lets you add, edit, or remove the JSON file at any time and have Transmute pick it up on the next download.
+
+> **Security:** The config file contains plaintext credentials. Restrict its permissions on the host (e.g. `chmod 600 ./domain_auth/config.json`) and do not commit it to source control.
