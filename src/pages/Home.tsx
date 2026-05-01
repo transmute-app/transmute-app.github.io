@@ -589,9 +589,6 @@ export default function Home() {
       <section className="py-20 sm:py-28 bg-surface-dark bg-grid relative">
         <div className="absolute inset-0 bg-spotlight pointer-events-none" />
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent mb-5 tracking-wide uppercase">
-            Currently in Beta
-          </span>
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             Open Source & Community Driven
           </h2>
