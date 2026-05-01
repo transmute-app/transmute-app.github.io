@@ -68,6 +68,7 @@ For OIDC configuration variables, please see [OIDC / SSO Integration](/docs/oidc
 | `HOST` | `0.0.0.0` | Network interface the server binds to. The default binds to all interfaces, which is required inside Docker. |
 | `PORT` | `3313` | Port the server listens on inside the container. If you change this, update the `ports` mapping and health check URL in your Compose file to match. |
 | `APP_URL` | `""` | Used for constructing URLs in OIDC API response, and also used for setting the displayed URL in the API docs. |
+| `CONVERSION_WORKER_CONCURRENCY` | `5` | Number of concurrent conversion workers. Each one runs on its own thread. |
 
 ### Storage
 
