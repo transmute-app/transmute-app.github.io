@@ -79,8 +79,8 @@ const screenshots = [
     url: 'https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/files.png',
   },
   {
-    label: 'History',
-    url: 'https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/history.png',
+    label: 'Jobs',
+    url: 'https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/jobs.png',
   },
   {
     label: 'Settings',
