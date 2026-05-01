@@ -15,7 +15,7 @@ This page is the canonical reference for what each quality level does in the cur
 ## How Quality Works
 
 - Quality is always **output-format specific**.
-- The same `high` value can mean **CRF 18** for one video output, **320 kbps** for one audio output, **JPEG quality 95** for an image output, or **no effect at all** for another converter.
+- The same `high` value can mean **CRF 18** for one video output, **320 kbps** for one audio output, **300 DPI page rendering** for PDF-to-image output, **JPEG quality 95** for one image encoder, or **no effect at all** for another converter.
 - Only formats explicitly marked as supporting quality expose the option in the UI and API metadata.
 - If you omit `quality`, Transmute either uses your saved default quality for that output format or falls back to the converter's built-in medium-style defaults.
 
@@ -168,9 +168,118 @@ Those behaviors can affect sharpness, color handling, transparency, and output s
 
 ---
 
+## PyMuPDF PDF Raster Outputs
+
+The PyMuPDF converter handles `pdf` to text-like outputs and now also handles `pdf` to raster-image outputs.
+
+For PDF raster output, quality does two things:
+
+- It changes the **render DPI** used when rasterizing each PDF page.
+- For some lossy or quality-tunable target formats, it also changes the **Pillow encoder settings** used when writing the final image.
+
+Applies to these PDF output formats:
+
+- `png`
+- `jpeg`
+- `webp`
+- `tiff`
+- `bmp`
+- `gif`
+- `ppm`
+- `pgm`
+- `pbm`
+- `tga`
+- `jp2`
+- `avif`
+- `jxl`
+- `ico`
+- `dib`
+- `pcx`
+- `sgi`
+- `pnm`
+
+### Render DPI Mapping
+
+Applies to **all** PDF raster outputs listed above.
+
+| Quality | Render DPI |
+|--------|-------------|
+| `high` | `300` |
+| `medium` | `150` |
+| `low` | `100` |
+
+Technical notes:
+
+- This is the biggest quality change for PDF-to-image output.
+- Higher DPI preserves more detail from the source PDF and usually creates larger images and slower processing.
+- Even for formats that do not have a dedicated encoder-quality knob, the selected quality still matters because the page is rendered at a different resolution first.
+
+### Additional Encoder Mapping For PDF Raster Outputs
+
+Some PDF raster outputs also apply format-specific Pillow save settings after the DPI render step.
+
+#### JPEG, WebP, AVIF, JPEG XL
+
+Applies to these PDF output formats:
+
+- `jpeg`
+- `webp`
+- `avif`
+- `jxl`
+
+Mapping:
+
+| Quality | Save parameter |
+|--------|------------------|
+| `high` | `jpeg/webp/jxl: quality=95`, `avif: quality=90` |
+| `medium` | `jpeg/webp/jxl: quality=80`, `avif: quality=70` |
+| `low` | `jpeg/webp/jxl: quality=60`, `avif: quality=50` |
+
+#### JPEG 2000 (`jp2`)
+
+Mapping:
+
+| Quality | Save parameter |
+|--------|------------------|
+| `high` | `quality_mode='rates', quality_layers=[5]` |
+| `medium` | `quality_mode='rates', quality_layers=[20]` |
+| `low` | `quality_mode='rates', quality_layers=[40]` |
+
+Technical notes:
+
+- For JPEG 2000 in this pipeline, lower numeric rate values correspond to higher quality.
+- That means the `high` / `medium` / `low` mapping is the reverse of a simple “bigger number = better quality” intuition.
+
+### PDF Raster Formats Without Extra Encoder Quality Knobs
+
+These formats still expose `low` / `medium` / `high` for PDF output because DPI changes, even though they do not currently get a separate encoder-quality value:
+
+- `png`
+- `tiff`
+- `bmp`
+- `gif`
+- `ppm`, `pgm`, `pbm`, `pnm`
+- `tga`, `ico`, `dib`, `pcx`, `sgi`
+
+Additional behavior worth knowing:
+
+- `png` enables Pillow `optimize=True`.
+- `tiff` uses `compression='tiff_deflate'`.
+- Formats without alpha support are flattened onto a white background before saving.
+
+### PDF Text-Like Outputs
+
+For PyMuPDF text-style outputs, quality has no effect:
+
+- `txt`
+- `md`
+- `html`
+
+---
+
 ## Pillow Image Outputs
 
-The Pillow converter handles most raster image outputs. It only exposes quality for selected lossy or quality-tunable formats.
+The Pillow converter handles image-to-image conversions and some image-to-document outputs. It only exposes quality for selected lossy or quality-tunable formats.
 
 ### JPEG, WebP, AVIF, JPEG XL, HEIF, HEIC
 
@@ -227,9 +336,7 @@ Technical notes:
 
 These formats are still converted by Pillow but do not currently expose `low` / `medium` / `high`:
 
-- `png`
 - `bmp`
-- `tiff`
 - `gif`
 - `ico`
 - `pdf`
@@ -312,9 +419,10 @@ Dimension limit behavior:
 
 Even though the API field is always named `quality`, many converters ignore it entirely.
 
-For the four converters covered here, quality has **no effect** for:
+For the converters covered here, quality has **no effect** for:
 
 - FFmpeg lossless-style outputs such as `wav`, `flac`, `aiff`, and `mka`
+- PyMuPDF outputs `txt`, `md`, and `html`
 - Draw.io outputs `png`, `pdf`, and `svg`
 - LibreOffice outputs other than stitched `jpeg`
 - Pillow outputs that are not listed in the quality-enabled set above
