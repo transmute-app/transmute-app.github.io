@@ -17,13 +17,33 @@ import { fileURLToPath } from 'node:url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const MEDIA_TYPES_PATH = resolve(__dirname, '..', 'public', 'reference_data', 'media_types.json')
 
-const CONVERSIONS_URL =
-  'https://raw.githubusercontent.com/transmute-app/conversion-compatibility/refs/heads/main/supported_conversions.json'
+const CONVERSIONS_REPO = {
+  owner: 'transmute-app',
+  repo: 'conversion-compatibility',
+  path: 'supported_conversions.json',
+  ref: 'main',
+}
 
-async function fetchJson(url) {
-  const res = await fetch(url)
+async function fetchGitHubRepoJson({ owner, repo, path, ref }) {
+  const url = new URL(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`)
+  url.searchParams.set('ref', ref)
+
+  const res = await fetch(url, {
+    headers: {
+      Accept: 'application/vnd.github+json',
+      'User-Agent': 'transmute-app.github.io scripts/add-missing-formats',
+      'X-GitHub-Api-Version': '2022-11-28',
+    },
+  })
+
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`)
-  return res.json()
+
+  const payload = await res.json()
+  if (payload.encoding !== 'base64' || typeof payload.content !== 'string') {
+    throw new Error(`Unexpected GitHub contents response for ${url}`)
+  }
+
+  return JSON.parse(Buffer.from(payload.content, 'base64').toString('utf8'))
 }
 
 async function main() {
@@ -38,7 +58,7 @@ async function main() {
   }
 
   console.log('Fetching supported conversions…')
-  const conversions = await fetchJson(CONVERSIONS_URL)
+  const conversions = await fetchGitHubRepoJson(CONVERSIONS_REPO)
 
   // Collect all unique format ids from conversions
   const conversionFormats = new Set()

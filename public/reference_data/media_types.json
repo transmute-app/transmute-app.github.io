@@ -1505,6 +1505,18 @@
     ]
   },
   {
+    "id": "tgs",
+    "full_name": "Telegram Sticker",
+    "classification": "image",
+    "description": "TGS, or Telegram Sticker, is a file format used for animated stickers in the Telegram messaging app.",
+    "extensions": [
+      "tgs"
+    ],
+    "aliases": [
+      "tgs"
+    ]
+  },
+  {
     "id": "tiff",
     "full_name": "Tagged Image File Format",
     "classification": "image",

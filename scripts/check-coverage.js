@@ -18,8 +18,12 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const PUBLIC = resolve(__dirname, '..', 'public')
 const MEDIA_TYPES_PATH = resolve(PUBLIC, 'reference_data', 'media_types.json')
 
-const CONVERSIONS_URL =
-  'https://raw.githubusercontent.com/transmute-app/conversion-compatibility/refs/heads/main/supported_conversions.json'
+const CONVERSIONS_REPO = {
+  owner: 'transmute-app',
+  repo: 'conversion-compatibility',
+  path: 'supported_conversions.json',
+  ref: 'main',
+}
 const SAMPLES_API_URL =
   'https://api.github.com/repos/transmute-app/transmute/contents/assets/samples'
 
@@ -29,6 +33,28 @@ async function fetchJson(url) {
   const res = await fetch(url)
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`)
   return res.json()
+}
+
+async function fetchGitHubRepoJson({ owner, repo, path, ref }) {
+  const url = new URL(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`)
+  url.searchParams.set('ref', ref)
+
+  const res = await fetch(url, {
+    headers: {
+      Accept: 'application/vnd.github+json',
+      'User-Agent': 'transmute-app.github.io scripts/check-coverage',
+      'X-GitHub-Api-Version': '2022-11-28',
+    },
+  })
+
+  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`)
+
+  const payload = await res.json()
+  if (payload.encoding !== 'base64' || typeof payload.content !== 'string') {
+    throw new Error(`Unexpected GitHub contents response for ${url}`)
+  }
+
+  return JSON.parse(Buffer.from(payload.content, 'base64').toString('utf8'))
 }
 
 function printSection(heading, items) {
@@ -60,7 +86,7 @@ async function main() {
 
   // Fetch remote data
   console.log('Fetching supported conversions…')
-  const conversions = await fetchJson(CONVERSIONS_URL)
+  const conversions = await fetchGitHubRepoJson(CONVERSIONS_REPO)
 
   console.log('Fetching sample files list…')
   const sampleFiles = await fetchJson(SAMPLES_API_URL)
