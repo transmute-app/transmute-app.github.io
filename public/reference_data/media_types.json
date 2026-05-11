@@ -39,6 +39,19 @@
     ]
   },
   {
+    "id": "aa3",
+    "full_name": "ATRAC3 Audio",
+    "classification": "audio",
+    "description": "ATRAC3, or Adaptive Transform Acoustic Coding 3, is a lossy audio compression format developed by Sony. It is commonly used in MiniDisc players and other Sony audio devices. ATRAC3 provides good audio quality at lower bit rates, making it suitable for portable audio applications.",
+    "sample_file": "None",
+    "extensions": [
+      "aa3"
+    ],
+    "aliases": [
+      "aa3"
+    ]
+  },
+  {
     "id": "ac3",
     "full_name": "Audio Codec 3 (Dolby Digital)",
     "classification": "audio",
@@ -905,6 +918,18 @@
     ],
     "aliases": [
       "ogv"
+    ]
+  },
+  {
+    "id": "oma",
+    "full_name": "OpenMG Audio",
+    "classification": "audio",
+    "description": "OMA, or OpenMG Audio, is a file format used for storing audio data often with digital rights management (DRM) protection. It is commonly used for music files distributed through online music stores. Support for DRM decoding is not included in this project, so only unprotected OMA files can be processed.",
+    "extensions": [
+      "oma"
+    ],
+    "aliases": [
+      "oma"
     ]
   },
   {
