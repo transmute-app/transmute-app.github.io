@@ -615,6 +615,19 @@
     ]
   },
   {
+    "id": "kepub",
+    "full_name": "Kobo EPUB",
+    "classification": "ebook",
+    "description": "Kobo EPUB, or KEPUB, is a file format used for eBooks, primarily supported by Kobo eReaders.",
+    "sample_file": "kepub.kepub.epub",
+    "extensions": [
+      "kepub"
+    ],
+    "aliases": [
+      "kepub"
+    ]
+  },
+  {
     "id": "key",
     "full_name": "Apple Keynote",
     "classification": "document",
@@ -898,7 +911,7 @@
     "id": "opml",
     "full_name": "Outline Processor Markup Language",
     "classification": "document",
-    "description": "",
+    "description": "OPML, or Outline Processor Markup Language, is a file format used for storing and exchanging outline-structured information. It is commonly used for organizing and sharing hierarchical data such as lists, notes, and project plans.",
     "extensions": [
       "opml"
     ],
