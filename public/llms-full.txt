@@ -538,7 +538,7 @@ This page is the canonical reference for what each quality level does in the cur
 ## How Quality Works
 
 - Quality is always **output-format specific**.
-- The same `high` value can mean **CRF 18** for one video output, **320 kbps** for one audio output, **JPEG quality 95** for an image output, or **no effect at all** for another converter.
+- The same `high` value can mean **CRF 18** for one video output, **320 kbps** for one audio output, **300 DPI page rendering** for PDF-to-image output, **JPEG quality 95** for one image encoder, or **no effect at all** for another converter.
 - Only formats explicitly marked as supporting quality expose the option in the UI and API metadata.
 - If you omit `quality`, Transmute either uses your saved default quality for that output format or falls back to the converter's built-in medium-style defaults.
 
@@ -691,9 +691,118 @@ Those behaviors can affect sharpness, color handling, transparency, and output s
 
 ---
 
+## PyMuPDF PDF Raster Outputs
+
+The PyMuPDF converter handles `pdf` to text-like outputs and now also handles `pdf` to raster-image outputs.
+
+For PDF raster output, quality does two things:
+
+- It changes the **render DPI** used when rasterizing each PDF page.
+- For some lossy or quality-tunable target formats, it also changes the **Pillow encoder settings** used when writing the final image.
+
+Applies to these PDF output formats:
+
+- `png`
+- `jpeg`
+- `webp`
+- `tiff`
+- `bmp`
+- `gif`
+- `ppm`
+- `pgm`
+- `pbm`
+- `tga`
+- `jp2`
+- `avif`
+- `jxl`
+- `ico`
+- `dib`
+- `pcx`
+- `sgi`
+- `pnm`
+
+### Render DPI Mapping
+
+Applies to **all** PDF raster outputs listed above.
+
+| Quality | Render DPI |
+|--------|-------------|
+| `high` | `300` |
+| `medium` | `150` |
+| `low` | `100` |
+
+Technical notes:
+
+- This is the biggest quality change for PDF-to-image output.
+- Higher DPI preserves more detail from the source PDF and usually creates larger images and slower processing.
+- Even for formats that do not have a dedicated encoder-quality knob, the selected quality still matters because the page is rendered at a different resolution first.
+
+### Additional Encoder Mapping For PDF Raster Outputs
+
+Some PDF raster outputs also apply format-specific Pillow save settings after the DPI render step.
+
+#### JPEG, WebP, AVIF, JPEG XL
+
+Applies to these PDF output formats:
+
+- `jpeg`
+- `webp`
+- `avif`
+- `jxl`
+
+Mapping:
+
+| Quality | Save parameter |
+|--------|------------------|
+| `high` | `jpeg/webp/jxl: quality=95`, `avif: quality=90` |
+| `medium` | `jpeg/webp/jxl: quality=80`, `avif: quality=70` |
+| `low` | `jpeg/webp/jxl: quality=60`, `avif: quality=50` |
+
+#### JPEG 2000 (`jp2`)
+
+Mapping:
+
+| Quality | Save parameter |
+|--------|------------------|
+| `high` | `quality_mode='rates', quality_layers=[5]` |
+| `medium` | `quality_mode='rates', quality_layers=[20]` |
+| `low` | `quality_mode='rates', quality_layers=[40]` |
+
+Technical notes:
+
+- For JPEG 2000 in this pipeline, lower numeric rate values correspond to higher quality.
+- That means the `high` / `medium` / `low` mapping is the reverse of a simple “bigger number = better quality” intuition.
+
+### PDF Raster Formats Without Extra Encoder Quality Knobs
+
+These formats still expose `low` / `medium` / `high` for PDF output because DPI changes, even though they do not currently get a separate encoder-quality value:
+
+- `png`
+- `tiff`
+- `bmp`
+- `gif`
+- `ppm`, `pgm`, `pbm`, `pnm`
+- `tga`, `ico`, `dib`, `pcx`, `sgi`
+
+Additional behavior worth knowing:
+
+- `png` enables Pillow `optimize=True`.
+- `tiff` uses `compression='tiff_deflate'`.
+- Formats without alpha support are flattened onto a white background before saving.
+
+### PDF Text-Like Outputs
+
+For PyMuPDF text-style outputs, quality has no effect:
+
+- `txt`
+- `md`
+- `html`
+
+---
+
 ## Pillow Image Outputs
 
-The Pillow converter handles most raster image outputs. It only exposes quality for selected lossy or quality-tunable formats.
+The Pillow converter handles image-to-image conversions and some image-to-document outputs. It only exposes quality for selected lossy or quality-tunable formats.
 
 ### JPEG, WebP, AVIF, JPEG XL, HEIF, HEIC
 
@@ -750,9 +859,7 @@ Technical notes:
 
 These formats are still converted by Pillow but do not currently expose `low` / `medium` / `high`:
 
-- `png`
 - `bmp`
-- `tiff`
 - `gif`
 - `ico`
 - `pdf`
@@ -835,9 +942,10 @@ Dimension limit behavior:
 
 Even though the API field is always named `quality`, many converters ignore it entirely.
 
-For the four converters covered here, quality has **no effect** for:
+For the converters covered here, quality has **no effect** for:
 
 - FFmpeg lossless-style outputs such as `wav`, `flac`, `aiff`, and `mka`
+- PyMuPDF outputs `txt`, `md`, and `html`
 - Draw.io outputs `png`, `pdf`, and `svg`
 - LibreOffice outputs other than stitched `jpeg`
 - Pillow outputs that are not listed in the quality-enabled set above
@@ -1216,6 +1324,122 @@ If a URL fails, try a direct file URL when available, or verify whether the sour
 
 ---
 
+## Authenticated Downloads
+
+Some sources require authentication to fetch a file (private file servers, internal artifact stores, protected APIs, etc.). Transmute supports per-domain authentication for direct HTTP/HTTPS downloads via a JSON config file at `domain_auth/config.json` inside the app's working directory.
+
+When the HTTP downloader is about to fetch a URL, it looks up the URL's host (and port, if present) in this config. If a matching entry is found, the configured credentials are attached to the request automatically.
+
+> **Note:** Domain auth currently applies to direct HTTP/HTTPS downloads only. It is not used by the `yt-dlp` downloader.
+
+### Config Format
+
+`domain_auth/config.json` is a JSON array of objects. Each object describes one domain and the credentials to use for it:
+
+```json
+[
+  {
+    "domain": "files.example.com",
+    "auth_type": "basic",
+    "secret": "alice:s3cret"
+  },
+  {
+    "domain": "api.example.com",
+    "auth_type": "bearer",
+    "secret": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.payload.signature"
+  },
+  {
+    "domain": "downloads.example.com:8443",
+    "auth_type": "bearer token",
+    "secret": "ghp_exampleTokenValue1234567890"
+  },
+  {
+    "domain": "internal.example.com",
+    "auth_type": "header",
+    "secret": "X-Api-Key: abc123-def456-ghi789"
+  },
+  {
+    "domain": "cdn.example.com",
+    "auth_type": "custom header",
+    "secret": "X-Auth-Token: my-secret-token-value"
+  }
+]
+```
+
+Each entry has three fields:
+
+- **`domain`** — The host to match. May include a port (`example.com:8443`). Matching is case-insensitive. An exact `host:port` entry is preferred over a host-only entry when both are present.
+- **`auth_type`** — How to authenticate. See [Supported Auth Types](#supported-auth-types).
+- **`secret`** — The credential material. The exact format depends on `auth_type`.
+
+Invalid or unrecognized entries are skipped with a warning and do not prevent other entries from being used.
+
+### Supported Auth Types
+
+| `auth_type` value | Behavior | `secret` format |
+| --- | --- | --- |
+| `basic`, `username and password`, `username_password` | HTTP Basic auth | `"username:password"` |
+| `bearer`, `bearer auth`, `bearer token`, `token` | Sends `Authorization: Bearer <secret>` | The raw token |
+| `header`, `custom header` | Sends a literal header on the request | `"Header-Name: value"` |
+
+`auth_type` matching is case-insensitive.
+
+### Docker Compose Example
+
+The `domain_auth` config lives outside the data volume. Mount the **folder** (not the file itself) so you can create or edit the config from the host without recreating the container:
+
+```yaml
+services:
+  transmute:
+    image: ghcr.io/transmute-app/transmute:latest
+    container_name: transmute
+    restart: unless-stopped
+    ports:
+      - 3313:3313
+    volumes:
+      - transmute_data:/app/data
+      - ./domain_auth:/app/domain_auth
+    healthcheck:
+      test:
+        - "CMD"
+        - "wget"
+        - "-q"
+        - "-O"
+        - "/dev/null"
+        - "--tries=1"
+        - "http://localhost:3313/api/health/ready"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  transmute_data:
+```
+
+Then, on the host, create the folder and the config file **after** the bind mount is in place:
+
+```sh
+mkdir -p ./domain_auth
+cat > ./domain_auth/config.json <<'EOF'
+[
+  {
+    "domain": "files.example.com",
+    "auth_type": "basic",
+    "secret": "alice:s3cret"
+  }
+]
+EOF
+
+docker compose up -d
+```
+
+> **Why mount the folder, not the file?** If you bind-mount `./domain_auth/config.json` directly and the file does not yet exist on the host, Docker will create a *directory* with that name on the host, which breaks the config. Mounting the folder lets you add, edit, or remove the JSON file at any time and have Transmute pick it up on the next download.
+
+> **Security:** The config file contains plaintext credentials. Restrict its permissions on the host (e.g. `chmod 600 ./domain_auth/config.json`) and do not commit it to source control.
+
+---
+
 # Environment Variables
 
 Transmute is configured through environment variables. Set them in the `environment` section of your `docker-compose.yml`, in a `.env` file mounted into the container, or as standard OS environment variables. Variable names are **case-insensitive**.
@@ -1280,6 +1504,7 @@ For OIDC configuration variables, please see [OIDC / SSO Integration](/docs/oidc
 | `HOST` | `0.0.0.0` | Network interface the server binds to. The default binds to all interfaces, which is required inside Docker. |
 | `PORT` | `3313` | Port the server listens on inside the container. If you change this, update the `ports` mapping and health check URL in your Compose file to match. |
 | `APP_URL` | `""` | Used for constructing URLs in OIDC API response, and also used for setting the displayed URL in the API docs. |
+| `CONVERSION_WORKER_CONCURRENCY` | `5` | Number of concurrent conversion workers. Each one runs on its own thread. |
 
 ### Storage
 
@@ -1313,6 +1538,9 @@ Currently supported languages are:
 - German (Shoutout to [@AnguTom](https://github.com/AnguTom) for initial translation)
 - Polish (Shoutout to [@Icikowski](https://github.com/Icikowski) for initial translation)
 - Italian (Shoutout to [@StefanoPernat](https://github.com/StefanoPernat) for initial translation)
+- French (Shoutout to [@bastiengrignon](https://github.com/bastiengrignon) for initial translation)
+- Danish (Shoutout to [@eurosite](https://github.com/eurosite) for initial translation)
+- Hindi (Shoutout to [@ykd007](https://github.com/ykd007) for initial translation)
 
 If you want to add a new language, open a pull request similar to [this example](https://github.com/transmute-app/transmute/pull/109/changes).
 

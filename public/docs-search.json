@@ -565,7 +565,7 @@
     "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
     "sectionTitle": "How Quality Works",
     "headingId": "how-quality-works",
-    "text": "How Quality Works Quality is always output-format specific. The same high value can mean CRF 18 for one video output, 320 kbps for one audio output, JPEG quality 95 for an image output, or no effect at all for another converter. Only formats explicitly marked as supporting quality expose the option in the UI and API metadata. If you omit quality, Transmute either uses your saved default quality for that output format or falls back to the converter's built-in medium-style defaults. The shared quality labels are: Quality General intent -------- ---------------- low Smaller output, faster encoding, more compression medium Balanced default high Larger output, slower encoding, less compression Important: Final file size and perceived quality still depend heavily on the source file, encoder defaults, frame complexity, color depth, transparency, resolution, and container/codec limitations. --- Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+    "text": "How Quality Works Quality is always output-format specific. The same high value can mean CRF 18 for one video output, 320 kbps for one audio output, 300 DPI page rendering for PDF-to-image output, JPEG quality 95 for one image encoder, or no effect at all for another converter. Only formats explicitly marked as supporting quality expose the option in the UI and API metadata. If you omit quality, Transmute either uses your saved default quality for that output format or falls back to the converter's built-in medium-style defaults. The shared quality labels are: Quality General intent -------- ---------------- low Smaller output, faster encoding, more compression medium Balanced default high Larger output, slower encoding, less compression Important: Final file size and perceived quality still depend heavily on the source file, encoder defaults, frame complexity, color depth, transparency, resolution, and container/codec limitations. --- Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
   },
   {
     "slug": "quality-reference",
@@ -619,9 +619,65 @@
     "slug": "quality-reference",
     "title": "Quality Reference",
     "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "PyMuPDF PDF Raster Outputs",
+    "headingId": "pymupdf-pdf-raster-outputs",
+    "text": "PyMuPDF PDF Raster Outputs The PyMuPDF converter handles pdf to text-like outputs and now also handles pdf to raster-image outputs. For PDF raster output, quality does two things: It changes the render DPI used when rasterizing each PDF page. For some lossy or quality-tunable target formats, it also changes the Pillow encoder settings used when writing the final image. Applies to these PDF output formats: png jpeg webp tiff bmp gif ppm pgm pbm tga jp2 avif jxl ico dib pcx sgi pnm Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "Render DPI Mapping",
+    "headingId": "render-dpi-mapping",
+    "text": "Render DPI Mapping Applies to all PDF raster outputs listed above. Quality Render DPI -------- ------------- high 300 medium 150 low 100 Technical notes: This is the biggest quality change for PDF-to-image output. Higher DPI preserves more detail from the source PDF and usually creates larger images and slower processing. Even for formats that do not have a dedicated encoder-quality knob, the selected quality still matters because the page is rendered at a different resolution first. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "Additional Encoder Mapping For PDF Raster Outputs",
+    "headingId": "additional-encoder-mapping-for-pdf-raster-outputs",
+    "text": "Additional Encoder Mapping For PDF Raster Outputs Some PDF raster outputs also apply format-specific Pillow save settings after the DPI render step. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "JPEG, WebP, AVIF, JPEG XL",
+    "headingId": "jpeg-webp-avif-jpeg-xl",
+    "text": "JPEG, WebP, AVIF, JPEG XL Applies to these PDF output formats: jpeg webp avif jxl Mapping: Quality Save parameter -------- ------------------ high jpeg/webp/jxl: quality=95, avif: quality=90 medium jpeg/webp/jxl: quality=80, avif: quality=70 low jpeg/webp/jxl: quality=60, avif: quality=50 Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "JPEG 2000 (jp2)",
+    "headingId": "jpeg-2000-jp2",
+    "text": "JPEG 2000 (jp2) Mapping: Quality Save parameter -------- ------------------ high quality_mode='rates', quality_layers=[5] medium quality_mode='rates', quality_layers=[20] low quality_mode='rates', quality_layers=[40] Technical notes: For JPEG 2000 in this pipeline, lower numeric rate values correspond to higher quality. That means the high / medium / low mapping is the reverse of a simple “bigger number = better quality” intuition. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "PDF Raster Formats Without Extra Encoder Quality Knobs",
+    "headingId": "pdf-raster-formats-without-extra-encoder-quality-knobs",
+    "text": "PDF Raster Formats Without Extra Encoder Quality Knobs These formats still expose low / medium / high for PDF output because DPI changes, even though they do not currently get a separate encoder-quality value: png tiff bmp gif ppm, pgm, pbm, pnm tga, ico, dib, pcx, sgi Additional behavior worth knowing: png enables Pillow optimize=True. tiff uses compression='tiff_deflate'. Formats without alpha support are flattened onto a white background before saving. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
+    "sectionTitle": "PDF Text-Like Outputs",
+    "headingId": "pdf-text-like-outputs",
+    "text": "PDF Text-Like Outputs For PyMuPDF text-style outputs, quality has no effect: txt md html --- Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+  },
+  {
+    "slug": "quality-reference",
+    "title": "Quality Reference",
+    "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
     "sectionTitle": "Pillow Image Outputs",
     "headingId": "pillow-image-outputs",
-    "text": "Pillow Image Outputs The Pillow converter handles most raster image outputs. It only exposes quality for selected lossy or quality-tunable formats. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+    "text": "Pillow Image Outputs The Pillow converter handles image-to-image conversions and some image-to-document outputs. It only exposes quality for selected lossy or quality-tunable formats. Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
   },
   {
     "slug": "quality-reference",
@@ -645,7 +701,7 @@
     "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
     "sectionTitle": "Formats Without Exposed Quality",
     "headingId": "formats-without-exposed-quality",
-    "text": "Formats Without Exposed Quality These formats are still converted by Pillow but do not currently expose low / medium / high: png bmp tiff gif ico pdf qoi dds pbm, pgm, ppm, pnm, pfm tga, sgi, icns, msp, xbm, blp, dib, eps, apng, mpo, pcx Some of those still have internal normalization rules, optimization flags, palette conversion, or size caps, but they do not use the shared quality selector. --- Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+    "text": "Formats Without Exposed Quality These formats are still converted by Pillow but do not currently expose low / medium / high: bmp gif ico pdf qoi dds pbm, pgm, ppm, pnm, pfm tga, sgi, icns, msp, xbm, blp, dib, eps, apng, mpo, pcx Some of those still have internal normalization rules, optimization flags, palette conversion, or size caps, but they do not use the shared quality selector. --- Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
   },
   {
     "slug": "quality-reference",
@@ -685,7 +741,7 @@
     "description": "Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings.",
     "sectionTitle": "When Quality Has No Effect",
     "headingId": "when-quality-has-no-effect",
-    "text": "When Quality Has No Effect Even though the API field is always named quality, many converters ignore it entirely. For the four converters covered here, quality has no effect for: FFmpeg lossless-style outputs such as wav, flac, aiff, and mka Draw.io outputs png, pdf, and svg LibreOffice outputs other than stitched jpeg Pillow outputs that are not listed in the quality-enabled set above If a format does not advertise quality support, the UI should not offer the selector and the converter will simply use its normal defaults. --- Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
+    "text": "When Quality Has No Effect Even though the API field is always named quality, many converters ignore it entirely. For the converters covered here, quality has no effect for: FFmpeg lossless-style outputs such as wav, flac, aiff, and mka PyMuPDF outputs txt, md, and html Draw.io outputs png, pdf, and svg LibreOffice outputs other than stitched jpeg Pillow outputs that are not listed in the quality-enabled set above If a format does not advertise quality support, the UI should not offer the selector and the converter will simply use its normal defaults. --- Detailed reference for what low, medium, and high mean for each converter and output format that supports quality settings. quality-reference"
   },
   {
     "slug": "quality-reference",
@@ -949,7 +1005,39 @@
     "description": "Download a file from a URL and convert it without uploading from your local device first.",
     "sectionTitle": "Limits and Expectations",
     "headingId": "limits-and-expectations",
-    "text": "Limits and Expectations Support for site downloads and playlists is only as broad as current yt-dlp support. Some URLs may fail because the source site changed, blocks automated access, requires authentication, or is otherwise unsupported. A successful download still needs to be in a format that Transmute can process and convert. If a URL fails, try a direct file URL when available, or verify whether the source is currently supported by yt-dlp. Download a file from a URL and convert it without uploading from your local device first. from-url"
+    "text": "Limits and Expectations Support for site downloads and playlists is only as broad as current yt-dlp support. Some URLs may fail because the source site changed, blocks automated access, requires authentication, or is otherwise unsupported. A successful download still needs to be in a format that Transmute can process and convert. If a URL fails, try a direct file URL when available, or verify whether the source is currently supported by yt-dlp. --- Download a file from a URL and convert it without uploading from your local device first. from-url"
+  },
+  {
+    "slug": "from-url",
+    "title": "From URL",
+    "description": "Download a file from a URL and convert it without uploading from your local device first.",
+    "sectionTitle": "Authenticated Downloads",
+    "headingId": "authenticated-downloads",
+    "text": "Authenticated Downloads Some sources require authentication to fetch a file (private file servers, internal artifact stores, protected APIs, etc.). Transmute supports per-domain authentication for direct HTTP/HTTPS downloads via a JSON config file at domain_auth/config.json inside the app's working directory. When the HTTP downloader is about to fetch a URL, it looks up the URL's host (and port, if present) in this config. If a matching entry is found, the configured credentials are attached to the request automatically. Note: Domain auth currently applies to direct HTTP/HTTPS downloads only. It is not used by the yt-dlp downloader. Download a file from a URL and convert it without uploading from your local device first. from-url"
+  },
+  {
+    "slug": "from-url",
+    "title": "From URL",
+    "description": "Download a file from a URL and convert it without uploading from your local device first.",
+    "sectionTitle": "Config Format",
+    "headingId": "config-format",
+    "text": "Config Format domain_auth/config.json is a JSON array of objects. Each object describes one domain and the credentials to use for it: [ { \"domain\": \"files.example.com\", \"auth_type\": \"basic\", \"secret\": \"alice:s3cret\" }, { \"domain\": \"api.example.com\", \"auth_type\": \"bearer\", \"secret\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.payload.signature\" }, { \"domain\": \"downloads.example.com:8443\", \"auth_type\": \"bearer token\", \"secret\": \"ghp_exampleTokenValue1234567890\" }, { \"domain\": \"internal.example.com\", \"auth_type\": \"header\", \"secret\": \"X-Api-Key: abc123-def456-ghi789\" }, { \"domain\": \"cdn.example.com\", \"auth_type\": \"custom header\", \"secret\": \"X-Auth-Token: my-secret-token-value\" } ] Each entry has three fields: domain — The host to match. May include a port (example.com:8443). Matching is case-insensitive. An exact host:port entry is preferred over a host-only entry when both are present. auth_type — How to authenticate. See Supported Auth Types. secret — The credential material. The exact format depends on auth_type. Invalid or unrecognized entries are skipped with a warning and do not prevent other entries from being used. Download a file from a URL and convert it without uploading from your local device first. from-url"
+  },
+  {
+    "slug": "from-url",
+    "title": "From URL",
+    "description": "Download a file from a URL and convert it without uploading from your local device first.",
+    "sectionTitle": "Supported Auth Types",
+    "headingId": "supported-auth-types",
+    "text": "Supported Auth Types auth_type value Behavior secret format --- --- --- basic, username and password, username_password HTTP Basic auth \"username:password\" bearer, bearer auth, bearer token, token Sends Authorization: Bearer The raw token header, custom header Sends a literal header on the request \"Header-Name: value\" auth_type matching is case-insensitive. Download a file from a URL and convert it without uploading from your local device first. from-url"
+  },
+  {
+    "slug": "from-url",
+    "title": "From URL",
+    "description": "Download a file from a URL and convert it without uploading from your local device first.",
+    "sectionTitle": "Docker Compose Example",
+    "headingId": "docker-compose-example",
+    "text": "Docker Compose Example The domain_auth config lives outside the data volume. Mount the folder (not the file itself) so you can create or edit the config from the host without recreating the container: services: transmute: image: ghcr.io/transmute-app/transmute:latest container_name: transmute restart: unless-stopped ports: - 3313:3313 volumes: - transmute_data:/app/data - ./domain_auth:/app/domain_auth healthcheck: test: - \"CMD\" - \"wget\" - \"-q\" - \"-O\" - \"/dev/null\" - \"--tries=1\" - \"http://localhost:3313/api/health/ready\" interval: 30s timeout: 10s retries: 3 start_period: 40s volumes: transmute_data: Then, on the host, create the folder and the config file after the bind mount is in place: mkdir -p ./domain_auth cat > ./domain_auth/config.json <<'EOF' [ { \"domain\": \"files.example.com\", \"auth_type\": \"basic\", \"secret\": \"alice:s3cret\" } ] EOF docker compose up -d Why mount the folder, not the file? If you bind-mount ./domain_auth/config.json directly and the file does not yet exist on the host, Docker will create a directory with that name on the host, which breaks the config. Mounting the folder lets you add, edit, or remove the JSON file at any time and have Transmute pick it up on the next download. Security: The config file contains plaintext credentials. Restrict its permissions on the host (e.g. chmod 600 ./domain_auth/config.json) and do not commit it to source control. Download a file from a URL and convert it without uploading from your local device first. from-url"
   },
   {
     "slug": "environment-variables",
@@ -1021,7 +1109,7 @@
     "description": "Configure Transmute's default behaviour using environment variables in your Docker Compose file.",
     "sectionTitle": "Server",
     "headingId": "server",
-    "text": "Server Variable Default Description ---------- --------- ------------- HOST 0.0.0.0 Network interface the server binds to. The default binds to all interfaces, which is required inside Docker. PORT 3313 Port the server listens on inside the container. If you change this, update the ports mapping and health check URL in your Compose file to match. APP_URL \"\" Used for constructing URLs in OIDC API response, and also used for setting the displayed URL in the API docs. Configure Transmute's default behaviour using environment variables in your Docker Compose file. environment-variables"
+    "text": "Server Variable Default Description ---------- --------- ------------- HOST 0.0.0.0 Network interface the server binds to. The default binds to all interfaces, which is required inside Docker. PORT 3313 Port the server listens on inside the container. If you change this, update the ports mapping and health check URL in your Compose file to match. APP_URL \"\" Used for constructing URLs in OIDC API response, and also used for setting the displayed URL in the API docs. CONVERSION_WORKER_CONCURRENCY 5 Number of concurrent conversion workers. Each one runs on its own thread. Configure Transmute's default behaviour using environment variables in your Docker Compose file. environment-variables"
   },
   {
     "slug": "environment-variables",
@@ -1053,7 +1141,7 @@
     "description": "Translations of the Transmute UI provided by other users.",
     "sectionTitle": "UI Translations",
     "headingId": "ui-translations",
-    "text": "UI Translations Transmute supports community-contributed UI translations. Currently supported languages are: English Spanish (Shoutout to @Fuan200 for initial translation) German (Shoutout to @AnguTom for initial translation) Polish (Shoutout to @Icikowski for initial translation) Italian (Shoutout to @StefanoPernat for initial translation) If you want to add a new language, open a pull request similar to this example. Translations of the Transmute UI provided by other users. translations"
+    "text": "UI Translations Transmute supports community-contributed UI translations. Currently supported languages are: English Spanish (Shoutout to @Fuan200 for initial translation) German (Shoutout to @AnguTom for initial translation) Polish (Shoutout to @Icikowski for initial translation) Italian (Shoutout to @StefanoPernat for initial translation) French (Shoutout to @bastiengrignon for initial translation) Danish (Shoutout to @eurosite for initial translation) Hindi (Shoutout to @ykd007 for initial translation) If you want to add a new language, open a pull request similar to this example. Translations of the Transmute UI provided by other users. translations"
   },
   {
     "slug": "translations",
