@@ -9,7 +9,6 @@ import {
   FaPalette,
   FaArrowRight,
   FaRightLeft,
-  FaTriangleExclamation,
   FaCheck,
   FaXmark,
 } from 'react-icons/fa6'
@@ -96,6 +95,19 @@ const screenshots = [
   },
 ]
 
+function PikaPodsLogo({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 383.39 169.27"
+      aria-hidden="true"
+      className={className}
+      fill="currentColor"
+    >
+      <path d="M383.39,161c-2.83,6.42-7.81,8.33-14.68,8.32q-155.86-.21-311.74-.1c-27.27,0-49.44-17.67-55.6-44.24C-5.79,94.08,15.88,62.26,47.24,57.65a74.42,74.42,0,0,1,8.17-.71c6.93-.25,12-4.95,12.08-11.22S62.28,34.47,55.13,34.45c-14.22-.05-28.44,0-42.66,0C5.12,34.42.19,30,.15,23.31S5,12,12.28,12C27,12,41.72,12,56.44,12c18.28.08,33.32,14.85,33.5,32.81.19,19-14.17,34.06-32.93,34.51-18.36.45-31.76,12.1-34.12,30.26a33,33,0,0,0,30.59,36.8c12.12,1,24.39.18,36.78.18,4.92-46.53,26.36-83.33,65-109.73,22.36-15.3,47.34-23.26,74.23-24.66-1.2,5.44-2.7,10.59-3.41,15.84-4,30.06,18.3,58.48,48.51,61.94a38.2,38.2,0,0,0,8.18.46A11.31,11.31,0,0,0,292.79,78.9c-.33-6.06-5.17-10.52-11.73-10.78-13.69-.54-23.72-7-29.84-19.13C245,36.65,247.44,21.68,257,11.07a33.11,33.11,0,0,1,35.48-9.23A35.2,35.2,0,0,1,315.33,32.4a6.1,6.1,0,0,0,2.4,4c33.18,22.94,54.39,53.9,62.8,93.44,1.19,5.58,1.92,11.25,2.86,16.88ZM326.48,101.8A11.22,11.22,0,1,0,315.29,113,11.54,11.54,0,0,0,326.48,101.8Z" />
+    </svg>
+  )
+}
+
 export default function Home() {
   const [dockerCompose, setDockerCompose] = useState<string | null>(null)
   const [dockerComposeLoading, setDockerComposeLoading] = useState(true)
@@ -162,29 +174,27 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               to="/docs/getting-started/"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-primary text-white font-semibold hover:bg-primary-dark transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5"
+              className="inline-flex min-w-[18rem] items-center justify-center gap-3 px-8 py-3.5 rounded-xl bg-primary text-white font-semibold hover:bg-primary-dark transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5"
             >
-              Get Started
-              <FaArrowRight className="h-4 w-4" />
+              <FaDocker className="h-5 w-5 shrink-0" />
+              <span className="flex flex-col items-start text-left leading-tight">
+                <span>Host on Your Hardware</span>
+              </span>
             </Link>
             <a
-              href="https://github.com/transmute-app/transmute"
+              href="https://www.pikapods.com/pods?run=transmute"
               target="_blank"
-              rel="noopener"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl border border-gray-700 text-text-muted font-semibold hover:text-white hover:border-gray-500 transition-all hover:-translate-y-0.5"
+              rel="noopener noreferrer"
+              className="relative inline-flex min-w-[18rem] items-center justify-center gap-3 px-8 py-3.5 rounded-xl border border-[#43A047] bg-[#43A047] text-white font-semibold hover:bg-[#388E3C] hover:border-[#388E3C] transition-all shadow-lg shadow-[#43A047]/25 hover:shadow-[#43A047]/40 hover:-translate-y-0.5"
             >
-              <FaGithub className="h-5 w-5" />
-              View on GitHub
-            </a>
-          </div>
-
-          {/* Tech badges */}
-          <div className="flex flex-wrap items-center justify-center gap-3 mt-12">
-            {['Docker Ready', 'FastAPI', 'FFmpeg', 'Pillow', 'pandas', 'PyMuPDF', 'Pandoc'].map((tech) => (
-              <span key={tech} className="px-3 py-1 rounded-full text-xs font-medium bg-surface-light/60 text-text-muted border border-gray-700/50">
-                {tech}
+              <span className="absolute -top-2.5 right-3 rounded-full border border-white/20 bg-surface-dark px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/85">
+                Coming Soon
               </span>
-            ))}
+              <PikaPodsLogo className="h-3.5 w-auto shrink-0" />
+              <span className="flex flex-col items-start text-left leading-tight">
+                <span>Host on PikaPods</span>
+              </span>
+            </a>
           </div>
         </div>
 
@@ -490,21 +500,6 @@ export default function Home() {
             <p className="text-text-muted max-w-md mx-auto">
               Deploy in seconds with Docker Compose. One command, fully running.
             </p>
-          </div>
-
-          <div className="mb-6 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-5 py-4 text-left">
-            <div className="flex items-start gap-3">
-              <FaTriangleExclamation className="mt-0.5 h-5 w-5 shrink-0 text-amber-300" />
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-amber-200">Warning</p>
-                <p className="mt-1 text-sm leading-relaxed text-amber-50/90">
-                  Think carefully before exposing Transmute to the public internet / WAN. Transmute includes 
-                  built-in authentication and per-user data isolation, but is designed for trusted networks. 
-                  If you expose it beyond your LAN, place it behind a reverse proxy with TLS and rate limiting. 
-                  The maintainers are not responsible for security issues arising from your deployment configuration.
-                </p>
-              </div>
-            </div>
           </div>
 
           {/* One-liner */}
