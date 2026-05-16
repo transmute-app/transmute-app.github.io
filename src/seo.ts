@@ -29,6 +29,14 @@ export const CONVERSIONS_METADATA: RouteMetadata = {
   path: '/conversions/',
 }
 
+export function normalizeRoutePath(path: string) {
+  if (!path || path === '/') {
+    return '/'
+  }
+
+  return path.endsWith('/') ? path : `${path}/`
+}
+
 export function formatPageTitle(title: string) {
   return title.toLowerCase().includes(BASE_TITLE.toLowerCase())
     ? title
@@ -36,5 +44,5 @@ export function formatPageTitle(title: string) {
 }
 
 export function toAbsoluteUrl(path: string) {
-  return new URL(path, SITE_URL).toString()
+  return new URL(normalizeRoutePath(path), SITE_URL).toString()
 }
