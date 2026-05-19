@@ -40,6 +40,14 @@
     "text": "Verifying the Installation Run the following command to check all services are healthy: docker compose ps You should see output similar to: NAME STATUS transmute running (healthy) Tip: If a container shows unhealthy, check its logs with docker compose logs . How to install and run Transmute for the first time. getting-started"
   },
   {
+    "slug": "getting-started",
+    "title": "Getting Started",
+    "description": "How to install and run Transmute for the first time.",
+    "sectionTitle": "Kubernetes",
+    "headingId": "kubernetes",
+    "text": "Kubernetes For those who wish to host Transmute on a Kubernetes cluster, an example configuration is available. You can download it to a local folder with the command: wget \"https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/k8s-deployment.yml\" You cannot, however, use this file immediately as Kubernetes clusters vary widely in configuration. Use the comments in the downloaded file to customize the deployment to match your cluster's storage back-end and ingress provider. Once this is done, you can deploy Transmute to your cluster with a simple: kubectl apply -f k8s-deployment.yaml How to install and run Transmute for the first time. getting-started"
+  },
+  {
     "slug": "authentication",
     "title": "Authentication & Users",
     "description": "How Transmute handles accounts, roles, API keys, and authentication.",
@@ -317,15 +325,23 @@
     "description": "Browse all available Transmute themes with side-by-side screenshots.",
     "sectionTitle": "Themes",
     "headingId": "themes",
-    "text": "Themes Transmute ships with several built-in themes. Choose between dark and light variants to suit your preference. --- Browse all available Transmute themes with side-by-side screenshots. themes"
+    "text": "Themes Transmute ships with several built-in themes. Choose between dark and light variants to suit your preference. Browse all available Transmute themes with side-by-side screenshots. themes"
   },
   {
     "slug": "themes",
     "title": "Themes",
     "description": "Browse all available Transmute themes with side-by-side screenshots.",
-    "sectionTitle": "Dark Themes",
-    "headingId": "dark-themes",
-    "text": "Dark Themes Browse all available Transmute themes with side-by-side screenshots. themes"
+    "sectionTitle": "Custom Themes",
+    "headingId": "custom-themes",
+    "text": "Custom Themes Transmute also supports custom themes. As an admin, you can create your own theme in the settings panel. Custom themes allow you to personalize the look and feel of your Transmute instance. Themes created by admins can be chosen by all users, but only admins have the ability to create and manage them. --- Browse all available Transmute themes with side-by-side screenshots. themes"
+  },
+  {
+    "slug": "themes",
+    "title": "Themes",
+    "description": "Browse all available Transmute themes with side-by-side screenshots.",
+    "sectionTitle": "Built-In Dark Themes",
+    "headingId": "built-in-dark-themes",
+    "text": "Built-In Dark Themes Browse all available Transmute themes with side-by-side screenshots. themes"
   },
   {
     "slug": "themes",
@@ -363,9 +379,9 @@
     "slug": "themes",
     "title": "Themes",
     "description": "Browse all available Transmute themes with side-by-side screenshots.",
-    "sectionTitle": "Light Themes",
-    "headingId": "light-themes",
-    "text": "Light Themes Browse all available Transmute themes with side-by-side screenshots. themes"
+    "sectionTitle": "Built-In Light Themes",
+    "headingId": "built-in-light-themes",
+    "text": "Built-In Light Themes Browse all available Transmute themes with side-by-side screenshots. themes"
   },
   {
     "slug": "themes",

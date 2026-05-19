@@ -47,6 +47,20 @@ transmute           running (healthy)
 
 > **Tip:** If a container shows `unhealthy`, check its logs with `docker compose logs <service>`.
 
+# Kubernetes
+
+For those who wish to host Transmute on a Kubernetes cluster, an example configuration is available. You can download it to a local folder with the command:
+
+```bash
+wget "https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/k8s-deployment.yml"
+```
+
+You cannot, however, use this file immediately as Kubernetes clusters vary widely in configuration. Use the comments in the downloaded file to customize the deployment to match your cluster's storage back-end and ingress provider. Once this is done, you can deploy Transmute to your cluster with a simple:
+
+```bash
+kubectl apply -f k8s-deployment.yaml
+```
+
 ---
 
 # Authentication & Users
@@ -381,9 +395,13 @@ volumes:
 
 Transmute ships with several built-in themes. Choose between dark and light variants to suit your preference.
 
+## Custom Themes
+
+Transmute also supports custom themes. As an admin, you can create your own theme in the settings panel. Custom themes allow you to personalize the look and feel of your Transmute instance. Themes created by admins can be chosen by all users, but only admins have the ability to create and manage them.
+
 ---
 
-## Dark Themes
+## Built-In Dark Themes
 
 ### Rubedo (Default)
 
@@ -403,7 +421,7 @@ Transmute ships with several built-in themes. Choose between dark and light vari
 
 ---
 
-## Light Themes
+## Built-In Light Themes
 
 ### Albedo
 
