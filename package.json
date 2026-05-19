@@ -39,7 +39,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "front-matter": "^4.0.2",
     "globals": "^16.5.0",
-    "postcss": "^8.5.3",
+    "postcss": "^8.5.14",
     "rehype-highlight": "^7.0.2",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
