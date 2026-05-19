@@ -13,6 +13,7 @@ import {
   DOCS_METADATA,
   formatPageTitle,
   HOME_METADATA,
+  normalizeRoutePath,
   toAbsoluteUrl,
   type RouteMetadata,
 } from './src/seo.ts'
@@ -87,7 +88,7 @@ function formatDetailMetadata(mt: MediaTypeEntry): RouteMetadata {
     description: mt.description
       ? `Convert ${id.toUpperCase()} (${fullName}) files with Transmute. ${mt.description}`
       : `Convert ${id.toUpperCase()} files with Transmute — a free, self-hosted file converter.`,
-    path: `/conversions/${slug}`,
+    path: normalizeRoutePath(`/conversions/${slug}`),
   }
 }
 
@@ -112,7 +113,7 @@ async function getPublicRouteMetadata(publicDir: string) {
       return {
         title: `${attributes.title} — Docs`,
         description: attributes.description ?? DOCS_METADATA.description,
-        path: `/docs/${slug}`,
+        path: normalizeRoutePath(`/docs/${slug}`),
       }
     }),
   )

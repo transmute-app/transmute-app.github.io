@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "node scripts/generate-seo.js && vite",
     "generate-seo": "node scripts/generate-seo.js",
     "check-coverage": "node scripts/check-coverage.js",
     "sort-media-types": "node scripts/sort-media-types.js",

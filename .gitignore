@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+public/docs-search.json
+public/llms-full.txt
+public/llms.txt
+public/sitemap.xml
 
 # Editor directories and files
 .vscode/*

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { formatPageTitle, SITE_URL } from '../seo.ts'
+import { formatPageTitle, normalizeRoutePath, SITE_URL } from '../seo.ts'
 
 interface SEOProps {
   title: string
@@ -43,7 +43,7 @@ export function useSEO({ title, description, path }: SEOProps) {
 
     // Canonical + OG URL
     if (path !== undefined) {
-      const url = `${SITE_URL}${path}`
+      const url = `${SITE_URL}${normalizeRoutePath(path)}`
       const canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null
       if (canonical) canonical.href = url
       const ogUrl = document.querySelector('meta[property="og:url"]') as HTMLMetaElement | null
