@@ -17,6 +17,7 @@ OIDC_INTERNAL_URL=http://<INTERNAL_URL>/application/o/transmute/
 OIDC_CLIENT_ID=<REPLACE_ME>
 OIDC_CLIENT_SECRET=<REPLACE_ME>
 OIDC_DISPLAY_NAME=Authentik
+OIDC_USERNAME_CLAIM=custom_username
 OIDC_AUTO_CREATE_USERS=true
 OIDC_AUTO_LAUNCH=true
 ```
@@ -78,6 +79,12 @@ OIDC_DISPLAY_NAME=Authentik
 ```
 
 ![OIDC_DISPLAY_NAME set to "Authentik"](https://raw.githubusercontent.com/transmute-app/transmute/refs/heads/main/assets/screenshots/login.png)
+
+### OIDC\_USERNAME\_CLAIM
+
+A custom username claim to use instead of the default `preferred_username`. This is useful if your provider uses a different claim for the username, or if you want to use a custom claim that contains the username in a specific format.
+
+See issue [#164](https://github.com/transmute-app/transmute/issues/164) for more details.
 
 ### OIDC\_AUTO\_CREATE\_USERS
 
