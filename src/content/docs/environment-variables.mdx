@@ -68,7 +68,7 @@ For OIDC configuration variables, please see [OIDC / SSO Integration](/docs/oidc
 | `HOST` | `0.0.0.0` | Network interface the server binds to. The default binds to all IPv4 interfaces, which is required inside Docker. |
 | `HOSTS` | `""` | A list of network interfaces the server binds to, either comma-separated or in JSON array format. If it is not set, the `HOST` value is used instead. |
 | `PORT` | `3313` | Port the server listens on inside the container. If you change this, update the `ports` mapping and health check URL in your Compose file to match. |
-| `APP_URL` | `""` | Used for constructing URLs in OIDC API response, and also used for setting the displayed URL in the API docs. |
+| `APP_URL` | `""` | Public URL of the app. Used for constructing URLs in the OIDC API response and for the displayed URL in the API docs. If it includes a path (e.g. `https://host/transmute`), Transmute is served under that [sub-path](/docs/reverse-proxy). |
 | `CONVERSION_WORKER_CONCURRENCY` | `5` | Number of concurrent conversion workers. Each one runs on its own thread. |
 
 > **What is the distinction between `HOSTS` and `HOST`?**
