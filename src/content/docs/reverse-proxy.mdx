@@ -1,0 +1,74 @@
+---
+title: Reverse Proxy & Sub-path
+description: Serve Transmute behind a reverse proxy, either at a domain root or under a sub-path.
+order: 11
+---
+
+# Reverse Proxy & Sub-path
+
+Transmute can be served either at a **domain root** (`https://transmute.example.com`)
+or under a **sub-path** (`https://example.com/transmute/`). Both are configured
+with the single [`APP_URL`](/docs/environment-variables) variable, the sub-path
+is derived from its path component automatically:
+
+| `APP_URL`                    | Served at        |
+| ---------------------------- | ---------------- |
+| *(unset)* or `https://host`  | `/` (the default)|
+| `https://host/transmute`     | `/transmute/`    |
+
+```yaml
+# docker-compose.yml
+services:
+  transmute:
+    image: ghcr.io/transmute-app/transmute:main
+    environment:
+      - APP_URL=https://example.com/transmute
+```
+
+## How it works
+
+Transmute serves the **whole app** (frontend, API and docs) under the sub-path
+itself. The reverse proxy therefore only needs to forward the request path
+**as-is**.
+
+> **Important:** Do **not** strip the sub-path prefix at the proxy. Transmute
+> expects to receive the full `/transmute/...` path. Stripping it (e.g. an nginx
+> `proxy_pass` with a trailing slash, or a Traefik `StripPrefix` middleware) will
+> break asset loading.
+
+No rebuild is required: asset URLs, the frontend router, API calls and the
+OpenAPI/docs URLs all adapt to `APP_URL` at runtime.
+
+## nginx
+
+Note the **absence of a trailing slash** on `proxy_pass`, which preserves the
+full path:
+
+```nginx
+location /transmute/ {
+    proxy_pass http://127.0.0.1:3313;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
+## Traefik
+
+Route the path prefix to the service **without** a `StripPrefix` middleware:
+
+```yaml
+labels:
+  - "traefik.enable=true"
+  - "traefik.http.routers.transmute.rule=Host(`example.com`) && PathPrefix(`/transmute`)"
+  - "traefik.http.services.transmute.loadbalancer.server.port=3313"
+```
+
+## OIDC under a sub-path
+
+OIDC works under a sub-path with no extra configuration, the callback URL is
+derived from `APP_URL`. Make sure the redirect URI registered with your provider
+includes the sub-path, e.g. `https://example.com/transmute/api/oidc/callback`.
+See [OIDC / SSO Integration](/docs/oidc) for the full setup.
+
+> **Tip:** Leaving `APP_URL` unset, or pointing it at a bare host, serves the app
+> at the root exactly as before, no migration needed.
