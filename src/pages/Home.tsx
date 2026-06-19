@@ -186,9 +186,6 @@ export default function Home() {
               target="_blank"
               className="relative inline-flex min-w-[18rem] items-center justify-center gap-3 px-8 py-3.5 rounded-xl border border-[#43A047] bg-[#43A047] text-white font-semibold hover:bg-[#388E3C] hover:border-[#388E3C] transition-all shadow-lg shadow-[#43A047]/25 hover:shadow-[#43A047]/40 hover:-translate-y-0.5"
             >
-              <span className="absolute -top-2.5 right-3 rounded-full border border-white/20 bg-surface-dark px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/85">
-                Coming Soon
-              </span>
               <PikaPodsLogo className="h-3.5 w-auto shrink-0" />
               <span className="flex flex-col items-start text-left leading-tight">
                 <span>Host on PikaPods</span>
