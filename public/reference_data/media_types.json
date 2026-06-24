@@ -14,6 +14,18 @@
     ]
   },
   {
+    "id": "3mf",
+    "full_name": "3D Manufacturing Format",
+    "classification": "model",
+    "description": "3MF, or 3D Manufacturing Format, is a file format designed for 3D printing. It provides a comprehensive way to describe 3D models, including geometry, materials, colors, and other properties, ensuring accurate and efficient 3D printing.",
+    "extensions": [
+      "3mf"
+    ],
+    "aliases": [
+      "3mf"
+    ]
+  },
+  {
     "id": "7z",
     "full_name": "7-Zip",
     "classification": "archive",
@@ -27,18 +39,6 @@
     ]
   },
   {
-    "id": "aac",
-    "full_name": "Advanced Audio Coding",
-    "classification": "audio",
-    "description": "AAC, or Advanced Audio Coding, is a lossy audio compression format designed to be the successor of MP3. It offers improved sound quality at similar bit rates and is widely used in streaming, broadcasting, and digital music distribution. AAC supports various audio channels and sample rates, making it versatile for different applications.",
-    "extensions": [
-      "aac"
-    ],
-    "aliases": [
-      "aac"
-    ]
-  },
-  {
     "id": "aa3",
     "full_name": "ATRAC3 Audio",
     "classification": "audio",
@@ -49,6 +49,18 @@
     ],
     "aliases": [
       "aa3"
+    ]
+  },
+  {
+    "id": "aac",
+    "full_name": "Advanced Audio Coding",
+    "classification": "audio",
+    "description": "AAC, or Advanced Audio Coding, is a lossy audio compression format designed to be the successor of MP3. It offers improved sound quality at similar bit rates and is widely used in streaming, broadcasting, and digital music distribution. AAC supports various audio channels and sample rates, making it versatile for different applications.",
+    "extensions": [
+      "aac"
+    ],
+    "aliases": [
+      "aac"
     ]
   },
   {
@@ -320,6 +332,30 @@
     ]
   },
   {
+    "id": "dxf",
+    "full_name": "Drawing Exchange Format",
+    "classification": "model",
+    "description": "DXF, or Drawing Exchange Format, is a file format used for exchanging 2D and 3D drawings between different CAD (Computer-Aided Design) software. It allows for interoperability and data sharing in design and engineering workflows.",
+    "extensions": [
+      "dxf"
+    ],
+    "aliases": [
+      "dxf"
+    ]
+  },
+  {
+    "id": "emf",
+    "full_name": "Enhanced Metafile",
+    "classification": "image",
+    "description": "EMF, or Enhanced Metafile, is a file format used for vector graphics in Windows. It is an improvement over the older Windows Metafile (WMF) format, providing better support for complex graphics and higher quality output.",
+    "extensions": [
+      "emf"
+    ],
+    "aliases": [
+      "emf"
+    ]
+  },
+  {
     "id": "eml",
     "full_name": "Electronic Mail",
     "classification": "email",
@@ -475,6 +511,18 @@
     ],
     "aliases": [
       "gif"
+    ]
+  },
+  {
+    "id": "glb",
+    "full_name": "GlTF Binary",
+    "classification": "model",
+    "description": "GLB, or GlTF Binary, is a file format used for 3D models. It is a binary version of the glTF (GL Transmission Format) and is designed for efficient transmission and loading of 3D assets.",
+    "extensions": [
+      "glb"
+    ],
+    "aliases": [
+      "glb"
     ]
   },
   {
@@ -861,6 +909,30 @@
     ]
   },
   {
+    "id": "obj",
+    "full_name": "Object File",
+    "classification": "model",
+    "description": "OBJ, or Object File, is a file format used for 3D models. It is commonly used for storing geometry, texture, and material information for 3D objects.",
+    "extensions": [
+      "obj"
+    ],
+    "aliases": [
+      "obj"
+    ]
+  },
+  {
+    "id": "odg",
+    "full_name": "OpenDocument Graphics",
+    "classification": "image",
+    "description": "ODG, or OpenDocument Graphics, is a file format used for creating and storing vector graphics. It is part of the OpenDocument standard and is commonly used for diagrams, charts, and illustrations.",
+    "extensions": [
+      "odg"
+    ],
+    "aliases": [
+      "odg"
+    ]
+  },
+  {
     "id": "odp",
     "full_name": "OpenDocument Presentation",
     "classification": "document",
@@ -894,6 +966,18 @@
     ],
     "aliases": [
       "odt"
+    ]
+  },
+  {
+    "id": "off",
+    "full_name": "",
+    "classification": "",
+    "description": "",
+    "extensions": [
+      "off"
+    ],
+    "aliases": [
+      "off"
     ]
   },
   {
@@ -1155,6 +1239,18 @@
     ]
   },
   {
+    "id": "ply",
+    "full_name": "Polygon File Format",
+    "classification": "model",
+    "description": "PLY, or Polygon File Format, is a file format used for storing 3D models. It is commonly used for representing 3D scanned data and supports both ASCII and binary encoding.",
+    "extensions": [
+      "ply"
+    ],
+    "aliases": [
+      "ply"
+    ]
+  },
+  {
     "id": "png",
     "full_name": "Portable Network Graphics",
     "classification": "image",
@@ -1413,6 +1509,18 @@
     ]
   },
   {
+    "id": "stl",
+    "full_name": "Stereolithography",
+    "classification": "model",
+    "description": "STL, or Stereolithography, is a file format used for 3D models. It is commonly used for 3D printing and computer-aided design (CAD) applications.",
+    "extensions": [
+      "stl"
+    ],
+    "aliases": [
+      "stl"
+    ]
+  },
+  {
     "id": "sub",
     "full_name": "MicroDVD / VobSub Subtitle",
     "classification": "subtitle",
@@ -1434,6 +1542,18 @@
     ],
     "aliases": [
       "svg"
+    ]
+  },
+  {
+    "id": "svgz",
+    "full_name": "Scalable Vector Graphics Compressed",
+    "classification": "image",
+    "description": "SVGZ, or Scalable Vector Graphics Compressed, is a file format used for storing compressed vector graphics. It is commonly used for web graphics and supports scalability without loss of quality.",
+    "extensions": [
+      "svgz"
+    ],
+    "aliases": [
+      "svgz"
     ]
   },
   {
@@ -1726,6 +1846,18 @@
     ],
     "aliases": [
       "wma"
+    ]
+  },
+  {
+    "id": "wmf",
+    "full_name": "Windows Metafile",
+    "classification": "image",
+    "description": "WMF, or Windows Metafile, is a file format used for storing vector graphics. It is commonly used for clip art and other graphical content in Windows applications.",
+    "extensions": [
+      "wmf"
+    ],
+    "aliases": [
+      "wmf"
     ]
   },
   {
