@@ -70,6 +70,7 @@ For OIDC configuration variables, please see [OIDC / SSO Integration](/docs/oidc
 | `PORT` | `3313` | Port the server listens on inside the container. If you change this, update the `ports` mapping and health check URL in your Compose file to match. |
 | `APP_URL` | `""` | Public URL of the app. Used for constructing URLs in the OIDC API response and for the displayed URL in the API docs. If it includes a path (e.g. `https://host/transmute`), Transmute is served under that [sub-path](/docs/reverse-proxy). |
 | `CONVERSION_WORKER_CONCURRENCY` | `5` | Number of concurrent conversion workers. Each one runs on its own thread. |
+| `MAX_CHUNK_SIZE` | `0` | Maximum size in bytes of a single HTTP request for file uploads and downloads. Files larger than this are split into multiple chunked requests. Useful when running behind a reverse proxy with per-request body size limits (e.g. Cloudflare's 100 MB upload cap). Set to `0` to disable chunking. |
 
 > **What is the distinction between `HOSTS` and `HOST`?**
 >
